@@ -18,33 +18,63 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HomeOwners_Exemption</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    <div class="container-fluid section-body">
+        <div class="row">
+            <div class="col-sm-2 section-nav">
+                <div class="emblem">
+                    <img class="rounded mx-auto d-block" src="~/img/LACseal.png" />
+                </div>
+                <nav class="sidebar">
+                    <ul>
+                        <li>
+                            <a href="#">Dashboard</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li>
+                            <a href="#">Process Claim</a>
+                        </li>
+                        <li>
+                            <a href="#">Edit Claims</a>
+                        </li>
+                        <li>
+                            <a href="#">Claims</a>
+                        </li>
+                        <li>
+                            <a href="#">Reports</a>
                         </li>
                     </ul>
+                </nav>
+            </div>
+            <div class="col-sm-10 px-0">
+                <div class="container homeowner-title px-0">
+                   <h2 class="">Homeowners Exemptions</h2>
+                </div>
+                <div class="homeowner-nav">
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Help</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Users</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="container-fluid">
+                    <partial name="_CookieConsentPartial" />
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        </div>
     </div>
+
+
+
+
+
+
+    
 
     <footer class="border-top footer text-muted">
         <div class="container">
