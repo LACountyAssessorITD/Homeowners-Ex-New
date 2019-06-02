@@ -14,5 +14,7 @@ namespace HomeOwners_Exemption.Models
         public HOXContext()
         {
         }
+
+        public DbSet<Claim> claim { get; set; }
     }
 }
