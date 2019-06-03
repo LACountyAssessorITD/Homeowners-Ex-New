@@ -7,55 +7,40 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
-              integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE="/>
+              integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
+        <link rel="stylesheet" href="~/css/site.css" />
     </environment>
-    <link rel="stylesheet" href="~/css/site.css" />
+    
 </head>
 <body>
     <div class="container-fluid section-body">
-        <div class="row">
-            <div class="col-sm-2 section-nav">
-                <div class="emblem">
-                    <img class="rounded mx-auto d-block" src="~/img/LACseal.png" />
-                </div>
-                <nav class="sidebar">
-                    <ul>
-                        <li>
-                            <a href="#">Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="#">Process Claim</a>
-                        </li>
-                        <li>
-                            <a href="#">Edit Claims</a>
-                        </li>
-                        <li>
-                            <a href="home/claim">Claims</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ProcessClaim">Process Claim</a>
-                        </li>
-                    </ul>
-                </div>
+        
+            <div class="section-nav">
+                test
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+            <div class="">
+                <div class="container">
+                    <partial name="_CookieConsentPartial" />
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
 
+            </div>
+        
+    </div>
+    
+    
+    
+    
+  
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2019 - Homeowners_Ex_New - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

@@ -11,9 +11,9 @@ namespace HomeOwners_Exemption.Controllers
 {
     public class ClaimsController : Controller
     {
-        private readonly HOXContext _context;
+        private readonly homeownerContext _context;
 
-        public ClaimsController(HOXContext context)
+        public ClaimsController(homeownerContext context)
         {
             _context = context;
         }
@@ -26,7 +26,7 @@ namespace HomeOwners_Exemption.Controllers
                 return NotFound();
             }
 
-            var claim = await _context.claim.FindAsync(id);
+            var claim = await _context.Claim.FindAsync(id);
             if (claim == null)
             {
                 return NotFound();
@@ -41,7 +41,7 @@ namespace HomeOwners_Exemption.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(long id, [Bind("ClaimID,Claimant,ClaimantSSN,Spouse")] Claim claim)
         {
-            if (id != claim.ClaimID)
+            if (id != claim.ClaimId)
             {
                 return NotFound();
             }
@@ -55,7 +55,7 @@ namespace HomeOwners_Exemption.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClaimExists(claim.ClaimID))
+                    if (!ClaimExists(claim.ClaimId))
                     {
                         return NotFound();
                     }
@@ -73,7 +73,7 @@ namespace HomeOwners_Exemption.Controllers
 
         private bool ClaimExists(long id)
         {
-            return _context.claim.Any(e => e.ClaimID == id);
+            return _context.Claim.Any(e => e.ClaimId == id);
         }
     }
 }
