@@ -10,22 +10,25 @@
 
 @using (Html.BeginForm("ProcessClaim", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <div><label><b>Scan your claim:</b></label></div>
+<div style="align-content:center">
+    <div>
+        <label><b>Scan your claim:</b></label>
+    </div>
     <div style="width:150px">
-        @Html.TextBox("ClaimID", null, new { @type = "text", maxlength = "7", @id = "txtClaimID", @name = "txtClaimID", @class = "form-control input-text" })
+        @Html.TextBox("ClaimID", null, new { @type = "number", maxlength = "7", @id = "txtClaimID", @name = "txtClaimID", @class = "form-control input-text" })
     </div>
     <br />
     <br />
     <div>
         <table>
             <tr>
-                <th style="width:300px;">Claim ID</th>
-                <th style="width:300px;">Current Status</th>
+                <th style="width:200px;">Claim ID</th>
+                <th style="width:200px;">Current Status</th>
                 <th style="width:300px;">Change Status</th>
             </tr>
             <tr>
                 <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID1", @name = "txtClaimID1", @class = "form-control input-text" })</td>
-                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:200px", disabled = "true", @id = "txtStatus1", @name = "txtStatus1", @class = "form-control input-text" })</td>
+                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus1", @name = "txtStatus1", @class = "form-control input-text" })</td>
                 <td rowspan="10" valign="top">
                     <div>
                         @Html.DropDownListFor(model => model.ClaimStatus,
@@ -119,42 +122,43 @@
             </tr>
             <tr>
                 <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID2", @name = "txtClaimID2", @class = "form-control input-text" })</td>
-                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:200px", disabled = "true", @id = "txtStatus2", @name = "txtStatus2", @class = "form-control input-text" })</td>
+                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus2", @name = "txtStatus2", @class = "form-control input-text" })</td>
             </tr>
             <tr>
                 <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID3", @name = "txtClaimID3", @class = "form-control input-text" })</td>
-                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:200px", disabled = "true", @id = "txtStatus3", @name = "txtStatus3", @class = "form-control input-text" })</td>
+                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus3", @name = "txtStatus3", @class = "form-control input-text" })</td>
             </tr>
             <tr>
                 <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID4", @name = "txtClaimID4", @class = "form-control input-text" })</td>
-                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:200px", disabled = "true", @id = "txtStatus4", @name = "txtStatus4", @class = "form-control input-text" })</td>
+                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus4", @name = "txtStatus4", @class = "form-control input-text" })</td>
             </tr>
             <tr>
                 <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID5", @name = "txtClaimID5", @class = "form-control input-text" })</td>
-                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:200px", disabled = "true", @id = "txtStatus5", @name = "txtStatus5", @class = "form-control input-text" })</td>
+                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus5", @name = "txtStatus5", @class = "form-control input-text" })</td>
             </tr>
             <tr>
                 <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID6", @name = "txtClaimID6", @class = "form-control input-text" })</td>
-                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:200px", disabled = "true", @id = "txtStatus6", @name = "txtStatus6", @class = "form-control input-text" })</td>
+                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus6", @name = "txtStatus6", @class = "form-control input-text" })</td>
             </tr>
             <tr>
                 <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID7", @name = "txtClaimID7", @class = "form-control input-text" })</td>
-                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:200px", disabled = "true", @id = "txtStatus7", @name = "txtStatus7", @class = "form-control input-text" })</td>
+                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus7", @name = "txtStatus7", @class = "form-control input-text" })</td>
             </tr>
             <tr>
                 <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID8", @name = "txtClaimID8", @class = "form-control input-text" })</td>
-                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:200px", disabled = "true", @id = "txtStatus8", @name = "txtStatus8", @class = "form-control input-text" })</td>
+                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus8", @name = "txtStatus8", @class = "form-control input-text" })</td>
             </tr>
             <tr>
                 <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID9", @name = "txtClaimID9", @class = "form-control input-text" })</td>
-                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:200px", disabled = "true", @id = "txtStatus9", @name = "txtStatus9", @class = "form-control input-text" })</td>
+                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus9", @name = "txtStatus9", @class = "form-control input-text" })</td>
             </tr>
             <tr>
                 <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID10", @name = "txtClaimID10", @class = "form-control input-text" })</td>
-                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:200px", disabled = "true", @id = "txtStatus10", @name = "txtStatus10", @class = "form-control input-text" })</td>
+                <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus10", @name = "txtStatus10", @class = "form-control input-text" })</td>
             </tr>
         </table>
     </div>
+</div>
 }
 
 
