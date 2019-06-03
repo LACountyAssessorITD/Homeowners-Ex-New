@@ -5,11 +5,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Homeowners_Ex_New.Models;
+using System.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using HomeOwners_Exemption.Models;
 
 namespace Homeowners_Ex_New.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly HOXContext _context;
+
+        public HomeController (HOXContext context)
+        {
+           
+            _context = context;
+            
+        }
         public IActionResult Index()
         {
             return View();
@@ -20,16 +31,20 @@ namespace Homeowners_Ex_New.Controllers
             return View();
         }
 
-        
-        public IActionResult Claim(Int64?id)
+
+        public IActionResult Claim(Int64? id)
         {
             id = 1234567;
             dynamic FaqFinalModel = new System.Dynamic.ExpandoObject();
             SqlParameter param1 = new SqlParameter("@ClaimID", id);
             //var abc = db.tablename.SqlQuery("SP_Name @Value1", param1).ToList();
-            var ClaimResult = _context.claim.FromSql("sp_getClaim1 @ClaimID",param1);
+            var ClaimResult = _context.claim.FromSql("sp_getClaim1 @ClaimID", param1);
             FaqFinalModel.claim = ClaimResult;
-                return View(FaqFinalModel);
+
+            return View(FaqFinalModel);
+        } 
+
+
         public IActionResult ProcessClaim()
         {
             return View();
