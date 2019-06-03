@@ -33,6 +33,9 @@ namespace Homeowners_Ex_New
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContext<Models.HOXContext>(options => {
+                options.UseSqlServer(Configuration.GetConnectionString("Development"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
