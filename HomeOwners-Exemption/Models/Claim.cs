@@ -1,56 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel;
+
 namespace HomeOwners_Exemption.Models
 {
-    public class Claim
+    public partial class Claim
     {
-        [Key]
-        public long ClaimID { get; set; }
-        
+        public long ClaimId { get; set; }
         public string Claimant { get; set; }
-
-        public string claimantSSN { get; set; }
-
+        public string ClaimantSsn { get; set; }
         public string Spouse { get; set; }
-
-        //public String SpouseSSN { get; set; }
-        //public Int64 currentAPN { get; set; }
-        //public DateTime dateAcquired { get; set; }
-        //public DateTime dateOccupied { get; set; }
-        //public String currentStName { get; set; }
-        //public String currentApt { get; set; }
-        //public String currentCity { get; set; }
-        //public String currentState { get; set; }
-        //public int currentZip { get; set; }
-        //public String mailingStName { get; set; }
-        //public String mailingApt { get; set; }
-        //public String mailingCity { get; set; }
-        //public String mailingState { get; set; }
-        //public int mailingZip { get; set; }
-        //public Int64 priorAPN { get; set; }
-        //public String dateMovedOut { get; set; }
-        //public String priorStName { get; set; }
-        //public String priorApt { get; set; }
-        //public String priorCity { get; set; }
-        //public String priorState { get; set; }
-        //public int priorZip { get; set; }
-        //public int rollTaxYear { get; set; }
-        //public int exemptRE { get; set; }
-        //public int suppTaxYear { get; set; }
-        //public int exemptRE2 { get; set; }
-        //public int ClaimActionRefID { get; set; }
-        //public int FindingReasonRefID { get; set; }
-        //public int ClaimStatusRefID { get; set; }
-        //public String CreatedBy { get; set; }
-        //public DateTime CreatedDate { get; set; }
-        //public String ModifiedBy { get; set; }
-        //public DateTime ModifiedDate { get; set; }
-        //public String active { get; set; }
-
+        public string SpouseSsn { get; set; }
+        public long? CurrentApn { get; set; }
+        public DateTime? DateAcquired { get; set; }
+        public DateTime? DateOccupied { get; set; }
+        public string CurrentStName { get; set; }
+        public string CurrentApt { get; set; }
+        public string CurrentCity { get; set; }
+        public string CurrentState { get; set; }
+        public int? CurrentZip { get; set; }
+        public string MailingStName { get; set; }
+        public string MailingApt { get; set; }
+        public string MailingCity { get; set; }
+        public string MailingState { get; set; }
+        public int? MailingZip { get; set; }
+        public long? PriorApn { get; set; }
+        public DateTime? DateMovedOut { get; set; }
+        public string PriorStName { get; set; }
+        public string PriorApt { get; set; }
+        public string PriorCity { get; set; }
+        public string PriorState { get; set; }
+        public int? PriorZip { get; set; }
+        public int? RollTaxYear { get; set; }
+        public int? ExemptRe { get; set; }
+        public int? SuppTaxYear { get; set; }
+        public int? ExemptRe2 { get; set; }
+        public int? ClaimActionRefId { get; set; }
+        public int? FindingReasonRefId { get; set; }
+        public int? ClaimStatusRefId { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public string Active { get; set; }
     }
 }
