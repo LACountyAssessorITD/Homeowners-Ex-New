@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using HomeOwners_Exemption.Models;
 
 namespace Homeowners_Ex_New
 {
@@ -33,7 +35,7 @@ namespace Homeowners_Ex_New
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddDbContext<Models.HOXContext>(options => {
+            services.AddDbContext<HOXContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("Development"));
             });
         }
