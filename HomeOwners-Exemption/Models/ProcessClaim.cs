@@ -10,7 +10,6 @@ namespace HomeOwners_Exemption.Models
         public int ClaimID { get; set; }
         public string ClaimStatus { get; set; }
         public string Assignee { get; set; }
-
         public string ClaimDate { get; set; }
     }
 }
