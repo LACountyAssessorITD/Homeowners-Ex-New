@@ -32,19 +32,16 @@ namespace Homeowners_Ex_New.Controllers
         }
 
 
-        public IActionResult Claim(Int64? id)
-        {
-            id = 1234567;
-            dynamic FaqFinalModel = new System.Dynamic.ExpandoObject();
-            SqlParameter param1 = new SqlParameter("@ClaimID", id);
-            //var abc = db.tablename.SqlQuery("SP_Name @Value1", param1).ToList();
-            var ClaimResult = _context.claim.FromSql("sp_getClaim1 @ClaimID", param1);
-            FaqFinalModel.claim = ClaimResult;
-
-            return View(FaqFinalModel);
-        } 
-
-
+        //public IActionResult Claim(Int64? id)
+        //{
+        //    id = 1234567;
+        //    dynamic FaqFinalModel = new System.Dynamic.ExpandoObject();
+        //    SqlParameter param1 = new SqlParameter("@ClaimID", id);
+        //    //var abc = db.tablename.SqlQuery("SP_Name @Value1", param1).ToList();
+        //    var ClaimResult = _context.claim.FromSql("sp_getClaim1 @ClaimID", param1);
+        //    FaqFinalModel.claim = ClaimResult;
+        //    return View(FaqFinalModel);
+        //}
         public IActionResult ProcessClaim()
         {
             return View();
