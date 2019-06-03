@@ -1,4 +1,39 @@
-﻿
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -10,55 +45,12 @@ body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
 }
-
-html, body {
-    height: 100vh;
-    font-size: 18px;
-}
-
-.section-body {
-    height: 100%;
-}
-.section-body .row {
-    height: 100%;
-}
-.section-nav {
-    background-color: #000;
-}
-.homeowner-nav {
-    height: 60px;
-    background-color: #0836d6;
-}
-    .homeowner-nav a {
-        color: #fff;
-    }
-    .homeowner-nav ul {
-        padding-right: 50px;
-        font-size: 120%;
-    }
-    .homeowner-title {
-        height: 60px;
-        background-color: #000;
-    }
-.homeowner-title h2 {
-    text-align: center;
-    color: #fff;
-}
-.emblem {
-    height: 120px;
-    
-}
-.emblem img {
-    width: 120px;
-    margin-left: auto;
-    margin-right: auto;
-}
-.sidebar li {
-    list-style: none;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    font-size: 115%;
-}
-.sidebar a {
-    color: #fff;
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
 }

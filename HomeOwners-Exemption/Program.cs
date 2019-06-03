@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace HomeOwners_Exemption
+namespace Homeowners_Ex_New
 {
     public class Program
     {

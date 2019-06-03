@@ -1,6 +1,6 @@
 using System;
 
-namespace HomeOwners_Exemption.Models
+namespace Homeowners_Ex_New.Models
 {
     public class ErrorViewModel
     {

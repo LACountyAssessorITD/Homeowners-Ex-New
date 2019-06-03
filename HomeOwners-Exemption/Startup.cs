@@ -9,22 +9,11 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 
-namespace HomeOwners_Exemption
+namespace Homeowners_Ex_New
 {
     public class Startup
     {
-        //public Startup(IHostingEnvironment env)
-        //{
-        //    var builder = new ConfigurationBuilder()
-        //       .SetBasePath(env.ContentRootPath)
-        //       .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-        //       .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-        //       .AddEnvironmentVariables();
-        //    Configuration = builder.Build();        
-        //}
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -44,9 +33,6 @@ namespace HomeOwners_Exemption
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddDbContext<Models.HOXContext>(options => {
-                options.UseSqlServer(Configuration.GetConnectionString("hox_connect"));
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

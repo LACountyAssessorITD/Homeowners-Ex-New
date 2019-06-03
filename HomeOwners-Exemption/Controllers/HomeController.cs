@@ -1,39 +1,34 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using HomeOwners_Exemption.Models;
-using System.IO;
-using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
-using System.Data;
+using Homeowners_Ex_New.Models;
 
-namespace HomeOwners_Exemption.Controllers
+namespace Homeowners_Ex_New.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly HOXContext _context;
-
-        public HomeController( HOXContext context)
-        {
-           
-            _context = context;
-        }
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Claim()
-        {   
-             var test = _context.claim.FromSql("select * from claim");
-            return View(test);
-        }
-
         public IActionResult Privacy()
         {
+            return View();
+        }
+
+        public IActionResult ProcessClaim()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ProcessClaim(string sClaimStatus)
+        {
+
             return View();
         }
 
