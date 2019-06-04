@@ -20,11 +20,13 @@
     
 </head>
 <body>
-    <div class="container-fluid section-body">
+    <div class="container-fluid section-body d-inline">
         
         <div class="section-nav">
+            @if (User.Identity.IsAuthenticated)
+            {
             <div>
-                <h4>Welcome @User.IsInRole("testAdmin"),</h4>
+                <h4>Welcome @User.IsInRole("Admin"),</h4>
                 <h4>Welcome @User.Identity.Name,</h4>
                 
                 <h4>Welcome @User.FindFirst("Username")</h4>
@@ -34,6 +36,7 @@
                     <button type="submit" class="btn btn-admin">Sign Out</button>
                 </form>
             </div>
+            }
         </div>
             <div class="">
                 <div class="container">

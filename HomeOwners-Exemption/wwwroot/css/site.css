@@ -32,14 +32,11 @@ body {
 
 .section-body {
     height: 100%;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
+
 }
 .section-nav {
     background-color: #000;
-    width: 300px;
+    
 }
 .footer {
     position: absolute;
