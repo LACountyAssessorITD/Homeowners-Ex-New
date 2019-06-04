@@ -47,15 +47,25 @@ namespace Homeowners_Ex_New.Controllers
         //}
         public IActionResult ProcessClaim()
         {
+            //dynamic RoleStatus = new System.Dynamic.ExpandoObject();
+            SqlParameter employeeID = new SqlParameter("@usersID", 617585);
+            //var Result = _context.Database.ExecuteSqlCommand ("sp_usersStatus @usersID", param1);
+            List<RoleStatus> Result = new List<RoleStatus>();
+            Result = _context.RoleStatus.FromSql("sp_usersStatus @usersID", employeeID).ToList();
+
+
+
+        //RoleStatus = Result;
+            //return View(RoleStatus);
             return View();
         }
 
-        [HttpPost]
-        public IActionResult ProcessClaim(string sClaimStatus)
-        {
+        //[HttpPost]
+        //public IActionResult ProcessClaim(string sClaimStatus)
+       // {
 
-            return View();
-        }
+         //   return View();
+        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

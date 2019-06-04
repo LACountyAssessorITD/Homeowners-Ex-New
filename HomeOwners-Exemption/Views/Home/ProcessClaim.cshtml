@@ -118,6 +118,13 @@
                                     document.getElementById(inputStatus).value = "";
                                 }
 
+                                // Click the process button
+                                // Change the claim status dropdown
+                                //$("body").on("click", "#SubmitProcess", function () {
+                                 //   alert("here")
+                                //    $('#ModalPopUp').modal('show');
+                                //});
+
                             </script>
                         }
                         <div id="divAssignTo" style="display:none;">
@@ -142,8 +149,7 @@
                             <br />
                             <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel" asp-controller="Home" asp-action="ProdessClaim" />
                             &nbsp;&nbsp;&nbsp;
-                            <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" asp-controller="Home" asp-action="ProdessClaim" />
-
+                            <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" />
                         </div>
                     </td>
                 </tr>
@@ -195,6 +201,29 @@
             </table>
         </div>
     </div>
+    <div class="modal fade" id="ModalPopUp" role="dialog">
+        <div class="modal-dialog err-pop" style="">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button id="DivClose" type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body" style="text-align:center;">
+                    Put Your Html Element Here
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.10.0.min.js"
+            integrity="sha256-2+LznWeWgL7AJ1ciaIG5rFP7GKemzzl+K75tRyTByOE="
+            crossorigin="anonymous"></script>
+    <script>
+
+
+        $("body").on("click", "#SubmitProcess", function () {
+            alert("here")
+            $('#ModalPopUp').modal('show');
+        });
+    </script>
 }
 
 

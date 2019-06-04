@@ -22,6 +22,7 @@ namespace HomeOwners_Exemption.Models
         public virtual DbSet<ClaimsList> ClaimsList { get; set; }
         public virtual DbSet<PropertyTable> PropertyTable { get; set; }
         public virtual DbSet<State> State { get; set; }
+        public virtual DbSet<RoleStatus> RoleStatus { get; set; }
 
         // Unable to generate entity type for table 'dbo.harvest_table'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.temp_table'. Please see the warning messages.
@@ -35,7 +36,7 @@ namespace HomeOwners_Exemption.Models
         // Unable to generate entity type for table 'dbo.ClaimStatusRefRole'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.tmpClaimID'. Please see the warning messages.
 
-       
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
