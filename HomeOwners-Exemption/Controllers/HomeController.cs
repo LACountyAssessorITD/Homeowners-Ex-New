@@ -51,7 +51,7 @@ namespace Homeowners_Ex_New.Controllers
             SqlParameter employeeID = new SqlParameter("@usersID", 617585);
             //var Result = _context.Database.ExecuteSqlCommand ("sp_usersStatus @usersID", param1);
             List<RoleStatus> Result = new List<RoleStatus>();
-            Result = _context.RoleStatus.FromSql("sp_usersStatus @usersID", employeeID).ToList();
+           // Result = _context.RoleStatus.FromSql("sp_usersStatus @usersID", employeeID).ToListAsyn
 
 
 
