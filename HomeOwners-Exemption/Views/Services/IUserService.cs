@@ -9,15 +9,19 @@ namespace HomeOwners_Exemption.Services
 {
     public interface IUserService
     {
-        Task<bool> ValidateCredentials(string username, string password, out User user);
+        Task<bool> ValidateCredentials(string username,  string password, homeownerContext DbContext, out User user);
     }
     public class User
     {
-        public User(string username)
+        public User(string username, string fullname, string role)
         {
 
             Username = username;
+            UserFullName = fullname;
+            Role = role;
         }
         public string Username { get; }
+        public string UserFullName { get; }
+        public string Role { get; }
     }
 }

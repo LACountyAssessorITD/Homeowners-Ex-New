@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using HomeOwners_Exemption.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace HomeOwners_Exemption.Services
@@ -16,7 +18,7 @@ namespace HomeOwners_Exemption.Services
 
 
 
-        public Task<bool> ValidateCredentials(string username, string password, out User user)
+        Task<bool> IUserService.ValidateCredentials(string username,  string password, homeownerContext DbContext, out User user)
         {
             user = null;
             const string LDAP_PATH = "ldap://laassessor.co.la.ca.us";
@@ -30,7 +32,18 @@ namespace HomeOwners_Exemption.Services
                     using (var ds = new DirectorySearcher(de))
                     {
                         // other logic to verify user has correct permissions
-                        user = new User(username);
+                        
+                        var EmpID = new SqlParameter("@EmployeeID", username);
+                        var modelUser = DbContext.user.FromSql("sp_UserInfo @EmployeeID", EmpID).SingleAsync().Result;
+                        //var modelUser = DbContext.user.FromSql("sp_UserInfo @EmployeeID", EmpID).ToListAsync().Result;
+                        //var modelUser = DbContext.Database.ExecuteSqlCommand("sp_UserInfo @EmployeeID", EmpID);
+                        if(modelUser == null)
+                        {
+                            return Task.FromResult(AuthenticateResult.Fail("Invalid key").Succeeded);
+                        }
+
+
+                        user = new User(username,modelUser.Name, modelUser.RoleTitle);
                         // User authenticated and authorized
                         var identities = new List<ClaimsIdentity> { new ClaimsIdentity("custom auth type") };
                         var ticket = new AuthenticationTicket(new ClaimsPrincipal(identities), username);
@@ -43,7 +56,7 @@ namespace HomeOwners_Exemption.Services
             return Task.FromResult(AuthenticateResult.Fail("Invalid key").Succeeded);
         }
 
-       
+      
     }
 }
      
