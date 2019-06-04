@@ -16,7 +16,7 @@
 {
     <div style="align-content:center">
         <div>
-            <label><b>Scan your claim:</b></label>
+            <h6>Scan your claim:</h6>
         </div>
         <div style="width:150px">
             @Html.TextBox("ClaimID", null, new { @type = "text", maxlength = "7", oninput = "numberOnly(this.id)", @id = "txtClaimID", @name = "txtClaimID", @class = "form-control input-text" })
@@ -26,29 +26,31 @@
         <div>
             <table>
                 <tr>
-                    <th style="width:200px;">Claim ID</th>
-                    <th style="width:200px;">Current Status</th>
+                    <th style="width:170px;">Claim ID</th>
+                    <th style="width:60px;"></th>
+                    <th style="width:170px;">Current Status</th>
                     <th style="width:300px;">Change Status</th>
                 </tr>
                 <tr>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID1", @name = "txtClaimID1", @class = "form-control input-text" })</td>
+                    <td><img src="~/img/edit_clear.png" style="width:30px;" onclick="ClearInput('1');" /></td>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus1", @name = "txtStatus1", @class = "form-control input-text" })</td>
                     <td rowspan="10" valign="top">
                         <div>
                             @Html.DropDownListFor(model => model.ClaimStatus,
                                             new SelectList(
                                             new List<Object>{
-                                                new { value = 1, text = "Preprint" },
-                                                new { value = 2, text = "Claim Received" },
-                                                new { value = 3, text = "Supervisor Workload" },
-                                                new { value = 4, text = "Staff Review" },
-                                                new { value = 5, text = "Supervisor Review" },
-                                                new { value = 6, text = "Case Closed" },
-                                                new { value = 7, text = "Hold"}
+                                                new { value = 1, text = "Claim Received" },
+                                                new { value = 2, text = "Supervisor Workload" },
+                                                new { value = 3, text = "Staff Review" },
+                                                new { value = 4, text = "Supervisor Review" },
+                                                new { value = 5, text = "Case Closed" },
+                                                new { value = 6, text = "Hold"}
                                                 }, "value", "text", 0), "Select Status", new { @class = "form-control", @id = "ddClaimStatus" })
                         </div>
                         @section scripts{
                             <script>
+                                // Enter number only
                                 function numberOnly(id) {
                                     // Get element by id which passed as parameter within HTML element event
                                     var element = document.getElementById(id);
@@ -58,6 +60,7 @@
                                     element.value = element.value.replace(regex, "");
                                 }
 
+                                // Hit "Enter" to insert the data
                                 $(document).on("keypress", "form", function (event) {
                                     //alert("Hit Enter");
                                     if (event.keyCode == 13) {
@@ -89,6 +92,7 @@
                                     });
                                 });
 
+                                // Change the claim status dropdown
                                 $("body").on("change", "#ddClaimStatus", function () {
                                     var selectedStatusText = $(this).find("option:selected").text();
                                     var selectedStatusValue = $(this).val();
@@ -105,13 +109,21 @@
                                         document.getElementById("divClaimDate").style.display = "none";
                                     }
                                 });
-             
+
+                                // Click the clear image
+                                function ClearInput(id) {
+                                    var inputClaimID = "txtClaimID" + id;
+                                    var inputStatus = "txtStatus" + id;
+                                    document.getElementById(inputClaimID).value = "";
+                                    document.getElementById(inputStatus).value = "";
+                                }
+
                             </script>
                         }
                         <div id="divAssignTo" style="display:none;">
                             <br />
                             <br />
-                            <label><b>Assign To</b></label>
+                            <h6>Assign To</h6>
                             @Html.DropDownListFor(model => model.Assignee,
                                             new SelectList(
                                             new List<Object>{
@@ -122,7 +134,7 @@
                         <div id="divClaimDate" style="display:none;">
                             <br />
                             <br />
-                            <label><b>Claim Date</b></label>
+                            <h6>Claim Date</h6>
                             @Html.TextBoxFor(model => model.ClaimDate, new { @type = "search", maxlength = "10", @id = "txtClaimDate", @name = "txtClaimDate", @class = "form-control input-text" })
                         </div>
                         <div>
@@ -131,44 +143,53 @@
                             <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel" asp-controller="Home" asp-action="ProdessClaim" />
                             &nbsp;&nbsp;&nbsp;
                             <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" asp-controller="Home" asp-action="ProdessClaim" />
-                            
+
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID2", @name = "txtClaimID2", @class = "form-control input-text" })</td>
+                    <td><img src="~/img/edit_clear.png" style="width:30px;" onclick="ClearInput('2');" /></td>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus2", @name = "txtStatus2", @class = "form-control input-text" })</td>
                 </tr>
                 <tr>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID3", @name = "txtClaimID3", @class = "form-control input-text" })</td>
+                    <td><img src="~/img/edit_clear.png" style="width:30px;" onclick="ClearInput('3');" /></td>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus3", @name = "txtStatus3", @class = "form-control input-text" })</td>
                 </tr>
                 <tr>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID4", @name = "txtClaimID4", @class = "form-control input-text" })</td>
+                    <td><img src="~/img/edit_clear.png" style="width:30px;" onclick="ClearInput('4');" /></td>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus4", @name = "txtStatus4", @class = "form-control input-text" })</td>
                 </tr>
                 <tr>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID5", @name = "txtClaimID5", @class = "form-control input-text" })</td>
+                    <td><img src="~/img/edit_clear.png" style="width:30px;" onclick="ClearInput('5');" /></td>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus5", @name = "txtStatus5", @class = "form-control input-text" })</td>
                 </tr>
                 <tr>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID6", @name = "txtClaimID6", @class = "form-control input-text" })</td>
+                    <td><img src="~/img/edit_clear.png" style="width:30px;" onclick="ClearInput('6');" /></td>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus6", @name = "txtStatus6", @class = "form-control input-text" })</td>
                 </tr>
                 <tr>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID7", @name = "txtClaimID7", @class = "form-control input-text" })</td>
+                    <td><img src="~/img/edit_clear.png" style="width:30px;" onclick="ClearInput('7');" /></td>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus7", @name = "txtStatus7", @class = "form-control input-text" })</td>
                 </tr>
                 <tr>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID8", @name = "txtClaimID8", @class = "form-control input-text" })</td>
+                    <td><img src="~/img/edit_clear.png" style="width:30px;" onclick="ClearInput('8');" /></td>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus8", @name = "txtStatus8", @class = "form-control input-text" })</td>
                 </tr>
                 <tr>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID9", @name = "txtClaimID9", @class = "form-control input-text" })</td>
+                    <td><img src="~/img/edit_clear.png" style="width:30px;" onclick="ClearInput('9');" /></td>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus9", @name = "txtStatus9", @class = "form-control input-text" })</td>
                 </tr>
                 <tr>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtClaimID10", @name = "txtClaimID10", @class = "form-control input-text" })</td>
+                    <td><img src="~/img/edit_clear.png" style="width:30px;" onclick="ClearInput('10');" /></td>
                     <td>@Html.TextBoxFor(model => model.ClaimID, new { @type = "text", style = "width:150px", disabled = "true", @id = "txtStatus10", @name = "txtStatus10", @class = "form-control input-text" })</td>
                 </tr>
             </table>
