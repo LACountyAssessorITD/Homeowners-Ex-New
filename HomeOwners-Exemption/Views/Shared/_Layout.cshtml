@@ -24,7 +24,10 @@
         
         <div class="section-nav">
             <div>
+                <h4>Welcome @User.IsInRole("testAdmin"),</h4>
                 <h4>Welcome @User.Identity.Name,</h4>
+                
+                <h4>Welcome @User.FindFirst("Username")</h4>
             </div>
             <div>
                 <form method="post" asp-controller="Auth" asp-action="SignOut">
@@ -37,6 +40,7 @@
                     <partial name="_CookieConsentPartial" />
                     <main role="main" class="pb-3">
                         @RenderBody()
+                        
                     </main>
                 </div>
 
