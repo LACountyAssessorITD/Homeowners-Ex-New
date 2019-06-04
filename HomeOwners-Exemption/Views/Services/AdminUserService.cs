@@ -1,8 +1,11 @@
-﻿using HomeOwners_Exemption.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.DirectoryServices;
+using System.DirectoryServices.AccountManagement;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using HomeOwners_Exemption.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Options;
 
 namespace HomeOwners_Exemption.Services
 {
@@ -13,35 +16,34 @@ namespace HomeOwners_Exemption.Services
 
 
 
-        public Task<bool> ValidateCredentials(string username, string password, homeownerContext context, out User user)
+        public Task<bool> ValidateCredentials(string username, string password, out User user)
         {
             user = null;
-            //var key = username.ToLower();
-            //IDictionary<string, (string PasswordHash, User User)> _users_1 = new Dictionary<string, (string PasswordHash, User User)>();
+            const string LDAP_PATH = "ldap://laassessor.co.la.ca.us";
+            const string LDAP_DOMAIN = "laassessor.co.la.ca.us";
 
+            using (var context = new PrincipalContext(ContextType.Domain, LDAP_DOMAIN, "service_acct_user", "service_acct_pswd"))
+            {
+                if (context.ValidateCredentials(username, password))
+                {
+                    using (var de = new DirectoryEntry(LDAP_PATH))
+                    using (var ds = new DirectorySearcher(de))
+                    {
+                        // other logic to verify user has correct permissions
+                        user = new User(username);
+                        // User authenticated and authorized
+                        var identities = new List<ClaimsIdentity> { new ClaimsIdentity("custom auth type") };
+                        var ticket = new AuthenticationTicket(new ClaimsPrincipal(identities), username);
+                        return Task.FromResult(AuthenticateResult.Success(ticket).Succeeded);
+                    }
+                }
+            }
 
-
-            //        IDictionary<string, string> user_account = new Dictionary<string, string>();
-            //        user_account = context.Users.Where(b => b.Active == 1).ToList().ToDictionary(x => x.Username, x => x.Password);
-            //        foreach (var user_1 in user_account)
-            //        {
-            //        _users_1.Add(user_1.Key.ToLower(), (BCrypt.Net.BCrypt.HashPassword(user_1.Value), new User(user_1.Key)));
-            //        }
-
-
-
-            //if (_users_1.ContainsKey(key))
-            //{
-
-            //    //var hash = _users_1[key].PasswordHash;
-            //    //if (BCrypt.Net.BCrypt.Verify(password, hash))
-            //    //{
-            //    //    user = _users_1[key].User;
-            //        return Task.FromResult(true);
-            //    }
-            //}
-            return Task.FromResult(true);
+            // User not authenticated
+            return Task.FromResult(AuthenticateResult.Fail("Invalid key").Succeeded);
         }
+
+       
     }
 }
      

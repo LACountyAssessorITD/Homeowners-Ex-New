@@ -8,19 +8,22 @@ using Homeowners_Ex_New.Models;
 using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using HomeOwners_Exemption.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Homeowners_Ex_New.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        private readonly HOXContext _context;
+        private readonly homeownerContext _context;
 
-        public HomeController (HOXContext context)
+        public HomeController (homeownerContext context)
         {
            
             _context = context;
             
         }
+        
         public IActionResult Index()
         {
             return View();

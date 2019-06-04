@@ -34,7 +34,7 @@ namespace HomeOwners_Exemption.Controllers
         public async Task<IActionResult> SignOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Index", "Home");
         }
 
         [Route("signin")]
@@ -45,14 +45,14 @@ namespace HomeOwners_Exemption.Controllers
             if (ModelState.IsValid)
             {
                 Services.User user;
-                if (await _userService.ValidateCredentials(model.Username, model.Password, _context, out user))
+                if (await _userService.ValidateCredentials(model.Username, model.Password, out user))
                 {
                     await SignInUser(user.Username);
                     if (returnUrl != null)
                     {
                         return Redirect(returnUrl);
                     }
-                    return RedirectToAction("Index", "Admin");
+                    return RedirectToAction("Index", "Home");
                 }
             }
             return View(model);
