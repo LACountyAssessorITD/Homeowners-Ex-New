@@ -34,7 +34,6 @@ namespace Homeowners_Ex_New.Controllers
             return View();
         }
 
-
         //public IActionResult Claim(Int64? id)
         //{
         //    id = 1234567;
@@ -45,13 +44,14 @@ namespace Homeowners_Ex_New.Controllers
         //    FaqFinalModel.claim = ClaimResult;
         //    return View(FaqFinalModel);
         //}
+
         public IActionResult ProcessClaim()
         {
             //dynamic RoleStatus = new System.Dynamic.ExpandoObject();
             SqlParameter employeeID = new SqlParameter("@usersID", 617585);
-            //var Result = _context.Database.ExecuteSqlCommand ("sp_usersStatus @usersID", param1);
+            //var Result = _context.Database.ExecuteSqlCommand ("sp_usersStatus @usersID", employeeID);
             //List<RoleStatus> Result = new List<RoleStatus>();
-            //var Result = _context.RoleStatus.FromSql("sp_usersStatus @usersID", employeeID).ToListAsync().Result;
+            var Result = _context.RoleStatus.FromSql("sp_usersStatus @usersID", employeeID).ToListAsync().Result;
 
 
 
@@ -62,9 +62,8 @@ namespace Homeowners_Ex_New.Controllers
 
         //[HttpPost]
         //public IActionResult ProcessClaim(string sClaimStatus)
-       // {
-
-         //   return View();
+        //{
+        //   return View();
         //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
