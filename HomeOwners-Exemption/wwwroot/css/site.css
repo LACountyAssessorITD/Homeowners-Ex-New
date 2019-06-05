@@ -32,10 +32,12 @@ body {
 
 .section-body {
     height: 100%;
-
+    width: 100%;
+    display: inline-flex;
 }
 .section-nav {
     background-color: #000;
+    width: 300px;
     
 }
 .footer {
@@ -46,4 +48,8 @@ body {
     /* Set the fixed height of the footer here */
     height: 60px;
     line-height: 60px; /* Vertically center the text there */
+}
+
+.top-nav-height {
+    height: 120px;
 }
