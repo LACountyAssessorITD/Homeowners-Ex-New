@@ -34,8 +34,10 @@ namespace HomeOwners_Exemption.Services
                         // other logic to verify user has correct permissions
                         
                         var EmpID = new SqlParameter("@EmployeeID", username);
-                        var modelUser = DbContext.user.FromSql("sp_UserInfo @EmployeeID", EmpID).SingleAsync().Result;
-                        //var modelUser = DbContext.user.FromSql("sp_UserInfo @EmployeeID", EmpID).ToListAsync().Result;
+                        var modelUser = DbContext.user.FromSql("sp_UserInfo @EmployeeID", EmpID).FirstOrDefaultAsync().Result;
+
+                        
+                        //If user does not exist in Database Return False
                         if (modelUser == null)
                         {
                             return Task.FromResult(AuthenticateResult.Fail("Invalid key").Succeeded);
