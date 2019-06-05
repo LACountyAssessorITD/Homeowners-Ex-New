@@ -50,12 +50,12 @@ namespace Homeowners_Ex_New.Controllers
             //dynamic RoleStatus = new System.Dynamic.ExpandoObject();
             SqlParameter employeeID = new SqlParameter("@usersID", 617585);
             //var Result = _context.Database.ExecuteSqlCommand ("sp_usersStatus @usersID", param1);
-            List<RoleStatus> Result = new List<RoleStatus>();
-           // Result = _context.RoleStatus.FromSql("sp_usersStatus @usersID", employeeID).ToListAsyn
+            //List<RoleStatus> Result = new List<RoleStatus>();
+            //var Result = _context.RoleStatus.FromSql("sp_usersStatus @usersID", employeeID).ToListAsync().Result;
 
 
 
-        //RoleStatus = Result;
+            //RoleStatus = Result;
             //return View(RoleStatus);
             return View();
         }
