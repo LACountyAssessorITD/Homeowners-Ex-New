@@ -34,6 +34,7 @@ body {
     height: 100%;
     width: 100%;
     display: inline-flex;
+    padding: 0;
 }
 .section-nav {
     background-color: #000;
@@ -51,5 +52,31 @@ body {
 }
 
 .top-nav-height {
-    height: 120px;
+    height: 100px;
+}
+.sidebar ul {
+    margin-left: 10px;
+    margin-top: 20px;
+    list-style: none;
+}
+.sidebar a {
+    color: #fff;
+    
+}
+.sidebar li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+}
+.sub-padding {
+    padding-left: 35px !important;
+}
+
+.homeowner-title{
+    height: 50px;
+    background-color: #000;
+}
+.homeowner-title h3 {
+    color: #fff;
+    text-align: center;
 }

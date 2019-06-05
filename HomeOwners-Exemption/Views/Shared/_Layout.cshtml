@@ -23,28 +23,76 @@
     <div class="container-fluid section-body">
 
         <div class="section-nav">
-            @if (User.Identity.IsAuthenticated)
-            {
+           
                 <div class="top-nav-height">
-                    <img class="h-100" src="~/img/LACseal.png" />
+                    <img class="h-100 rounded mx-auto d-block" src="~/img/LACseal.png" />
                 </div>
+                <nav class="sidebar">
+                    <ul>
+                        <li>
+                            <a href="#">Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#">Claim Intake</a>
+                        </li>
+                        <li>
+                            <a href="#">Advanced Search</a>
+                        </li>
+                        <li>
+                            <a href="#"> Other</a>
+                        </li>
+
+                        <li class="sub-padding">
+                            <a  href="#">Received Claims</a>
+                        </li>
+                        <li class="sub-padding">
+                            <a href="#">On Hold Claims</a>
+                        </li>
+                        <li>
+                            <a href="#">Reports</a>
+                        </li>
+
+                    </ul>
+
+                </nav>
                 <div>
-                    <form method="post" asp-controller="Auth" asp-action="SignOut">
-                        <button type="submit" class="btn btn-admin">Sign Out</button>
-                    </form>
+                    
                 </div>
-            }
+            
         </div>
-        <div class="">
-            <div class="container">
-                <partial name="_CookieConsentPartial" />
+        
+            <div class="container-fluid  px-0">
+                <div class="homeowner-title">
+                    <h3>Homeowners Exemption</h3>
+                </div>
+                <div class="homeowner-nav">
+                    <ul class="nav justify-content-end">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <h4>@User.Identity.Name</h4>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a href="#">Help</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <form method="post" asp-controller="Auth" asp-action="SignOut">
+                                    <button type="submit" class="btn btn-admin">Sign Out</button>
+                                </form>
+                            </li>
+                        }
+                    </ul>
+                    
+                </div>
                 <main role="main" class="pb-3">
                     @RenderBody()
-
                 </main>
             </div>
 
-        </div>
+        
 
     </div>
 
@@ -52,11 +100,7 @@
 
 
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2019 - Homeowners_Ex_New - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>-->
+   
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
