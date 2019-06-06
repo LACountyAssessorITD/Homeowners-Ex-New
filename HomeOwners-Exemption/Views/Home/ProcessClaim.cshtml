@@ -54,8 +54,11 @@
         btnRemove.val("Remove");
         cell.append(btnRemove);
 
-        //Current Claim Date cell
-        cell = $(row.cell(0));
+        var length = document.getElementById("tblClaims").rows.length;
+        alert(document.getElementById("tblClaims").rows[1].cells[3].val);
+        //Populate Claim Date
+        //var length = document.getElementById("tblClaims").rows.length;
+        //document.getElementById("tblClaims").rows[length-1].columns[4].innerHTML = claimdate;
 
     };
 
@@ -115,7 +118,7 @@
                     <td>&nbsp;</td>
                     <td><input type="text" id="txtAIN" maxlength="10" oninput="numberOnly(this.id)" /></td>
                     <td>&nbsp;</td>
-                    <td><input type="text" id="txtClaimDate" maxlength="10" /></td>
+                    <td><input type="text" id="txtClaimDate" maxlength="10" value="06/06/2019"/></td>
                     <td><input type="button" onclick="Add()" value="Add" /></td>
                 </tr>
                 <tr>
