@@ -65,11 +65,28 @@ namespace Homeowners_Ex_New.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public IActionResult ProcessClaim(string sClaimStatus)
-        //{
-        //   return View();
-        //}
+        [HttpPost]
+        public JsonResult IsClaimIDExist(string ClaimID)
+        {
+            bool isExist = false;
+            if (ClaimID.Equals("1234567"))
+            {
+                isExist = true;
+            }
+
+            return Json(!isExist);
+        }
+
+        [HttpPost]
+        public IActionResult ProcessClaim(ProcessClaim model)
+        {
+            if (ModelState.IsValid)
+            {
+                return View();
+            }
+            else
+                return View(model);    
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
