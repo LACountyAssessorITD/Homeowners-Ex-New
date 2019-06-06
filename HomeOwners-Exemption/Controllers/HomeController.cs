@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using HomeOwners_Exemption.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Homeowners_Ex_New.Controllers
@@ -50,29 +51,26 @@ namespace Homeowners_Ex_New.Controllers
             return View();
         }
         
-
         public IActionResult ProcessClaim()
-        {
-            //dynamic RoleStatus = new System.Dynamic.ExpandoObject();
-            //SqlParameter employeeID = new SqlParameter("@usersID", 617585);
-            //var Result = _context.Database.ExecuteSqlCommand ("sp_usersStatus @usersID", employeeID);
-            //List<RoleStatus> Result = new List<RoleStatus>();
-            //var Result = _context.RoleStatus.FromSql("sp_usersStatus @usersID", employeeID).ToListAsync().Result;
-
+        {      
             var model = new ProcessClaim();
             model.Supervisors = GetAllSupervisors();
 
-
-            //RoleStatus = Result;
-            //return View(RoleStatus);
-            return View();
+            return View(model);
         }
 
         private IEnumerable<SelectListItem> GetAllSupervisors()
         {
-            List<Supervisors> lsupervisors = new List<Supervisors>();
-            var list = _context.Supervisors.FromSql("sp_getSupervisors").ToListAsync().Result;
-            return null;
+            List<Supervisors> lSupervisors = new List<Supervisors>();
+            lSupervisors = _context.Supervisors.FromSql("sp_getSupervisors").ToListAsync().Result.ToList();
+            List<SelectListItem> li = new List<SelectListItem>();
+            li.Add(new SelectListItem { Text = "Select Supervisor", Value = "" });
+            foreach (var oneSupervisor in lSupervisors)
+            {
+                li.Add(new SelectListItem { Text = oneSupervisor.Users, Value = oneSupervisor.EmployeeID });
+            }
+            IEnumerable<SelectListItem> item = li.AsEnumerable();
+            return item;
         }
 
         [HttpPost]
@@ -90,6 +88,9 @@ namespace Homeowners_Ex_New.Controllers
         [HttpPost]
         public IActionResult ProcessClaim(ProcessClaim model)
         {
+            model.Supervisors = GetAllSupervisors();
+
+
             if (ModelState.IsValid)
             {
                 return View();

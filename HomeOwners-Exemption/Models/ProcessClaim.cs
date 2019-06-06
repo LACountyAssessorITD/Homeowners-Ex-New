@@ -10,6 +10,7 @@ namespace HomeOwners_Exemption.Models
 {
     public class ProcessClaim
     {
+        public string ClaimStatus { get; set; }
         public int ClaimID { get; set; }
         public int AIN { get; set; }
         public string ClaimDate { get; set; }
