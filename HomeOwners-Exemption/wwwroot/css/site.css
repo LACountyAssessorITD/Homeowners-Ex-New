@@ -32,10 +32,13 @@ body {
 
 .section-body {
     height: 100%;
-
+    width: 100%;
+    display: inline-flex;
+    padding: 0;
 }
 .section-nav {
     background-color: #000;
+    width: 300px;
     
 }
 .footer {
@@ -46,4 +49,47 @@ body {
     /* Set the fixed height of the footer here */
     height: 60px;
     line-height: 60px; /* Vertically center the text there */
+}
+
+.top-nav-height {
+    height: 100px;
+}
+.sidebar ul {
+    margin-left: 10px;
+    margin-top: 20px;
+    list-style: none;
+}
+.sidebar a {
+    color: #fff;
+    
+}
+.sidebar li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+}
+.sub-padding {
+    padding-left: 35px !important;
+}
+
+.homeowner-title{
+    height: 50px;
+    background-color: #000;
+}
+.homeowner-title h3 {
+    color: #fff;
+    text-align: center;
+}
+.center {
+    /*margin: auto;*/
+    width: 50%;
+    background-color: #f7f2f2;
+    border-radius: 7px 7px;
+    padding-left: 30px;
+    padding-right: 30px;
+    height: 400px;
+}
+.la-title {
+    max-width: 700px;
+    padding-top: 100px;
 }
