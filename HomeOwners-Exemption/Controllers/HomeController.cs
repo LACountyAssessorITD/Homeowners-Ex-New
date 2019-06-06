@@ -60,6 +60,18 @@ namespace Homeowners_Ex_New.Controllers
             return View();
         }
 
+        [HttpGet]
+        public JsonResult IsClaimIDExist(string ClaimID)
+        {
+            bool isExist = false;
+            if (ClaimID.Equals("1234567"))
+            {
+                isExist = true;
+            }
+
+            return Json(!isExist);
+        }
+
         //[HttpPost]
         //public IActionResult ProcessClaim(string sClaimStatus)
         //{
