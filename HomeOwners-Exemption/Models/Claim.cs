@@ -7,8 +7,9 @@ namespace HomeOwners_Exemption.Models
     {
         public long ClaimId { get; set; }
         public string Claimant { get; set; }
-        public string ClaimantSsn { get; set; }
         public string Spouse { get; set; }
+        public string ClaimantSsn { get; set; }
+     
         public string SpouseSsn { get; set; }
         public long? CurrentApn { get; set; }
         public DateTime? DateAcquired { get; set; }

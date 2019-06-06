@@ -44,6 +44,11 @@ namespace Homeowners_Ex_New.Controllers
         //    FaqFinalModel.claim = ClaimResult;
         //    return View(FaqFinalModel);
         //}
+        public IActionResult Claim(int? id)
+        {
+            return View();
+        }
+        
 
         public IActionResult ProcessClaim()
         {

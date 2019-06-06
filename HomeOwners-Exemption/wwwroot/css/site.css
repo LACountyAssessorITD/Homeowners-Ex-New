@@ -22,12 +22,16 @@ body {
     /*height: 100%;*/
     position: relative;
     background-color: transparent;
-    
+    font-family: 'Open Sans', sans-serif;
     font-size: 20px;
-    font-weight: 300;
+    font-weight: 400;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
+    overflow-y: hidden;
     height: 100vh;
+}
+h1,h2,h3,h4,h5 {
+    font-weight: 600;
 }
 
 .section-body {
@@ -52,7 +56,7 @@ body {
 }
 
 .top-nav-height {
-    height: 100px;
+    height: 104px;
 }
 .sidebar ul {
     margin-left: 10px;
@@ -92,4 +96,40 @@ body {
 .la-title {
     max-width: 700px;
     padding-top: 100px;
+}
+.homeowner-nav {
+    background-color: #155189;
+    font-size: 120%;
+    color: #fff;
+}
+.homeowner-nav a {
+    /*font-size: 120%;*/
+    color: #fff;
+    text-decoration: none;  
+    
+}
+.homeowner-nav p {
+    margin-bottom: 0;
+}
+.homeowner-nav li {
+    
+    padding: 5px 10px 5px 10px;
+}
+.btn-admin {
+    background-color: transparent;
+    padding: 0;
+    padding-bottom: 6px;
+    font-weight: 300;
+    color: #fff;
+    font-size: 100%;
+}
+
+.dashboard-1 {
+    height: 30%;
+
+}
+.dashboard-2 {
+    height: 40%;
+    background-color: #155189;
+    margin-top: 40px;
 }

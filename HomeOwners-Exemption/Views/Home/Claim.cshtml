@@ -4,18 +4,17 @@
     ViewData["Title"] = "Claim";
 }
 
-<h1>Claim</h1>
-
 <h4>Claim</h4>
-<hr />
+
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Claim">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ClaimId" />
             <div class="form-group">
-                <label asp-for="Claimant" class="control-label"></label>
-                <input asp-for="Claimant" class="form-control" />
+                <label asp-for="Claimant" class=""></label>
+                <input asp-for="Claimant" class="" />
                 <span asp-validation-for="Claimant" class="text-danger"></span>
             </div>
             
