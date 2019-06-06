@@ -60,7 +60,7 @@ namespace Homeowners_Ex_New.Controllers
             return View();
         }
 
-        [HttpGet]
+        [HttpPost]
         public JsonResult IsClaimIDExist(string ClaimID)
         {
             bool isExist = false;
@@ -72,11 +72,16 @@ namespace Homeowners_Ex_New.Controllers
             return Json(!isExist);
         }
 
-        //[HttpPost]
-        //public IActionResult ProcessClaim(string sClaimStatus)
-        //{
-        //   return View();
-        //}
+        [HttpPost]
+        public IActionResult ProcessClaim(ProcessClaim model)
+        {
+            if (ModelState.IsValid)
+            {
+                return View();
+            }
+            else
+                return View(model);    
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

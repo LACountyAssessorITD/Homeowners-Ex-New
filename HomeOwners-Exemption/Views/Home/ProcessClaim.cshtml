@@ -10,28 +10,18 @@
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
-    //$(function () {
-    //Build an array containing claim records.
-    //var claims = new Array();
-    //claims.push(["1234567", "111111111"]);
-    //claims.push(["7654321", "222222222"]);
-    //claims.push(["1223344", "3333333333"]);
-    //claims.push(["4433221", "444444444"]);
-
-    //Add the data rows.
-    //for (var i = 0; i < claims.length; i++) {
-    //    AddRow(claims[i][0], customers[i][1]);
-    //}
-    //});
-
     function Add() {
-        AddRow($("#txtClaimID").val(), $("#txtAIN").val(), $("#txtClaimDate").val());
-        $("#txtClaimID").val("");
-        $("#txtAIN").val("");
-        $("#txtClaimDate").val("");
+        var howManyRows = document.getElementById("tblClaims").rows.length;
+        if ((howManyRows - 3) < 10) {
+            AddRow($("#txtClaimID").val(), $("#txtAIN").val(), $("#txtClaimDate").val());
+            $("#txtClaimID").val("");
+            $("#txtAIN").val("");
+            $("#txtClaimDate").val("");
+        }
     };
 
     function AddRow(claimid, ain, claimdate) {
+        //alert(document.getElementById("txtClaimDate").value);
         //Get the reference of the Table's TBODY element.
         var tBody = $("#tblClaims > TBODY")[0];
 
@@ -63,13 +53,17 @@
         btnRemove.attr("onclick", "Remove(this);");
         btnRemove.val("Remove");
         cell.append(btnRemove);
+
+        //Current Claim Date cell
+        cell = $(row.cell(0));
+
     };
 
     function Remove(button) {
         //Determine the reference of the Row using the Button.
         var row = $(button).closest("TR");
         var name = $("TD", row).eq(0).html();
-        if (confirm("Do you want to delete Claim ID: " + name)) {
+        if (confirm("Do you want to delete Claim #: " + name)) {
             //Get the reference of the Table.
             var table = $("#tblClaims")[0];
 
@@ -102,62 +96,45 @@
 
 @using (Html.BeginForm("ProcessClaim", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <table id="tblClaims" cellpadding="0" cellspacing="0" border="1">
-        <thead>
-            <tr>
-                <th width="100px">Claim #</th>
-                <th width="30px">&nbsp;</th>
-                <th width="100px">AIN</th>
-                <th width="30px">&nbsp;</th>
-                <th width="100px">Claim Date</th>
-                <th width="50px">&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-        <tfoot>
-            <tr>
-                <td><input type="text" id="txtClaimID" maxlength="7" oninput="numberOnly(this.id)" /></td>
-                <td>&nbsp;</td>
-                <!--<td>
-                    @Html.EditorFor(model => model.ClaimID, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ClaimID, "", new { @class = "text-danger" })
-                </td> -->
+    <div text-align="center">
+        <table id="tblClaims" cellpadding="0" cellspacing="0" border="1">
+            <thead>
+                <tr>
+                    <th width="100px">Claim #</th>
+                    <th width="30px">&nbsp;</th>
+                    <th width="100px">AIN</th>
+                    <th width="30px">&nbsp;</th>
+                    <th width="100px">Claim Date</th>
+                    <th width="50px">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+                <tr>
+                    <td><input type="text" id="txtClaimID" maxlength="7" oninput="numberOnly(this.id)" /></td>
+                    <td>&nbsp;</td>
+                    <td><input type="text" id="txtAIN" maxlength="10" oninput="numberOnly(this.id)" /></td>
+                    <td>&nbsp;</td>
+                    <td><input type="text" id="txtClaimDate" maxlength="10" /></td>
+                    <td><input type="button" onclick="Add()" value="Add" /></td>
+                </tr>
+                <tr>
+                    <td colspan="6" align="right">
+                        <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" />
+                        &nbsp;&nbsp;&nbsp;
+                        <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel" asp-controller="Home" asp-action="ProdessClaim" />
+                    </td>
+                </tr>
+                <!--<tr>
+                    <td colspan="6">
+                        @Html.EditorFor(model => model.ClaimID, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ClaimID, "", new { @class = "text-danger" })
 
-                <td><input type="text" id="txtAIN" maxlength="7" oninput="numberOnly(this.id)" /></td>
-                <td>&nbsp;</td>
-                <td><input type="text" id="txtClaimDate" /></td>
-                <td><input type="button" onclick="Add()" value="Add" /></td>
-            </tr>
-            <tr>
-                <td colspan="6" align="right">
-                    <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" />
-                    &nbsp;&nbsp;&nbsp;
-                    <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel" asp-controller="Home" asp-action="ProdessClaim" />
-                </td>
-            </tr>
-        </tfoot>
-    </table>
-
-    <div class="modal fade" id="ModalPopUp" role="dialog">
-        <div class="modal-dialog err-pop" style="">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button id="DivClose" type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body" style="text-align:center;">
-                    Put Your Html Element Here
-                </div>
-            </div>
-        </div>
+                    </td>
+                </tr>-->
+            </tfoot>
+        </table>
     </div>
-    <script src="https://code.jquery.com/jquery-1.10.0.min.js"
-            integrity="sha256-2+LznWeWgL7AJ1ciaIG5rFP7GKemzzl+K75tRyTByOE="
-            crossorigin="anonymous">
-        $("body").on("click", "#SubmitProcess", function () {
-            alert("here")
-            $('#ModalPopUp').modal('show');
-        });
-    </script>
-}
+ }
 
 
