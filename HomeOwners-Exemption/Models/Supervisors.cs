@@ -11,6 +11,7 @@ namespace HomeOwners_Exemption.Models
     public class Supervisors
     {
         [Key]
-        public string Supervisor { get; set; }
+        public string EmployeeID { get; set; }
+        public string Users { get; set; }
     }
 }

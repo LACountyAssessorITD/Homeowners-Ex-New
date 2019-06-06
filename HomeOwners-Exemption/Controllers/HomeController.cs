@@ -71,7 +71,7 @@ namespace Homeowners_Ex_New.Controllers
         private IEnumerable<SelectListItem> GetAllSupervisors()
         {
             List<Supervisors> lsupervisors = new List<Supervisors>();
-            var list = _context.Database.ExecuteSqlCommand ("sp_getSupervisors");
+            var list = _context.Supervisors.FromSql("sp_getSupervisors").ToListAsync().Result;
             return null;
         }
 

@@ -1,32 +1,113 @@
-﻿@model HomeOwners_Exemption.Models.Claim
+﻿
 
 @{
     ViewData["Title"] = "Claim";
 }
-
-<h4>Claim</h4>
-
-
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Claim">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ClaimId" />
-            <div class="form-group">
-                <label asp-for="Claimant" class=""></label>
-                <input asp-for="Claimant" class="" />
-                <span asp-validation-for="Claimant" class="text-danger"></span>
+<div class="h-100 p-4">
+    <h4 class="">Claim</h4>
+    <form>
+        <div class="container-fluid Section-Claim">
+            <div class="row claim-core">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label id="Claimant" class="">Claim#:</label>
+                        <input placeholder="Enter a Claim #" class="" />
+                        @*<span asp-validation-for="Claimant" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group">
+                        <label class="">AIN#:</label>
+                        <input placeholder="Enter an AIN" class="" />
+                        @*<span asp-validation-for="Claimant" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="">Assignee:</label>
+                        <input class="" />
+                        @*<span asp-validation-for="Claimant" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group">
+                        <label id="Claimant" class="">Claim Status:</label>
+                        <input class="" />
+                        @*<span asp-validation-for="Claimant" class="text-danger"></span>*@
+                    </div>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="row row-divider" style="">
+                <p>Personal Information</p>
             </div>
-        </form>
-    </div>
-</div>
+            <div class="row claim-core form-info">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label id="Claimant" class="">Claim#:</label>
+                        <input placeholder="Enter a Claim #" class="" />
+                        @*<span asp-validation-for="Claimant" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group">
+                        <label class="">AIN#:</label>
+                        <input placeholder="Enter an AIN" class="" />
+                        @*<span asp-validation-for="Claimant" class="text-danger"></span>*@
+                    </div>
+                </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+            </div>
+            <div class="row row-divider" style="">
+                <p>Property Information</p>
+            </div>
+            <div class="row claim-core form-info-2 border-title">
+                
+                <div class="col-4">
+                    <div class="w-100 ">
+                        <p>SITUS Information</p>
+                    </div>
+                    <div class="form-group">
+                        <label id="Claimant" class="">Claim#:</label>
+                        <input placeholder="Enter a Claim #" class="" />
+                        @*<span asp-validation-for="Claimant" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group">
+                        <label class="">AIN#:</label>
+                        <input placeholder="Enter an AIN" class="" />
+                        @*<span asp-validation-for="Claimant" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="w-100 ">
+                        <p>SITUS Information</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="">Assignee:</label>
+                        <input class="" />
+                        @*<span asp-validation-for="Claimant" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group">
+                        <label id="Claimant" class="">Claim Status:</label>
+                        <input class="" />
+                        @*<span asp-validation-for="Claimant" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="w-100 " style="border-right: 1px solid #c4c4c4;">
+                        <p>SITUS Information</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="">Assignee:</label>
+                        <input class="" />
+                        @*<span asp-validation-for="Claimant" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group">
+                        <label id="Claimant" class="">Claim Status:</label>
+                        <input class="" />
+                        @*<span asp-validation-for="Claimant" class="text-danger"></span>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </form>
 </div>
 
 @section Scripts {
