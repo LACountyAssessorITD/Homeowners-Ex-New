@@ -13,5 +13,7 @@ namespace HomeOwners_Exemption.Models
         public int ClaimID { get; set; }
         public int AIN { get; set; }
         public string ClaimDate { get; set; }
+        public string Supervisor { get; set; }
+        public IEnumerable<SelectListItem> Supervisors { get; set; }
     }
 }

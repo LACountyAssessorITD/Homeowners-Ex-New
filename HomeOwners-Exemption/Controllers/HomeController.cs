@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using HomeOwners_Exemption.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Homeowners_Ex_New.Controllers
 {
@@ -53,16 +54,25 @@ namespace Homeowners_Ex_New.Controllers
         public IActionResult ProcessClaim()
         {
             //dynamic RoleStatus = new System.Dynamic.ExpandoObject();
-            SqlParameter employeeID = new SqlParameter("@usersID", 617585);
+            //SqlParameter employeeID = new SqlParameter("@usersID", 617585);
             //var Result = _context.Database.ExecuteSqlCommand ("sp_usersStatus @usersID", employeeID);
             //List<RoleStatus> Result = new List<RoleStatus>();
-            var Result = _context.RoleStatus.FromSql("sp_usersStatus @usersID", employeeID).ToListAsync().Result;
+            //var Result = _context.RoleStatus.FromSql("sp_usersStatus @usersID", employeeID).ToListAsync().Result;
 
+            var model = new ProcessClaim();
+            model.Supervisors = GetAllSupervisors();
 
 
             //RoleStatus = Result;
             //return View(RoleStatus);
             return View();
+        }
+
+        private IEnumerable<SelectListItem> GetAllSupervisors()
+        {
+            List<Supervisors> lsupervisors = new List<Supervisors>();
+            var list = _context.Database.ExecuteSqlCommand ("sp_getSupervisors");
+            return null;
         }
 
         [HttpPost]
