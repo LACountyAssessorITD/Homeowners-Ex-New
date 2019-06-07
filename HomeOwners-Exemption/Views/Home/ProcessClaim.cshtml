@@ -90,15 +90,32 @@
     $(document).ready(function () {
         $("#ddClaimStatus").change(function () {
             var statusText = $("#ddClaimStatus option:selected").text();
-            //alert(statusText);
-            //alert(document.getElementById("dvAssignSupervisor").style.visibility);
-            if ((statusText == "Supervisor Workload") || (statusText == "Staff Review"))
-            {
-                document.getElementById("dvAssignSupervisor").style.visibility = "visible";
+
+            if ((statusText == "Claim Received")) {
+                document.getElementById("lblClaimReceivedDate").style.display = "inline";
+                document.getElementById("txtClaimReceivedDate").style.display = "inline";
             }
-            else
-            {
-                document.getElementById("dvAssignSupervisor").style.visibility = "hidden";
+            else {
+                document.getElementById("lblClaimReceivedDate").style.display = "none";
+                document.getElementById("txtClaimReceivedDate").style.display = "none";
+            }
+
+            if ((statusText == "Supervisor Workload")) {
+                document.getElementById("lblAssignTo").style.display = "inline";
+                document.getElementById("ddSupervisors").style.display = "inline";
+            }
+            else {
+                document.getElementById("lblAssignTo").style.display = "none";
+                document.getElementById("ddSupervisors").style.display = "none";
+            }
+
+            if ((statusText == "Staff Review")) {
+                document.getElementById("lblAssignToStaff").style.display = "inline";
+                document.getElementById("ddStaffs").style.display = "inline";
+            }
+            else {
+                document.getElementById("lblAssignToStaff").style.display = "none";
+                document.getElementById("ddStaffs").style.display = "none";
             }
             
             
@@ -114,24 +131,36 @@
 {
     <table>
         <tr>
-            <td width="300px">
-                <label style="font-weight:bold;">Claim Status:</label>
-                @Html.DropDownListFor(model => model.ClaimStatus,
-                        new SelectList(
-                        new List<Object>{
-                            new { value = 1, text = "Claim Received" },
-                            new { value = 2, text = "Supervisor Workload" },
-                            new { value = 3, text = "Staff Review" },
-                            //new { value = 4, text = "Supervisor Review" },
-                            new { value = 5, text = "Case Closed" },
-                            new { value = 6, text = "Hold"}
-                            }, "value", "text", 0), "Select Status", new { style = "width:250px;", @id = "ddClaimStatus", @class = "form-control" })
+            <td width="350px">
+                <label style="font-weight:bold;">
+                    Claim Status:
+                    @Html.DropDownListFor(model => model.ClaimStatus,
+                            new SelectList(
+                            new List<Object>{
+                                new { value = 1, text = "Claim Received" },
+                                new { value = 2, text = "Supervisor Workload" },
+                                new { value = 3, text = "Staff Review" },
+                                //new { value = 4, text = "Supervisor Review" },
+                                new { value = 5, text = "Case Closed" },
+                                new { value = 6, text = "Hold"}
+                                }, "value", "text", 0), "Select Status", new { style = "width:250px;", @id = "ddClaimStatus", @class = "form-control", @label = "Claim Status:" })
+                </label>
             </td>
-            <td>
-                <div id="dvAssignSupervisor" style="visibility:hidden">
-                    <label style="font-weight:bold;">Assign To:</label>
-                    @Html.DropDownListFor(model => model.Supervisor, Model.Supervisors, new { style = "width:250px;", @id = "ddSupervisor", @class = "form-control dropdown-text" })
-                 </div>
+            <td width="300px">
+                <label id="lblAssignTo" style="font-weight:bold;display:none;">
+                    Assign To:
+                    @Html.DropDownListFor(model => model.Supervisor, Model.Supervisors, new { style = "width:250px;display:none;", @id = "ddSupervisors", @class = "form-control dropdown-text" })
+                </label>
+
+                <label id="lblAssignToStaff" style="font-weight:bold;display:none;">
+                    Assign To:
+                    @Html.DropDownListFor(model => model.Staff, Model.Staffs, new { style = "width:250px;display:none;", @id = "ddStaffs", @class = "form-control dropdown-text" })
+                </label>
+
+                <label id="lblClaimReceivedDate" style="font-weight:bold;display:none;">
+                    Claim Received Date:
+                    @Html.TextBoxFor(model => model.ClaimReceivedDate, new { style = "width:250px;display:none;", @id = "txtClaimReceivedDate", @name = "txtClaimReceivedDate", maxlength = 10, @class = "form-control input-text" })
+                </label>
             </td>
         </tr>
     </table>

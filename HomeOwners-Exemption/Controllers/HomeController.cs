@@ -55,8 +55,23 @@ namespace Homeowners_Ex_New.Controllers
         {      
             var model = new ProcessClaim();
             model.Supervisors = GetAllSupervisors();
+            model.Staffs = GetAllStaffs();
 
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ProcessClaim(ProcessClaim model)
+        {
+            model.Supervisors = GetAllSupervisors();
+            model.Staffs = GetAllStaffs();
+
+            if (ModelState.IsValid)
+            {
+                return View();
+            }
+            else
+                return View(model);
         }
 
         private IEnumerable<SelectListItem> GetAllSupervisors()
@@ -73,6 +88,20 @@ namespace Homeowners_Ex_New.Controllers
             return item;
         }
 
+        private IEnumerable<SelectListItem> GetAllStaffs()
+        {
+            List<Staffs> lStaffs = new List<Staffs>();
+            lStaffs = _context.Staffs.FromSql("sp_users").ToListAsync().Result.ToList();
+            List<SelectListItem> li = new List<SelectListItem>();
+            li.Add(new SelectListItem { Text = "Select Staff", Value = "" });
+            foreach (var oneStaff in lStaffs)
+            {
+                li.Add(new SelectListItem { Text = oneStaff.Users, Value = oneStaff.EmployeeID });
+            }
+            IEnumerable<SelectListItem> item = li.AsEnumerable();
+            return item;
+        }
+
         [HttpPost]
         public JsonResult IsClaimIDExist(string ClaimID)
         {
@@ -83,20 +112,6 @@ namespace Homeowners_Ex_New.Controllers
             }
 
             return Json(!isExist);
-        }
-
-        [HttpPost]
-        public IActionResult ProcessClaim(ProcessClaim model)
-        {
-            model.Supervisors = GetAllSupervisors();
-
-
-            if (ModelState.IsValid)
-            {
-                return View();
-            }
-            else
-                return View(model);    
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
