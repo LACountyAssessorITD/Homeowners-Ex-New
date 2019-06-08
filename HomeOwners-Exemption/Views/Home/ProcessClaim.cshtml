@@ -48,13 +48,6 @@
         btnRemove.attr("onclick", "Remove(this);");
         btnRemove.val("Remove");
         cell.append(btnRemove);
-
-        var length = document.getElementById("tblClaims").rows.length;
-        alert(document.getElementById("tblClaims").rows[1].cells[3].val);
-        //Populate Claim Date
-        //var length = document.getElementById("tblClaims").rows.length;
-        //document.getElementById("tblClaims").rows[length-1].columns[4].innerHTML = claimdate;
-
     };
 
     function Remove(button) {
@@ -94,10 +87,25 @@
             if ((statusText == "Claim Received")) {
                 document.getElementById("lblClaimReceivedDate").style.display = "inline";
                 document.getElementById("txtClaimReceivedDate").style.display = "inline";
+
+                
+                var today = new Date();
+                var mm = today.getMonth() + 1; //January is 0!
+                var dd = today.getDate();
+                var yyyy = today.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+                var today = mm + '/' + dd + '/' + yyyy;
+                document.getElementById("txtClaimReceivedDate").value = today;
             }
             else {
                 document.getElementById("lblClaimReceivedDate").style.display = "none";
                 document.getElementById("txtClaimReceivedDate").style.display = "none";
+                document.getElementById("txtClaimReceivedDate").value = "";
             }
 
             if ((statusText == "Supervisor Workload")) {
@@ -117,8 +125,6 @@
                 document.getElementById("lblAssignToStaff").style.display = "none";
                 document.getElementById("ddStaffs").style.display = "none";
             }
-            
-            
         });
     });
 
@@ -188,18 +194,11 @@
                 </tr>
                 <tr>
                     <td colspan="6" align="right">
-                        <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" name="Command" />
+                        <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" />
                         &nbsp;&nbsp;&nbsp;
-                        <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel" name="Command" />
+                        <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel"  />
                     </td>
                 </tr>
-                <!--<tr>
-                    <td colspan="6">
-                        @Html.EditorFor(model => model.ClaimID, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.ClaimID, "", new { @class = "text-danger" })
-
-                    </td>
-                </tr>-->
             </tfoot>
         </table>
     </div>
