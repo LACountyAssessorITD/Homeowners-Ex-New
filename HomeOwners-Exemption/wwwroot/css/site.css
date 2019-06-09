@@ -84,7 +84,7 @@ h1,h2,h3,h4,h5 {
 }
 .homeowner-title h3 {
     color: #fff;
-    text-align: center;
+    /*text-align: center;*/
 }
 .center {
     /*margin: auto;*/
@@ -130,11 +130,21 @@ h1,h2,h3,h4,h5 {
     height: 30%;
 
 }
+.bg-1 {
+    background-color: #155189;
+}
 .dashboard-2 {
     height: 40%;
-    background-color: #155189;
+   
     margin-top: 40px;
 }
+    .dashboard-2 .col-2 {
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+        padding: 0;
+    }
+
 .Section-Claim{
     
     font-size: 80%;
