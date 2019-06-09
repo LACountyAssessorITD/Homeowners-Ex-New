@@ -43,9 +43,6 @@
 
         //Add Button cell.
         cell = $(row.insertCell(-1));
-        //var btnRemove = $("<input />");
-        //btnRemove.attr("type", "button");
-        //btnRemove.attr("onclick", "Remove(this);");
         var btnRemove = $("<img />");
         btnRemove.attr("src", "/img/minus-circle-solid.svg");
         btnRemove.attr("style", "height:30px;width:30px;");
@@ -84,6 +81,7 @@
         }
     });
 
+    // Populate the dropdown
     $(document).ready(function () {
         $("#ddClaimStatus").change(function () {
             var statusText = $("#ddClaimStatus option:selected").text();
@@ -115,98 +113,148 @@
             if ((statusText == "Supervisor Workload")) {
                 document.getElementById("lblAssignTo").style.display = "inline";
                 document.getElementById("ddSupervisors").style.display = "inline";
+                document.getElementById("ddSupervisors").selectedIndex = "0";
             }
             else {
                 document.getElementById("lblAssignTo").style.display = "none";
                 document.getElementById("ddSupervisors").style.display = "none";
+                document.getElementById("ddSupervisors").selectedIndex = "0";
             }
 
             if ((statusText == "Staff Review")) {
                 document.getElementById("lblAssignToStaff").style.display = "inline";
                 document.getElementById("ddStaffs").style.display = "inline";
+                document.getElementById("ddStaffs").selectedIndex = "0";
             }
             else {
                 document.getElementById("lblAssignToStaff").style.display = "none";
                 document.getElementById("ddStaffs").style.display = "none";
+                document.getElementById("ddStaffs").selectedIndex = "0";
             }
         });
     });
 
+    // Send the data to the controller
+    $(document).ready(function () {
+        $('#SubmitProcess').on('click', function () {
+            var claimIDs = [];
+            var AINs = [];
+
+            //Get the values from the cells
+            var tbl = document.getElementById("tblClaims");         
+            var tblRows = tbl.getElementsByTagName("tr");
+            if (tblRows.length > 3) {
+                for (var i = 1; i<tblRows.length-2; i++) {
+                    claimIDs.push(tbl.rows[i].cells[0].innerHTML);
+                    AINs.push(tbl.rows[i].cells[2].innerHTML);
+                }
+            }
+
+            // Get the value from the input text box
+            claimIDs.push(document.getElementById("txtClaimID").value);
+            AINs.push(document.getElementById("txtAIN").value);
+
+            // Get the claim status
+            var e = document.getElementById("ddClaimStatus");
+            var status = e.options[e.selectedIndex].value;
+
+            // Get the claim received date
+            var receivedDate = document.getElementById("txtClaimReceivedDate").value;
+
+            // Get the supervisor assignee
+            e = document.getElementById("ddSupervisors");
+            var supervisorAssignee = e.options[e.selectedIndex].value;
+
+            // Get the staff assignee
+            e = document.getElementById("ddStaffs");
+            var staffAssignee = e.options[e.selectedIndex].value;;
+
+            $.ajax({
+                url: '@Url.Action("GetClaimInfo", "Home")',
+                type: "POST",
+                data: { ClaimIDList: claimIDs, AINList: AINs, ClaimStatus: status, ClaimReceivedDate: receivedDate, AssigneeSupervisor: supervisorAssignee, AssigneeStaff: staffAssignee},
+                traditional: true,
+                success: function () {
+                    alert("Processed!");
+                },
+                error: function () {
+                    alert("Not Process!");
+                }
+            }); 
+        });
+    });
 </script>
 <div class="text-left">
     <label><b>Scan Claim - Claim Received</b></label>
 </div>
 <br />
-@using (Html.BeginForm("ProcessClaim", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <table>
-        <tr>
-            <td width="350px">
-                <label style="font-weight:bold;">
-                    Claim Status:
-                    @Html.DropDownListFor(model => model.ClaimStatus,
-                            new SelectList(
-                            new List<Object>{
-                                new { value = 1, text = "Claim Received" },
-                                new { value = 2, text = "Supervisor Workload" },
-                                new { value = 3, text = "Staff Review" },
-                                //new { value = 4, text = "Supervisor Review" },
-                                new { value = 5, text = "Case Closed" },
-                                new { value = 6, text = "Hold"}
-                                }, "value", "text", 0), "Select Status", new { style = "width:250px;", @id = "ddClaimStatus", @class = "form-control", @label = "Claim Status:" })
-                </label>
-            </td>
-            <td width="300px">
-                <label id="lblAssignTo" style="font-weight:bold;display:none;">
-                    Assign To:
-                    @Html.DropDownListFor(model => model.Supervisor, Model.Supervisors, new { style = "width:250px;display:none;", @id = "ddSupervisors", @class = "form-control dropdown-text" })
-                </label>
+<table>
+    <tr>
+        <td width="350px">
+            <label style="font-weight:bold;">
+                Claim Status:
+                @Html.DropDownListFor(model => model.ClaimStatus,
+                        new SelectList(
+                        new List<Object>{
+                            new { value = 2, text = "Claim Received" },
+                            new { value = 3, text = "Supervisor Workload" },
+                            new { value = 4, text = "Staff Review" },
+                            //new { value = 4, text = "Supervisor Review" },
+                            new { value = 6, text = "Case Closed" },
+                            new { value = 7, text = "Hold"}
+                            }, "value", "text", 0), "Select Status", new { style = "width:250px;", @id = "ddClaimStatus", @class = "form-control", @label = "Claim Status:" })
+            </label>
+        </td>
+        <td width="300px">
+            <label id="lblAssignTo" style="font-weight:bold;display:none;">
+                Assign To:
+                @Html.DropDownListFor(model => model.Supervisor, Model.Supervisors, new { style = "width:250px;display:none;", @id = "ddSupervisors", @class = "form-control dropdown-text" })
+            </label>
 
-                <label id="lblAssignToStaff" style="font-weight:bold;display:none;">
-                    Assign To:
-                    @Html.DropDownListFor(model => model.Staff, Model.Staffs, new { style = "width:250px;display:none;", @id = "ddStaffs", @class = "form-control dropdown-text" })
-                </label>
+            <label id="lblAssignToStaff" style="font-weight:bold;display:none;">
+                Assign To:
+                @Html.DropDownListFor(model => model.Staff, Model.Staffs, new { style = "width:250px;display:none;", @id = "ddStaffs", @class = "form-control dropdown-text" })
+            </label>
 
-                <label id="lblClaimReceivedDate" style="font-weight:bold;display:none;">
-                    Claim Received Date:
-                    @Html.TextBoxFor(model => model.ClaimReceivedDate, new { style = "width:250px;display:none;", @id = "txtClaimReceivedDate", @name = "txtClaimReceivedDate", maxlength = 10, @class = "form-control input-text" })
-                </label>
-            </td>
-        </tr>
+            <label id="lblClaimReceivedDate" style="font-weight:bold;display:none;">
+                Claim Received Date:
+                @Html.TextBoxFor(model => model.ClaimReceivedDate, new { style = "width:250px;display:none;", @id = "txtClaimReceivedDate", @name = "txtClaimReceivedDate", maxlength = 10, @class = "form-control input-text" })
+            </label>
+        </td>
+    </tr>
+</table>
+<br />
+<br />
+<div text-align="center">
+    <table id="tblClaims" cellpadding="0" cellspacing="0" border="1">
+        <thead>
+            <tr>
+                <th width="100px">Claim #</th>
+                <th width="30px">&nbsp;</th>
+                <th width="100px">AIN</th>
+                <th width="30px">&nbsp;</th>
+                <th width="50px">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+            <tr>
+                <td><input type="text" id="txtClaimID" name="txtClaimID" maxlength="7" oninput="numberOnly(this.id)" /></td>
+                <td>&nbsp;</td>
+                <td><input type="text" id="txtAIN" name="txtAIN" maxlength="10" oninput="numberOnly(this.id)" /></td>
+                <td>&nbsp;</td>
+                <td><img src="~/img/plus-circle-solid.svg" onclick="Add()" style="height:30px;width:30px;" /></td>
+            </tr>
+            <tr>
+                <td colspan="6" align="right">
+                    <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" />
+                    &nbsp;&nbsp;&nbsp;
+                    <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel"  />
+                </td>
+            </tr>
+        </tfoot>
     </table>
-    <br />
-    <br />
-    <div text-align="center">
-        <table id="tblClaims" cellpadding="0" cellspacing="0" border="1">
-            <thead>
-                <tr>
-                    <th width="100px">Claim #</th>
-                    <th width="30px">&nbsp;</th>
-                    <th width="100px">AIN</th>
-                    <th width="30px">&nbsp;</th>
-                    <th width="50px">&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-            <tfoot>
-                <tr>
-                    <td><input type="text" id="txtClaimID" maxlength="7" oninput="numberOnly(this.id)" /></td>
-                    <td>&nbsp;</td>
-                    <td><input type="text" id="txtAIN" maxlength="10" oninput="numberOnly(this.id)" /></td>
-                    <td>&nbsp;</td>
-                    <!--<td><input type="button" value"Add" onclick="Add()" /></td>-->
-                    <td><img src="~/img/plus-circle-solid.svg" onclick="Add()" style="height:30px;width:30px;" /></td>
-                </tr>
-                <tr>
-                    <td colspan="6" align="right">
-                        <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" />
-                        &nbsp;&nbsp;&nbsp;
-                        <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel"  />
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
-}
+</div>
+
 
 

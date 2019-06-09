@@ -78,21 +78,45 @@ namespace Homeowners_Ex_New.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public IActionResult ProcessClaim(ProcessClaim model)
-        {
-            model.Supervisors = GetAllSupervisors();
-            model.Staffs = GetAllStaffs();
+        //[HttpPost]
+        //public IActionResult ProcessClaim(ProcessClaim model)
+        //{
+        //    model.Supervisors = GetAllSupervisors();
+        //    model.Staffs = GetAllStaffs();
 
-            if (ModelState.IsValid)
+        //    if (ModelState.IsValid)
+        //    {
+
+
+
+        //        return View();
+        //    }
+        //    else
+        //        return View(model);
+        //}
+
+        public string GetClaimInfo(IEnumerable<int> ClaimIDList, IEnumerable<int> AINList, string ClaimStatus, string ClaimReceivedDate, string AssigneeSupervisor, string AssigneeStaff)
+        {
+            if (ClaimStatus == "2") //Claim Received
+            {
+
+            } 
+            else if (ClaimStatus == "3") //Supervisor Workload
             {
 
 
-
-                return View();
             }
-            else
-                return View(model);
+            else if (ClaimStatus == "4") //Staff Reivew
+            {
+
+            }
+            else //"6" Case Closed or "7" Hold
+            {
+
+            }
+
+
+            return "1";
         }
 
         private IEnumerable<SelectListItem> GetAllSupervisors()
@@ -122,18 +146,6 @@ namespace Homeowners_Ex_New.Controllers
             }
             IEnumerable<SelectListItem> item = li.AsEnumerable();
             return item;
-        }
-
-        [HttpPost]
-        public JsonResult IsClaimIDExist(string ClaimID)
-        {
-            bool isExist = false;
-            if (ClaimID.Equals("1234567"))
-            {
-                isExist = true;
-            }
-
-            return Json(!isExist);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
