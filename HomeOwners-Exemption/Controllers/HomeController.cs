@@ -60,21 +60,27 @@ namespace Homeowners_Ex_New.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public IActionResult ProcessClaim(ProcessClaim model)
+        //[HttpPost]
+        //public IActionResult ProcessClaim(ProcessClaim model)
+        //{
+        //    model.Supervisors = GetAllSupervisors();
+        //    model.Staffs = GetAllStaffs();
+
+        //    if (ModelState.IsValid)
+        //    {
+
+
+
+        //        return View();
+        //    }
+        //    else
+        //        return View(model);
+        //}
+
+        public string GetClaimInfo(IEnumerable<int> ClaimIDList, IEnumerable<int> AINList, string ClaimStatus, string ClaimReceivedDate)
         {
-            model.Supervisors = GetAllSupervisors();
-            model.Staffs = GetAllStaffs();
-
-            if (ModelState.IsValid)
-            {
-
-
-
-                return View();
-            }
-            else
-                return View(model);
+            // do something with values
+            return "1";
         }
 
         private IEnumerable<SelectListItem> GetAllSupervisors()
