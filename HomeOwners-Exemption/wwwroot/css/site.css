@@ -33,7 +33,7 @@ body {
 h1,h2,h3,h4,h5 {
     font-weight: 600;
 }
-.col-4, .col-6, .col-12 {
+.col-4, .col-6, .col-8, .col-12 {
     padding: 0;
 }
 .section-body {
@@ -142,6 +142,8 @@ h1,h2,h3,h4,h5 {
 
 .Section-Claim label {
     width: 20%;
+    margin-bottom: 0;
+    padding-left: 3px;
 }
 .claim-core{
     padding-top: 1.0rem;
@@ -198,4 +200,28 @@ h1,h2,h3,h4,h5 {
     border-bottom: 1px solid #c4c4c4;
     border-left: 1px solid #c4c4c4;
     margin-bottom: 2px;
+}
+.property-info {
+    padding: 4px;
+    background-color: #f7f2f2;
+}
+.property-info .col-6 {
+    padding-left:  8px;
+    padding-right: 15px;
+}
+    .property-info .col-4 {
+        padding-left: 8px;
+        padding-right: 15px;
+    }
+    .property-info .col-7 {
+        padding-left: 8px;
+        padding-right: 15px;
+    }
+.property-info label {
+    width: 150px;
+}
+.property-info input {
+    width: 100%;
+    padding-left: 10px;
+    
 }
