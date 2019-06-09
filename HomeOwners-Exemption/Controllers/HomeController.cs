@@ -88,9 +88,27 @@ namespace Homeowners_Ex_New.Controllers
         //        return View(model);
         //}
 
-        public string GetClaimInfo(IEnumerable<int> ClaimIDList, IEnumerable<int> AINList, string ClaimStatus, string ClaimReceivedDate)
+        public string GetClaimInfo(IEnumerable<int> ClaimIDList, IEnumerable<int> AINList, string ClaimStatus, string ClaimReceivedDate, string AssigneeSupervisor, string AssigneeStaff)
         {
-            // do something with values
+            if (ClaimStatus == "2") //Claim Received
+            {
+
+            } 
+            else if (ClaimStatus == "3") //Supervisor Workload
+            {
+
+
+            }
+            else if (ClaimStatus == "4") //Staff Reivew
+            {
+
+            }
+            else //"6" Case Closed or "7" Hold
+            {
+
+            }
+
+
             return "1";
         }
 
@@ -121,18 +139,6 @@ namespace Homeowners_Ex_New.Controllers
             }
             IEnumerable<SelectListItem> item = li.AsEnumerable();
             return item;
-        }
-
-        [HttpPost]
-        public JsonResult IsClaimIDExist(string ClaimID)
-        {
-            bool isExist = false;
-            if (ClaimID.Equals("1234567"))
-            {
-                isExist = true;
-            }
-
-            return Json(!isExist);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
