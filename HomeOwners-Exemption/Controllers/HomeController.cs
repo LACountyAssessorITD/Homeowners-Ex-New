@@ -48,7 +48,18 @@ namespace Homeowners_Ex_New.Controllers
         //}
         public IActionResult Claim(int? id)
         {
-            return View();
+            var modelUser = new Claim();
+            if (id != null)
+            {
+                var EmpID = new SqlParameter("@EmployeeID", id);
+                 modelUser = _context.Claim.FromSql("sp_getClaim @EmployeeID", EmpID).FirstOrDefaultAsync().Result;
+            }
+            else
+            {
+                modelUser = new Claim();
+            }
+
+            return View(modelUser);
         }
         
         public IActionResult ProcessClaim()
