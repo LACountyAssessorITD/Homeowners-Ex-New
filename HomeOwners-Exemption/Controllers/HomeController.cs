@@ -68,6 +68,9 @@ namespace Homeowners_Ex_New.Controllers
 
             if (ModelState.IsValid)
             {
+
+
+
                 return View();
             }
             else
@@ -82,6 +85,7 @@ namespace Homeowners_Ex_New.Controllers
             li.Add(new SelectListItem { Text = "Select Supervisor", Value = "" });
             foreach (var oneSupervisor in lSupervisors)
             {
+                //if (oneSupervisor.Users != User.FindFirst("UserName").Value)
                 li.Add(new SelectListItem { Text = oneSupervisor.Users, Value = oneSupervisor.EmployeeID });
             }
             IEnumerable<SelectListItem> item = li.AsEnumerable();

@@ -43,8 +43,12 @@
 
         //Add Button cell.
         cell = $(row.insertCell(-1));
-        var btnRemove = $("<input />");
-        btnRemove.attr("type", "button");
+        //var btnRemove = $("<input />");
+        //btnRemove.attr("type", "button");
+        //btnRemove.attr("onclick", "Remove(this);");
+        var btnRemove = $("<img />");
+        btnRemove.attr("src", "/img/minus-circle-solid.svg");
+        btnRemove.attr("style", "height:30px;width:30px;");
         btnRemove.attr("onclick", "Remove(this);");
         btnRemove.val("Remove");
         cell.append(btnRemove);
@@ -190,7 +194,8 @@
                     <td>&nbsp;</td>
                     <td><input type="text" id="txtAIN" maxlength="10" oninput="numberOnly(this.id)" /></td>
                     <td>&nbsp;</td>
-                    <td><input type="button" onclick="Add()" value="Add" /></td>
+                    <!--<td><input type="button" value"Add" onclick="Add()" /></td>-->
+                    <td><img src="~/img/plus-circle-solid.svg" onclick="Add()" style="height:30px;width:30px;" /></td>
                 </tr>
                 <tr>
                     <td colspan="6" align="right">
