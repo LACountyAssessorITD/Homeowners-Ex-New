@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using HomeOwners_Exemption.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Homeowners_Ex_New.Controllers
@@ -61,29 +62,59 @@ namespace Homeowners_Ex_New.Controllers
             return View(modelUser);
         }
         
-
         public IActionResult ProcessClaim()
-        {
-            //dynamic RoleStatus = new System.Dynamic.ExpandoObject();
-            //SqlParameter employeeID = new SqlParameter("@usersID", 617585);
-            //var Result = _context.Database.ExecuteSqlCommand ("sp_usersStatus @usersID", employeeID);
-            //List<RoleStatus> Result = new List<RoleStatus>();
-            //var Result = _context.RoleStatus.FromSql("sp_usersStatus @usersID", employeeID).ToListAsync().Result;
-
+        {      
             var model = new ProcessClaim();
             model.Supervisors = GetAllSupervisors();
+            model.Staffs = GetAllStaffs();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ProcessClaim(ProcessClaim model)
+        {
+            model.Supervisors = GetAllSupervisors();
+            model.Staffs = GetAllStaffs();
+
+            if (ModelState.IsValid)
+            {
 
 
-            //RoleStatus = Result;
-            //return View(RoleStatus);
-            return View();
+
+                return View();
+            }
+            else
+                return View(model);
         }
 
         private IEnumerable<SelectListItem> GetAllSupervisors()
         {
-            List<Supervisors> lsupervisors = new List<Supervisors>();
-            var list = _context.Supervisors.FromSql("sp_getSupervisors").ToListAsync().Result;
-            return null;
+            List<Supervisors> lSupervisors = new List<Supervisors>();
+            lSupervisors = _context.Supervisors.FromSql("sp_getSupervisors").ToListAsync().Result.ToList();
+            List<SelectListItem> li = new List<SelectListItem>();
+            li.Add(new SelectListItem { Text = "Select Supervisor", Value = "" });
+            foreach (var oneSupervisor in lSupervisors)
+            {
+                //if (oneSupervisor.Users != User.FindFirst("UserName").Value)
+                li.Add(new SelectListItem { Text = oneSupervisor.Users, Value = oneSupervisor.EmployeeID });
+            }
+            IEnumerable<SelectListItem> item = li.AsEnumerable();
+            return item;
+        }
+
+        private IEnumerable<SelectListItem> GetAllStaffs()
+        {
+            List<Staffs> lStaffs = new List<Staffs>();
+            lStaffs = _context.Staffs.FromSql("sp_users").ToListAsync().Result.ToList();
+            List<SelectListItem> li = new List<SelectListItem>();
+            li.Add(new SelectListItem { Text = "Select Staff", Value = "" });
+            foreach (var oneStaff in lStaffs)
+            {
+                li.Add(new SelectListItem { Text = oneStaff.Users, Value = oneStaff.EmployeeID });
+            }
+            IEnumerable<SelectListItem> item = li.AsEnumerable();
+            return item;
         }
 
         [HttpPost]
@@ -96,17 +127,6 @@ namespace Homeowners_Ex_New.Controllers
             }
 
             return Json(!isExist);
-        }
-
-        [HttpPost]
-        public IActionResult ProcessClaim(ProcessClaim model)
-        {
-            if (ModelState.IsValid)
-            {
-                return View();
-            }
-            else
-                return View(model);    
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
