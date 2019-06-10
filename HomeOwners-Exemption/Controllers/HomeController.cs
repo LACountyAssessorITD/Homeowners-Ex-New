@@ -11,6 +11,9 @@ using HomeOwners_Exemption.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Claim = HomeOwners_Exemption.Models.Claim;
 
 namespace Homeowners_Ex_New.Controllers
 {
@@ -18,6 +21,7 @@ namespace Homeowners_Ex_New.Controllers
     public class HomeController : Controller
     {
         private readonly homeownerContext _context;
+        private UserManager<ApplicationIdentity> _userManager;
 
         public HomeController (homeownerContext context)
         {
@@ -28,6 +32,9 @@ namespace Homeowners_Ex_New.Controllers
         
         public IActionResult Index()
         {
+            var userId = this.User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier);
+
+
             return View();
         }
 
