@@ -77,13 +77,29 @@ namespace Homeowners_Ex_New.Controllers
 
             DataTable dt_tmpClaimID = new DataTable();
             dt_tmpClaimID.Columns.Add("ClaimID", typeof(string));
+            dt_tmpClaimID.Columns.Add("AIN", typeof(string));
             DataRow tmpClaimID;
-            
-            foreach (int claimID in ClaimIDList)
+
+            if (ClaimStatus == "2")
             {
-                tmpClaimID = dt_tmpClaimID.NewRow();
-                tmpClaimID["ClaimID"] = Convert.ToString(claimID);
-                dt_tmpClaimID.Rows.Add(tmpClaimID);
+                List<int> lClaimIDList = ClaimIDList.ToList();
+                List<int> lAINList = AINList.ToList();
+                for (int i=0; i<lClaimIDList.Count; i++)
+                {
+                    tmpClaimID = dt_tmpClaimID.NewRow();
+                    tmpClaimID["ClaimID"] = Convert.ToString(lClaimIDList[i]);
+                    tmpClaimID["AIN"] = Convert.ToString(lAINList[i]);
+                    dt_tmpClaimID.Rows.Add(tmpClaimID);
+                }
+            }
+            else
+            {
+                foreach (int claimID in ClaimIDList)
+                {
+                    tmpClaimID = dt_tmpClaimID.NewRow();
+                    tmpClaimID["ClaimID"] = Convert.ToString(claimID);
+                    dt_tmpClaimID.Rows.Add(tmpClaimID);
+                }
             }
 
             string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
@@ -136,8 +152,7 @@ namespace Homeowners_Ex_New.Controllers
                 li.Add(new SelectListItem { Text = "Claim Received", Value = "2" });
                 li.Add(new SelectListItem { Text = "Supervisor Workload", Value = "3" });
                 li.Add(new SelectListItem { Text = "Staff Review", Value = "4" });
-                li.Add(new SelectListItem { Text = "Case Closed", Value = "6" });
-                li.Add(new SelectListItem { Text = "Hold", Value = "7" });
+                li.Add(new SelectListItem { Text = "Closed", Value = "6" });
             }
             IEnumerable<SelectListItem> item = li.AsEnumerable();
             return item;
