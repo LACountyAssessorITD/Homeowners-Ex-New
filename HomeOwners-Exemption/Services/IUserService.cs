@@ -23,5 +23,6 @@ namespace HomeOwners_Exemption.Services
         public string Username { get; }
         public string UserFullName { get; }
         public string Role { get; }
+        
     }
 }

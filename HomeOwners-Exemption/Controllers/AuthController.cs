@@ -63,6 +63,7 @@ namespace HomeOwners_Exemption.Controllers
                 new System.Security.Claims.Claim(ClaimTypes.NameIdentifier, username),
                 new System.Security.Claims.Claim("name", username),
                 new System.Security.Claims.Claim("Username", fullname),
+                new System.Security.Claims.Claim("RoleTitle", role),
                 new System.Security.Claims.Claim(ClaimTypes.Role, role)
             };
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme, "name", null);
