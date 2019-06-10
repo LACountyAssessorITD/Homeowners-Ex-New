@@ -23,15 +23,15 @@ namespace Homeowners_Ex_New.Controllers
     public class HomeController : Controller
     {
         private readonly homeownerContext _context;
-        
 
-        public HomeController (homeownerContext context)
+
+        public HomeController(homeownerContext context)
         {
-           
+
             _context = context;
-            
+
         }
-        
+
         public IActionResult Index()
         {
             var userId = this.User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier);
@@ -51,7 +51,7 @@ namespace Homeowners_Ex_New.Controllers
             if (id != null)
             {
                 var EmpID = new SqlParameter("@EmployeeID", id);
-                 modelUser = _context.Claim.FromSql("sp_getClaim @EmployeeID", EmpID).FirstOrDefaultAsync().Result;
+                modelUser = _context.Claim.FromSql("sp_getClaim @EmployeeID", EmpID).FirstOrDefaultAsync().Result;
             }
             else
             {
@@ -60,9 +60,9 @@ namespace Homeowners_Ex_New.Controllers
 
             return View(modelUser);
         }
-        
+
         public IActionResult ProcessClaim()
-        {      
+        {
             var model = new ProcessClaim();
             model.StatusList = GetAllClaimStatus();
             model.Supervisors = GetAllSupervisors();
@@ -84,7 +84,7 @@ namespace Homeowners_Ex_New.Controllers
             {
                 List<int> lClaimIDList = ClaimIDList.ToList();
                 List<int> lAINList = AINList.ToList();
-                for (int i=0; i<lClaimIDList.Count; i++)
+                for (int i = 0; i < lClaimIDList.Count; i++)
                 {
                     tmpClaimID = dt_tmpClaimID.NewRow();
                     tmpClaimID["ClaimID"] = Convert.ToString(lClaimIDList[i]);
@@ -109,13 +109,13 @@ namespace Homeowners_Ex_New.Controllers
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
             if (ClaimStatus == "2") //Claim Received
-            {     
+            {
                 cmd.CommandText = "sp_ClaimReceived";
                 //cmd.Parameters.Add(new SqlParameter("@ClaimStatusRefID", ClaimStatus));
                 //cmd.Parameters.Add(new SqlParameter("@ClaimDate", Convert.ToDateTime(ClaimReceivedDate)));
                 //cmd.Parameters.Add(new SqlParameter("@ReceivedBy", strAssignor));
                 cmd.Parameters.Add(new SqlParameter("@tvpClaimID", dt_tmpClaimID));
-            } 
+            }
             else if (ClaimStatus == "3") //Supervisor Workload
             {
 
@@ -133,6 +133,12 @@ namespace Homeowners_Ex_New.Controllers
             cnn.Open();
             object o = cmd.ExecuteScalar();
             cnn.Close();
+
+            return "1";
+        }
+
+        public string ValidateClaimID(string ClaimID, string Status)
+        {
 
             return "1";
         }

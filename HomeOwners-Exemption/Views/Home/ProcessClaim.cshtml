@@ -10,13 +10,13 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
     function Add() {
-        var howManyRows = document.getElementById("tblClaims").rows.length;
-        if ((howManyRows - 3) < 10) {
+        //var howManyRows = document.getElementById("tblClaims").rows.length;
+        //if ((howManyRows - 3) < 10) {
             AddRow($("#txtClaimID").val(), $("#txtAIN").val(), $("#txtClaimDate").val());
             $("#txtClaimID").val("");
             $("#txtAIN").val("");
             $("#txtClaimDate").val("");
-        }
+        //}
     };
 
     function AddRow(claimid, ain, claimdate) {
@@ -51,12 +51,15 @@
 
         //Add Button cell.
         cell = $(row.insertCell(-1));
-        var btnRemove = $("<img />");
-        btnRemove.attr("src", "/img/minus-circle-solid.svg");
-        btnRemove.attr("style", "height:30px;width:30px;");
-        btnRemove.attr("onclick", "Remove(this);");
-        btnRemove.val("Remove");
-        cell.append(btnRemove);
+        //cell.html();
+        //var btnRemove = $("<img />");
+        //btnRemove.attr("src", "/img/minus-circle-solid.svg");
+        //btnRemove.attr("style", "height:30px;width:30px;");
+        //btnRemove.attr("onclick", "Remove(this);");
+        //btnRemove.val("Remove");
+        //cell.append(btnRemove);
+        var lblProcessed = $("<label style=\"height:30px;width:30px;color:green;\">Processed</label>");
+        cell.append(lblProcessed);
     };
 
     function Remove(button) {
@@ -207,32 +210,6 @@
         });
     });
 
-    // Validate the Claim ID
-    $(document).ready(function() {
-	    var x_timer;
-	    $("#txtClaimID").keyup (function (e) {
-            clearTimeout(x_timer);
-            var user_name = $(this).val();
-		    x_timer = setTimeout(function(){
-                check_username_ajax(user_name);
-		    }, 1000);
-        });	
-
-        function check_username_ajax(username) {
-            $("#user-result").html('<img src="ajax-loader.gif" />');
-            $.post('username-checker.php', { 'username': username }, function (data) {
-                $("#user-result").html(data);
-            });
-        }
-    });
-
-
-
-
-
-    // Validate the AIN
-
-
 
 
 </script>
@@ -276,7 +253,7 @@
                 <th width="30px">&nbsp;</th>
                 <th width="100px">AIN</th>
                 <th width="30px">&nbsp;</th>
-                <th width="50px">&nbsp;</th>
+                <th width="150px">&nbsp;</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -284,7 +261,8 @@
             <tr>
                 <td><input type="text" id="txtClaimID" name="txtClaimID" maxlength="7" oninput="numberOnly(this.id)" disabled /></td>
                 <td>
-                    <img src="~/img/exclamation-circle-solid.svg" style="height:30px;width:30px;display:inline;" />
+                    <img src="~/img/exclamation-circle-solid.svg" style
+                         ="height:30px;width:30px;display:inline;" />
                     <img src="~/img/check-circle-solid.svg" style="height:30px;width:30px;display:none;" />
                 </td>
                 <td><input type="text" id="txtAIN" name="txtAIN" maxlength="10" oninput="numberOnly(this.id)" disabled /></td>
@@ -292,18 +270,20 @@
                     <img src="~/img/exclamation-circle-solid.svg" style="height:30px;width:30px;display:inline;" />
                     <img src="~/img/check-circle-solid.svg" style="height:30px;width:30px;display:none;" />
                 </td>
-                <td><img src="~/img/plus-circle-solid.svg" onclick="Add()" style="height:30px;width:30px;" /></td>
-            </tr>
-            <tr>
-                <td colspan="6" align="right">
-                    <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" />
-                    &nbsp;&nbsp;&nbsp;
-                    <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel" onclick="javascript:window.location='../Home/ProcessClaim';" />
+                <td>
+                    <img src="~/img/plus-circle-solid.svg" onclick="Add()" style="height:30px;width:30px;" title="Add another record" />
+                    <img src="~/img/search.jpg" onclick="ValidateInfo()" style="height:30px;width:30px;" title="Search" />
                 </td>
             </tr>
+            <!--<tr>
+            <td colspan="6" align="right">
+                <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" />
+                &nbsp;&nbsp;&nbsp;
+                <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel" onclick="javascript:window.location='../Home/ProcessClaim';" />
+            </td>
+        </tr>-->
         </tfoot>
     </table>
-   
 </div>
 
 
