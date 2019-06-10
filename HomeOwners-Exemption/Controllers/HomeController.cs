@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Claim = HomeOwners_Exemption.Models.Claim;
 using Microsoft.Extensions.Configuration;
+using System.Data;
 
 namespace Homeowners_Ex_New.Controllers
 {
@@ -63,6 +64,7 @@ namespace Homeowners_Ex_New.Controllers
         public IActionResult ProcessClaim()
         {      
             var model = new ProcessClaim();
+            model.StatusList = GetAllClaimStatus();
             model.Supervisors = GetAllSupervisors();
             model.Staffs = GetAllStaffs();
 
@@ -71,6 +73,19 @@ namespace Homeowners_Ex_New.Controllers
 
         public string GetClaimInfo(IEnumerable<int> ClaimIDList, IEnumerable<int> AINList, string ClaimStatus, string ClaimReceivedDate, string AssigneeSupervisor, string AssigneeStaff)
         {
+            string strAssignor = User.FindFirst("Name").Value;
+
+            DataTable dt_tmpClaimID = new DataTable();
+            dt_tmpClaimID.Columns.Add("ClaimID", typeof(string));
+            DataRow tmpClaimID;
+            
+            foreach (int claimID in ClaimIDList)
+            {
+                tmpClaimID = dt_tmpClaimID.NewRow();
+                tmpClaimID["ClaimID"] = Convert.ToString(claimID);
+                dt_tmpClaimID.Rows.Add(tmpClaimID);
+            }
+
             string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
             SqlConnection cnn = new SqlConnection(cnnString);
             SqlCommand cmd = new SqlCommand();
@@ -79,11 +94,11 @@ namespace Homeowners_Ex_New.Controllers
 
             if (ClaimStatus == "2") //Claim Received
             {     
-                cmd.CommandText = "sp_ClaimReceived1";
-                cmd.Parameters.Add(new SqlParameter("@ClaimStatusRefID", ClaimStatus));
-                cmd.Parameters.Add(new SqlParameter("@ClaimDate", Convert.ToDateTime(ClaimReceivedDate)));
-                cmd.Parameters.Add(new SqlParameter("@ReceivedBy", "617585"));
-                cmd.Parameters.Add(new SqlParameter("@tvpClaimID", ClaimIDList.ToList()));
+                cmd.CommandText = "sp_ClaimReceived";
+                //cmd.Parameters.Add(new SqlParameter("@ClaimStatusRefID", ClaimStatus));
+                //cmd.Parameters.Add(new SqlParameter("@ClaimDate", Convert.ToDateTime(ClaimReceivedDate)));
+                //cmd.Parameters.Add(new SqlParameter("@ReceivedBy", strAssignor));
+                cmd.Parameters.Add(new SqlParameter("@tvpClaimID", dt_tmpClaimID));
             } 
             else if (ClaimStatus == "3") //Supervisor Workload
             {
@@ -105,6 +120,28 @@ namespace Homeowners_Ex_New.Controllers
 
             return "1";
         }
+        
+        private IEnumerable<SelectListItem> GetAllClaimStatus()
+        {
+            List<SelectListItem> li = new List<SelectListItem>();
+            if (User.FindFirst("RoleTitle").Value == "2")
+            {
+                li.Add(new SelectListItem { Text = "Select Status", Value = "0" });
+                li.Add(new SelectListItem { Text = "Claim Received", Value = "2" });
+                li.Add(new SelectListItem { Text = "Supervisor Workload", Value = "3" });
+            }
+            else
+            {
+                li.Add(new SelectListItem { Text = "Select Status", Value = "0" });
+                li.Add(new SelectListItem { Text = "Claim Received", Value = "2" });
+                li.Add(new SelectListItem { Text = "Supervisor Workload", Value = "3" });
+                li.Add(new SelectListItem { Text = "Staff Review", Value = "4" });
+                li.Add(new SelectListItem { Text = "Case Closed", Value = "6" });
+                li.Add(new SelectListItem { Text = "Hold", Value = "7" });
+            }
+            IEnumerable<SelectListItem> item = li.AsEnumerable();
+            return item;
+        }
 
         private IEnumerable<SelectListItem> GetAllSupervisors()
         {
@@ -124,7 +161,7 @@ namespace Homeowners_Ex_New.Controllers
         private IEnumerable<SelectListItem> GetAllStaffs()
         {
             List<Staffs> lStaffs = new List<Staffs>();
-            lStaffs = _context.Staffs.FromSql("sp_users").ToListAsync().Result.ToList();
+            lStaffs = _context.Staffs.FromSql("sp_getStaff").ToListAsync().Result.ToList();
             List<SelectListItem> li = new List<SelectListItem>();
             li.Add(new SelectListItem { Text = "Select Staff", Value = "" });
             foreach (var oneStaff in lStaffs)

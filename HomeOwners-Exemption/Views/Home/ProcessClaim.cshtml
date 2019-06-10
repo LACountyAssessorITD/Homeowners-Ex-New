@@ -231,16 +231,7 @@
         <td width="350px">
             <label style="font-weight:bold;">
                 Claim Status:
-                @Html.DropDownListFor(model => model.ClaimStatus,
-                        new SelectList(
-                        new List<Object>{
-                            new { value = 2, text = "Claim Received" },
-                            new { value = 3, text = "Supervisor Workload" },
-                            new { value = 4, text = "Staff Review" },
-                            //new { value = 4, text = "Supervisor Review" },
-                            new { value = 6, text = "Case Closed" },
-                            new { value = 7, text = "Hold"}
-                            }, "value", "text", 0), "Select Status", new { style = "width:250px;", @id = "ddClaimStatus", @class = "form-control", @label = "Claim Status:" })
+                @Html.DropDownListFor(model => model.ClaimStatus, Model.StatusList, new { style = "width:250px;", @id = "ddClaimStatus", @class = "form-control", @label = "Claim Status:" })
             </label>
         </td>
         <td width="300px">
