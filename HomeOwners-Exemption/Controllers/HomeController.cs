@@ -124,7 +124,7 @@ namespace Homeowners_Ex_New.Controllers
         private IEnumerable<SelectListItem> GetAllClaimStatus()
         {
             List<SelectListItem> li = new List<SelectListItem>();
-            if (User.FindFirst("RoleTitle").Value == "2")
+            if (User.FindFirst("RoleTitle").Value == "3")
             {
                 li.Add(new SelectListItem { Text = "Select Status", Value = "0" });
                 li.Add(new SelectListItem { Text = "Claim Received", Value = "2" });

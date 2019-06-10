@@ -94,7 +94,21 @@
         $("#ddClaimStatus").change(function () {
             var statusText = $("#ddClaimStatus option:selected").text();
 
-            if ((statusText == "Claim Received")) {
+            if (statusText == "Select Status") {
+                document.getElementById("txtClaimID").disabled = true;
+                document.getElementById("txtAIN").disabled = true;
+            }
+            else if (statusText == "Claim Received") {
+                document.getElementById("txtClaimID").disabled = false;
+                document.getElementById("txtAIN").disabled = false;
+            }
+            else
+            {
+                document.getElementById("txtClaimID").disabled = false;
+                document.getElementById("txtAIN").disabled = true;
+            }
+
+            if (statusText == "Claim Received") {
                 document.getElementById("lblClaimReceivedDate").style.display = "inline";
                 document.getElementById("txtClaimReceivedDate").style.display = "inline";
 
@@ -118,7 +132,7 @@
                 document.getElementById("txtClaimReceivedDate").value = "";
             }
 
-            if ((statusText == "Supervisor Workload")) {
+            if (statusText == "Supervisor Workload") {
                 document.getElementById("lblAssignTo").style.display = "inline";
                 document.getElementById("ddSupervisors").style.display = "inline";
                 document.getElementById("ddSupervisors").selectedIndex = "0";
@@ -129,7 +143,7 @@
                 document.getElementById("ddSupervisors").selectedIndex = "0";
             }
 
-            if ((statusText == "Staff Review")) {
+            if (statusText == "Staff Review") {
                 document.getElementById("lblAssignToStaff").style.display = "inline";
                 document.getElementById("ddStaffs").style.display = "inline";
                 document.getElementById("ddStaffs").selectedIndex = "0";
@@ -268,12 +282,12 @@
         <tbody></tbody>
         <tfoot>
             <tr>
-                <td><input type="text" id="txtClaimID" name="txtClaimID" maxlength="7" oninput="numberOnly(this.id)" /></td>
+                <td><input type="text" id="txtClaimID" name="txtClaimID" maxlength="7" oninput="numberOnly(this.id)" disabled /></td>
                 <td>
                     <img src="~/img/exclamation-circle-solid.svg" style="height:30px;width:30px;display:inline;" />
                     <img src="~/img/check-circle-solid.svg" style="height:30px;width:30px;display:none;" />
                 </td>
-                <td><input type="text" id="txtAIN" name="txtAIN" maxlength="10" oninput="numberOnly(this.id)" /></td>
+                <td><input type="text" id="txtAIN" name="txtAIN" maxlength="10" oninput="numberOnly(this.id)" disabled /></td>
                 <td>
                     <img src="~/img/exclamation-circle-solid.svg" style="height:30px;width:30px;display:inline;" />
                     <img src="~/img/check-circle-solid.svg" style="height:30px;width:30px;display:none;" />
