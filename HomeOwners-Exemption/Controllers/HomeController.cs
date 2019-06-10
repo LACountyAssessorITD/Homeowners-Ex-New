@@ -21,7 +21,7 @@ namespace Homeowners_Ex_New.Controllers
     public class HomeController : Controller
     {
         private readonly homeownerContext _context;
-        private UserManager<ApplicationIdentity> _userManager;
+        
 
         public HomeController (homeownerContext context)
         {
