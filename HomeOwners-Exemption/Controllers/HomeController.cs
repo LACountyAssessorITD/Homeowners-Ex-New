@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Claim = HomeOwners_Exemption.Models.Claim;
+using Microsoft.Extensions.Configuration;
 
 namespace Homeowners_Ex_New.Controllers
 {
@@ -43,16 +44,6 @@ namespace Homeowners_Ex_New.Controllers
             return View();
         }
 
-        //public IActionResult Claim(Int64? id)
-        //{
-        //    id = 1234567;
-        //    dynamic FaqFinalModel = new System.Dynamic.ExpandoObject();
-        //    SqlParameter param1 = new SqlParameter("@ClaimID", id);
-        //    //var abc = db.tablename.SqlQuery("SP_Name @Value1", param1).ToList();
-        //    var ClaimResult = _context.claim.FromSql("sp_getClaim1 @ClaimID", param1);
-        //    FaqFinalModel.claim = ClaimResult;
-        //    return View(FaqFinalModel);
-        //}
         public IActionResult Claim(int? id)
         {
             var modelUser = new Claim();
@@ -78,28 +69,21 @@ namespace Homeowners_Ex_New.Controllers
             return View(model);
         }
 
-        //[HttpPost]
-        //public IActionResult ProcessClaim(ProcessClaim model)
-        //{
-        //    model.Supervisors = GetAllSupervisors();
-        //    model.Staffs = GetAllStaffs();
-
-        //    if (ModelState.IsValid)
-        //    {
-
-
-
-        //        return View();
-        //    }
-        //    else
-        //        return View(model);
-        //}
-
         public string GetClaimInfo(IEnumerable<int> ClaimIDList, IEnumerable<int> AINList, string ClaimStatus, string ClaimReceivedDate, string AssigneeSupervisor, string AssigneeStaff)
         {
-            if (ClaimStatus == "2") //Claim Received
-            {
+            string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
+            SqlConnection cnn = new SqlConnection(cnnString);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = cnn;
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
+            if (ClaimStatus == "2") //Claim Received
+            {     
+                cmd.CommandText = "sp_ClaimReceived1";
+                cmd.Parameters.Add(new SqlParameter("@ClaimStatusRefID", ClaimStatus));
+                cmd.Parameters.Add(new SqlParameter("@ClaimDate", Convert.ToDateTime(ClaimReceivedDate)));
+                cmd.Parameters.Add(new SqlParameter("@ReceivedBy", "617585"));
+                cmd.Parameters.Add(new SqlParameter("@tvpClaimID", ClaimIDList.ToList()));
             } 
             else if (ClaimStatus == "3") //Supervisor Workload
             {
@@ -115,6 +99,9 @@ namespace Homeowners_Ex_New.Controllers
 
             }
 
+            cnn.Open();
+            object o = cmd.ExecuteScalar();
+            cnn.Close();
 
             return "1";
         }
