@@ -32,14 +32,22 @@
         cell.html(claimid);
 
         cell = $(row.insertCell(-1));
-        cell.html();
+        //cell.html();
+        var imgCheck = $("<img />");
+        imgCheck.attr("src", "/img/check-circle-solid.svg");
+        imgCheck.attr("style", "height:30px;width:30px;");
+        cell.append(imgCheck);
 
         //Add AIN cell.
         cell = $(row.insertCell(-1));
         cell.html(ain);
 
         cell = $(row.insertCell(-1));
-        cell.html();
+        //cell.html();
+        var imgCheck = $("<img />");
+        imgCheck.attr("src", "/img/check-circle-solid.svg");
+        imgCheck.attr("style", "height:30px;width:30px;");
+        cell.append(imgCheck);
 
         //Add Button cell.
         cell = $(row.insertCell(-1));
@@ -186,9 +194,33 @@
     });
 
     // Validate the Claim ID
+    $(document).ready(function() {
+	    var x_timer;
+	    $("#txtClaimID").keyup (function (e) {
+            clearTimeout(x_timer);
+            var user_name = $(this).val();
+		    x_timer = setTimeout(function(){
+                check_username_ajax(user_name);
+		    }, 1000);
+        });	
+
+        function check_username_ajax(username) {
+            $("#user-result").html('<img src="ajax-loader.gif" />');
+            $.post('username-checker.php', { 'username': username }, function (data) {
+                $("#user-result").html(data);
+            });
+        }
+    });
+
+
+
 
 
     // Validate the AIN
+
+
+
+
 </script>
 <div class="text-left">
     <label><b>Scan Claim - Claim Received</b></label>
@@ -246,9 +278,15 @@
         <tfoot>
             <tr>
                 <td><input type="text" id="txtClaimID" name="txtClaimID" maxlength="7" oninput="numberOnly(this.id)" /></td>
-                <td><img src="~/img/exclamation-circle-solid.svg" style="height:30px;width:30px;" /></td>
+                <td>
+                    <img src="~/img/exclamation-circle-solid.svg" style="height:30px;width:30px;display:inline;" />
+                    <img src="~/img/check-circle-solid.svg" style="height:30px;width:30px;display:none;" />
+                </td>
                 <td><input type="text" id="txtAIN" name="txtAIN" maxlength="10" oninput="numberOnly(this.id)" /></td>
-                <td><img src="~/img/exclamation-circle-solid.svg" style="height:30px;width:30px;" /></td>
+                <td>
+                    <img src="~/img/exclamation-circle-solid.svg" style="height:30px;width:30px;display:inline;" />
+                    <img src="~/img/check-circle-solid.svg" style="height:30px;width:30px;display:none;" />
+                </td>
                 <td><img src="~/img/plus-circle-solid.svg" onclick="Add()" style="height:30px;width:30px;" /></td>
             </tr>
             <tr>
