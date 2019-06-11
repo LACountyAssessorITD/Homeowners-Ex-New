@@ -47,7 +47,7 @@ namespace HomeOwners_Exemption.Controllers
                 Services.User user;
                 if (await _userService.ValidateCredentials(model.Username, model.Password, _context, out user))
                 {
-                    await SignInUser(user.Username, user.UserFullName, user.Role);
+                    await SignInUser(user.Username, user.UserFullName, user.Role, user.RoleId);
                     if (returnUrl != null)
                     {
                         return Redirect(returnUrl);
@@ -57,13 +57,14 @@ namespace HomeOwners_Exemption.Controllers
             }
             return View(model);
         }
-        public async Task SignInUser(string username, string fullname, string role)
+        public async Task SignInUser(string username, string fullname, string role, int roldId)
         {
             var claims = new List<System.Security.Claims.Claim> {
                 new System.Security.Claims.Claim(ClaimTypes.NameIdentifier, username),
                 new System.Security.Claims.Claim("name", username),
                 new System.Security.Claims.Claim("Username", fullname),
                 new System.Security.Claims.Claim("RoleTitle", role),
+                new System.Security.Claims.Claim("RoleId", roldId.ToString()),
                 new System.Security.Claims.Claim(ClaimTypes.Role, role)
             };
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme, "name", null);

@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Claim = HomeOwners_Exemption.Models.Claim;
 using Microsoft.Extensions.Configuration;
+using System.Dynamic;
 using System.Data;
 
 namespace Homeowners_Ex_New.Controllers
@@ -36,8 +37,38 @@ namespace Homeowners_Ex_New.Controllers
         {
             var userId = this.User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier);
 
+            dynamic model = new ExpandoObject();
+            
+            var staffList = _context.Staffs.FromSql("sp_getStaff").ToListAsync().Result.ToList();
+            var supList = _context.Staffs.FromSql("sp_getSupervisors").ToListAsync().Result.ToList();
+            staffList.AddRange(supList);
 
-            return View();
+
+            List<string> statusList = new List<string>(new string[]
+            {
+                "Preprint Sent",
+                "Claim Received",
+                "Supervisor Workload",
+                "Staff Review",
+                "Hold",
+                "Closed"
+            });
+
+
+            var EmpID = new SqlParameter("@usersID", "471413");
+            var claimList = _context.MyClaims.FromSql("sp_getListOfAssignedClaim @usersID", EmpID).ToListAsync().Result.ToList();
+            
+
+            model.staff = staffList;
+            model.claims = claimList;
+            model.status = statusList;
+            return View( model);
+        }
+
+        [HttpPost]
+        public RedirectToActionResult Index(int? id)
+        {
+            return RedirectToAction("Claim", "Home", new { id });
         }
 
         public IActionResult Privacy()
@@ -48,10 +79,15 @@ namespace Homeowners_Ex_New.Controllers
         public IActionResult Claim(int? id)
         {
             var modelUser = new Claim();
+            ViewBag.ModelMessage = false;
             if (id != null)
             {
                 var EmpID = new SqlParameter("@EmployeeID", id);
-                modelUser = _context.Claim.FromSql("sp_getClaim @EmployeeID", EmpID).FirstOrDefaultAsync().Result;
+                 modelUser = _context.Claim.FromSql("sp_getClaim @EmployeeID", EmpID).FirstOrDefaultAsync().Result;
+                if(modelUser == null)
+                {
+                    ViewBag.ModelMessage= true;
+                }
             }
             else
             {

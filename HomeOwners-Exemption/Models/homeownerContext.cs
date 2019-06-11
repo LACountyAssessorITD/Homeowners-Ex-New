@@ -15,6 +15,7 @@ namespace HomeOwners_Exemption.Models
         {
         }
 
+        public virtual DbSet<MyClaims> MyClaims { get; set; }
         //public virtual DbSet<User> user { get; set; }
         public virtual DbSet<Staffs> Staffs { get; set; }
         public virtual DbSet<Supervisors> Supervisors { get; set; }

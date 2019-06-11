@@ -18,7 +18,7 @@
     }
 
 html,
-body {
+body{
     /*height: 100%;*/
     position: relative;
     background-color: transparent;
@@ -26,9 +26,22 @@ body {
     font-size: 20px;
     font-weight: 400;
     text-rendering: optimizeLegibility;
-    overflow-x: hidden;
-    overflow-y: hidden;
+    /*overflow-x: hidden;
+    overflow-y: hidden;*/
     height: 100vh;
+}
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+input {
+    
+    
+    
+    margin-bottom: 0.2em;
+    border-radius: 3px;
+    border: 1px solid #BABABA;
 }
 h1,h2,h3,h4,h5 {
     font-weight: 600;
@@ -37,7 +50,7 @@ h1,h2,h3,h4,h5 {
     padding: 0;
 }
 .section-body {
-    height: 100%;
+    height: 100vh;
     width: 100%;
     display: inline-flex;
     padding: 0;
@@ -58,7 +71,7 @@ h1,h2,h3,h4,h5 {
 }
 
 .top-nav-height {
-    height: 104px;
+    height: 98px;
 }
 .sidebar ul {
     margin-left: 10px;
@@ -101,7 +114,7 @@ h1,h2,h3,h4,h5 {
 }
 .homeowner-nav {
     background-color: #155189;
-    font-size: 120%;
+    /*font-size: 120%;*/
     color: #fff;
 }
 .homeowner-nav a {
@@ -114,9 +127,10 @@ h1,h2,h3,h4,h5 {
     margin-bottom: 0;
 }
 .homeowner-nav li {
-    
+    font-size: 80%;
     padding: 5px 10px 5px 10px;
 }
+
 .btn-admin {
     background-color: transparent;
     padding: 0;
@@ -125,16 +139,39 @@ h1,h2,h3,h4,h5 {
     color: #fff;
     font-size: 100%;
 }
-
+.index-section {
+}
+.col-custom {
+    -ms-flex: 0 0 20%;
+    flex: 0 0 20%;
+    max-width: 20%;
+}
 .dashboard-1 {
-    height: 30%;
+    max-height: 300px;
+}
+.sub-dash {
+    overflow-y: scroll; 
+    padding: 0;
+}
 
+.dashboard-1 p {
+    font-size: 90%;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
-.bg-1 {
-    background-color: #155189;
-}
+    .dashboard-1 .col-6,
+    .dashboard-1 .col-2,
+    .dashboard-1 .col-4,
+    .dashboard-1 .col-custom{
+        padding-left: 3px;
+        padding-right: 4px;
+        border: 1px solid #000;
+    }
+    .bg-1 {
+        background-color: #155189;
+    }
 .dashboard-2 {
-    height: 40%;
+    height: 300px;
    
     margin-top: 40px;
 }
@@ -159,11 +196,16 @@ h1,h2,h3,h4,h5 {
     padding-top: 1.0rem;
 }
 .claim-core input{
-    width: 79%;
+    width: 76%;
     padding-left: 20px;
 }
 .Section-Claim .form-group {
     margin-bottom: .5rem;
+}
+.test-padding .col-4 {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right:auto;
 }
 
 .row-divider {
@@ -179,12 +221,13 @@ h1,h2,h3,h4,h5 {
     background-color: #f7f2f2;
 }
 .form-info label {
-    width: 10%;
+    width: 20%;
 }
 
 
     .form-info input {
-        width: 89.6%;
+        width: 76.6%;
+        
         
     }
 .form-info-2 {
@@ -206,9 +249,7 @@ h1,h2,h3,h4,h5 {
     }
 
 .border-title {
-    border-top: 1px solid #c4c4c4;
-    border-bottom: 1px solid #c4c4c4;
-    border-left: 1px solid #c4c4c4;
+    border: 1px solid #c4c4c4;
     margin-bottom: 2px;
 }
 .property-info {
@@ -235,3 +276,4 @@ h1,h2,h3,h4,h5 {
     padding-left: 10px;
     
 }
+
