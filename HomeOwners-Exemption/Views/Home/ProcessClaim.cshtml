@@ -159,12 +159,12 @@
         });
     });
 
-    // Send the data to the controller
+    // Send the data to the controller when click the "Process" button
     $(document).ready(function () {
         $('#SubmitProcess').on('click', function () {
             var claimIDs = [];
             var AINs = [];
-            alert("here");
+
             //Get the values from the cells
             var tbl = document.getElementById("tblClaims");         
             var tblRows = tbl.getElementsByTagName("tr");
@@ -204,13 +204,95 @@
                     window.location = '../Home/ProcessClaim';
                 },
                 error: function () {
-                    alert("Not Process!");
+                    alert("Not Processed!");
                 }
             }); 
         });
     });
 
+    // Send the data to the controller when click the "Search" button
+    function ValidateInfo()
+    {
+        // Get the value from the input text box
+        var claimID = document.getElementById("txtClaimID").value;
+        var AIN = document.getElementById("txtAIN").value;
 
+        // Get the claim status
+        var e = document.getElementById("ddClaimStatus");
+        var status = e.options[e.selectedIndex].value;
+
+        // Get the claim received date
+        var receivedDate = document.getElementById("txtClaimReceivedDate").value;
+
+        $.ajax({
+            url: '@Url.Action("ValidateInfo", "Home")',
+            type: "POST",
+            data: { ClaimID: claimID, AIN: AIN, ClaimStatus: status, ClaimReceivedDate: receivedDate},
+            traditional: true,
+            success: function (returnData) {
+                //alert("Validated!");
+                confirmBox(returnData);
+        
+                function confirmBox(displayData)
+                {
+                    var data = displayData + "Do you want to process this claim?"
+                    if (confirm(data))
+                    {
+                        //Click OK
+                        Add();
+                        document.getElementById("exclamationClaimID").style.display = "inline";
+                        document.getElementById("exclamationAIN").style.display = "inline";
+                        document.getElementById("checkClaimID").style.display = "none";
+                        document.getElementById("checkAIN").style.display = "none";
+                        document.getElementById("txtClaimID").focus();
+
+                        $.ajax({
+                            url: '@Url.Action("ProcessInfo", "Home")',
+                            type: "POST",
+                            data: { ClaimID: claimID, AIN: AIN, ClaimStatus: status, ClaimReceivedDate: receivedDate},
+                            traditional: true,
+                            success: function () {
+                                alert("Processed!");
+                            },
+                            error: function () {
+                                alert("Fail to process!");
+                            }
+                        }); 
+                    }
+                    else
+                    {
+                        //Click CANCEL
+                        document.getElementById("exclamationClaimID").style.display = "none";
+                        document.getElementById("exclamationAIN").style.display = "none";
+                        document.getElementById("checkClaimID").style.display = "inline";
+                        document.getElementById("checkAIN").style.display = "inline";
+                        document.getElementById("txtClaimID").focus();
+                    }
+                }
+            },
+            error: function () {
+                alert("Fail to validate!");
+            }
+        }); 
+    }
+
+    function ClearInfo()
+    {
+        var table = document.getElementById("tblClaims");
+        if (table.rows.length > 2)
+        {
+            for (var i = table.rows.length - 2; i > 0; i--) {
+                table.deleteRow(i);
+            }
+        }
+        document.getElementById("txtClaimID").value = ""
+        document.getElementById("txtAIN").value = ""
+        document.getElementById("exclamationClaimID").style.display = "inline";
+        document.getElementById("exclamationAIN").style.display = "inline";
+        document.getElementById("checkClaimID").style.display = "none";
+        document.getElementById("checkAIN").style.display = "none";
+        document.getElementById("txtClaimID").focus();
+    }
 
 </script>
 <div class="text-left">
@@ -222,7 +304,7 @@
         <td width="350px">
             <label style="font-weight:bold;">
                 Claim Status:
-                @Html.DropDownListFor(model => model.ClaimStatus, Model.StatusList, new { style = "width:250px;", @id = "ddClaimStatus", @class = "form-control", @label = "Claim Status:" })
+                @Html.DropDownListFor(model => model.ClaimStatus, Model.StatusList, new { style = "width:250px;", @id = "ddClaimStatus", @class = "form-control", @label = "Claim Status:", autofocus = "autofocus" })
             </label>
         </td>
         <td width="300px">
@@ -253,7 +335,7 @@
                 <th width="30px">&nbsp;</th>
                 <th width="100px">AIN</th>
                 <th width="30px">&nbsp;</th>
-                <th width="150px">&nbsp;</th>
+                <th width="150px"><input type="submit" class="btn btn-primary bg-3" id="SubmitClear" value="Clear" onclick="ClearInfo();" /></th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -261,17 +343,16 @@
             <tr>
                 <td><input type="text" id="txtClaimID" name="txtClaimID" maxlength="7" oninput="numberOnly(this.id)" disabled /></td>
                 <td>
-                    <img src="~/img/exclamation-circle-solid.svg" style
-                         ="height:30px;width:30px;display:inline;" />
-                    <img src="~/img/check-circle-solid.svg" style="height:30px;width:30px;display:none;" />
+                    <img src="~/img/exclamation-circle-solid.svg" id="exclamationClaimID" style="height:30px;width:30px;display:inline;" />
+                    <img src="~/img/check-circle-solid.svg" id="checkClaimID" style="height:30px;width:30px;display:none;" />
                 </td>
                 <td><input type="text" id="txtAIN" name="txtAIN" maxlength="10" oninput="numberOnly(this.id)" disabled /></td>
                 <td>
-                    <img src="~/img/exclamation-circle-solid.svg" style="height:30px;width:30px;display:inline;" />
-                    <img src="~/img/check-circle-solid.svg" style="height:30px;width:30px;display:none;" />
+                    <img src="~/img/exclamation-circle-solid.svg" id="exclamationAIN" style="height:30px;width:30px;display:inline;" />
+                    <img src="~/img/check-circle-solid.svg" id="checkAIN" style="height:30px;width:30px;display:none;" />
                 </td>
                 <td>
-                    <img src="~/img/plus-circle-solid.svg" onclick="Add()" style="height:30px;width:30px;" title="Add another record" />
+                    <!--<img src="~/img/plus-circle-solid.svg" onclick="Add()" style="height:30px;width:30px;" title="Add another record" />-->
                     <img src="~/img/search.jpg" onclick="ValidateInfo()" style="height:30px;width:30px;" title="Search" />
                 </td>
             </tr>
