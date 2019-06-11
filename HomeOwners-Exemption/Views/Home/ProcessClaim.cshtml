@@ -10,19 +10,17 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
     function Add() {
-        //var howManyRows = document.getElementById("tblClaims").rows.length;
+        //var howManyRows = document.getElementById("tblClaims_1").rows.length;
         //if ((howManyRows - 3) < 10) {
-            AddRow($("#txtClaimID").val(), $("#txtAIN").val(), $("#txtClaimDate").val());
-            $("#txtClaimID").val("");
-            $("#txtAIN").val("");
-            $("#txtClaimDate").val("");
+            AddRow($("#txtClaimID_1").val());
+            $("#txtClaimID_1").val("");
         //}
     };
 
-    function AddRow(claimid, ain, claimdate) {
+    function AddRow(claimid) {
         //alert(document.getElementById("txtClaimDate").value);
         //Get the reference of the Table's TBODY element.
-        var tBody = $("#tblClaims > TBODY")[0];
+        var tBody = $("#tblClaims_1 > TBODY")[0];
 
         //Add Row.
         row = tBody.insertRow(-1);
@@ -31,35 +29,17 @@
         var cell = $(row.insertCell(-1));
         cell.html(claimid);
 
-        cell = $(row.insertCell(-1));
-        //cell.html();
-        var imgCheck = $("<img />");
-        imgCheck.attr("src", "/img/check-circle-solid.svg");
-        imgCheck.attr("style", "height:30px;width:30px;");
-        cell.append(imgCheck);
-
-        //Add AIN cell.
-        cell = $(row.insertCell(-1));
-        cell.html(ain);
-
-        cell = $(row.insertCell(-1));
-        //cell.html();
-        var imgCheck = $("<img />");
-        imgCheck.attr("src", "/img/check-circle-solid.svg");
-        imgCheck.attr("style", "height:30px;width:30px;");
-        cell.append(imgCheck);
-
         //Add Button cell.
         cell = $(row.insertCell(-1));
         //cell.html();
-        //var btnRemove = $("<img />");
-        //btnRemove.attr("src", "/img/minus-circle-solid.svg");
-        //btnRemove.attr("style", "height:30px;width:30px;");
-        //btnRemove.attr("onclick", "Remove(this);");
-        //btnRemove.val("Remove");
-        //cell.append(btnRemove);
-        var lblProcessed = $("<label style=\"height:30px;width:30px;color:green;\">Processed</label>");
-        cell.append(lblProcessed);
+        var btnRemove = $("<img />");
+        btnRemove.attr("src", "/img/minus-circle-solid.svg");
+        btnRemove.attr("style", "height:30px;width:30px;");
+        btnRemove.attr("onclick", "Remove(this);");
+        btnRemove.val("Remove");
+        cell.append(btnRemove);
+        //var lblProcessed = $("<label style=\"height:30px;width:30px;color:green;\">Processed</label>");
+        //cell.append(lblProcessed);
     };
 
     function Remove(button) {
@@ -68,7 +48,7 @@
         var name = $("TD", row).eq(0).html();
         if (confirm("Do you want to delete Claim #: " + name)) {
             //Get the reference of the Table.
-            var table = $("#tblClaims")[0];
+            var table = $("#tblClaims_1")[0];
 
             //Delete the Table row using it's Index.
             table.deleteRow(row[0].rowIndex);
@@ -96,28 +76,18 @@
     $(document).ready(function () {
         $("#ddClaimStatus").change(function () {
             var statusText = $("#ddClaimStatus option:selected").text();
-            //if (statusText == "Claim Received") {
-            //    document.getElementById("tblClaims").style.display = "inline";
-            //    document.getElementById("dvNotClaimReceived").style.visibility = "hidden";
-            //}
-            //else {
-             //   document.getElementById("tblClaims").style.display = "none";
-            //    document.getElementById("dvNotClaimReceived").style.visibility = "visible";
-            //}
-
-
-            if (statusText == "Select Status") {
-                document.getElementById("txtClaimID").disabled = true;
-                document.getElementById("txtAIN").disabled = true;
+            if (statusText == "Claim Received") {
+                document.getElementById("dvClaimReceived").style.visibility = "visible";
+                document.getElementById("dvNotClaimReceived").style.visibility = "hidden";
             }
-            else if (statusText == "Claim Received") {
+            else {
+                document.getElementById("dvClaimReceived").style.visibility = "hidden";
+                document.getElementById("dvNotClaimReceived").style.visibility = "visible";
+            }
+
+            if (statusText == "Claim Received") {
                 document.getElementById("txtClaimID").disabled = false;
                 document.getElementById("txtAIN").disabled = false;
-            }
-            else
-            {
-                document.getElementById("txtClaimID").disabled = false;
-                document.getElementById("txtAIN").disabled = true;
             }
 
             if (statusText == "Claim Received") {
@@ -172,28 +142,22 @@
     $(document).ready(function () {
         $('#SubmitProcess').on('click', function () {
             var claimIDs = [];
-            var AINs = [];
 
             //Get the values from the cells
-            var tbl = document.getElementById("tblClaims");         
+            var tbl = document.getElementById("tblClaims_1");         
             var tblRows = tbl.getElementsByTagName("tr");
             if (tblRows.length > 3) {
                 for (var i = 1; i<tblRows.length-2; i++) {
                     claimIDs.push(tbl.rows[i].cells[0].innerHTML);
-                    AINs.push(tbl.rows[i].cells[2].innerHTML);
                 }
             }
 
             // Get the value from the input text box
-            claimIDs.push(document.getElementById("txtClaimID").value);
-            AINs.push(document.getElementById("txtAIN").value);
+            claimIDs.push(document.getElementById("txtClaimID_1").value);
 
             // Get the claim status
             var e = document.getElementById("ddClaimStatus");
             var status = e.options[e.selectedIndex].value;
-
-            // Get the claim received date
-            var receivedDate = document.getElementById("txtClaimReceivedDate").value;
 
             // Get the supervisor assignee
             e = document.getElementById("ddSupervisors");
@@ -206,7 +170,7 @@
             $.ajax({
                 url: '@Url.Action("GetClaimInfo", "Home")',
                 type: "POST",
-                data: { ClaimIDList: claimIDs, AINList: AINs, ClaimStatus: status, ClaimReceivedDate: receivedDate, AssigneeSupervisor: supervisorAssignee, AssigneeStaff: staffAssignee},
+                data: { ClaimIDList: claimIDs, ClaimStatus: status, AssigneeSupervisor: supervisorAssignee, AssigneeStaff: staffAssignee},
                 traditional: true,
                 success: function () {
                     alert("Processed!");
@@ -223,8 +187,10 @@
     function ValidateInfo()
     {
         // Get the value from the input text box
-        var claimID = document.getElementById("txtClaimID").value;
-        var AIN = document.getElementById("txtAIN").value;
+        var claimID = "";
+        clamID = document.getElementById("txtClaimID").value;
+        var AIN = "";
+        AIN = document.getElementById("txtAIN").value;
 
         // Get the claim status
         var e = document.getElementById("ddClaimStatus");
@@ -351,7 +317,7 @@
 
 </script>
 <div class="text-left">
-    <label><b>Scan Claim - Claim Received</b></label>
+    <label><b>Process Claim</b></label>
 </div>
 <br />
 <table>
@@ -373,16 +339,16 @@
                 @Html.DropDownListFor(model => model.Staff, Model.Staffs, new { style = "width:250px;display:none;", @id = "ddStaffs", @class = "form-control dropdown-text" })
             </label>
 
-            <label id="lblClaimReceivedDate" style="font-weight:bold;display:none;">
+            <label id="lblClaimReceivedDate" style="font-weight:bold;display:inline;">
                 Claim Received Date:
-                @Html.TextBoxFor(model => model.ClaimReceivedDate, new { style = "width:250px;display:none;", @id = "txtClaimReceivedDate", @name = "txtClaimReceivedDate", maxlength = 10, @class = "form-control input-text" })
+                @Html.TextBoxFor(model => model.ClaimReceivedDate, new { style = "width:250px;", @id = "txtClaimReceivedDate", @name = "txtClaimReceivedDate", maxlength = 10, @class = "form-control input-text" })
             </label>
         </td>
     </tr>
 </table>
 <br />
 <br />
-<div text-align="center" id="dvClaimReceived" style="visibility:visible">
+<div text-align="center" id="dvClaimReceived" style="visibility:visible;">
     <table id="tblClaims" cellpadding="0" cellspacing="0" border="1">
         <thead>
             <tr>
@@ -396,12 +362,12 @@
         <tbody></tbody>
         <tfoot>
             <tr>
-                <td><input type="text" id="txtClaimID" name="txtClaimID" maxlength="7" oninput="numberOnly(this.id)" disabled /></td>
+                <td><input type="text" id="txtClaimID" name="txtClaimID" maxlength="7" oninput="numberOnly(this.id)" /></td>
                 <td>
                     <img src="~/img/exclamation-circle-solid.svg" id="exclamationClaimID" style="height:30px;width:30px;display:inline;" />
                     <img src="~/img/check-circle-solid.svg" id="checkClaimID" style="height:30px;width:30px;display:none;" />
                 </td>
-                <td><input type="text" id="txtAIN" name="txtAIN" maxlength="10" oninput="numberOnly(this.id)" disabled /></td>
+                <td><input type="text" id="txtAIN" name="txtAIN" maxlength="10" oninput="numberOnly(this.id)" /></td>
                 <td>
                     <img src="~/img/exclamation-circle-solid.svg" id="exclamationAIN" style="height:30px;width:30px;display:inline;" />
                     <img src="~/img/check-circle-solid.svg" id="checkAIN" style="height:30px;width:30px;display:none;" />
@@ -412,8 +378,35 @@
             </tr>
         </tfoot>
     </table>
-
-    
+</div>
+<div text-align="center" id="dvNotClaimReceived" style="visibility:hidden;">
+    <table id="tblClaims_1" cellpadding="0" cellspacing="0" border="1">
+        <thead>
+            <tr>
+                <th width="100px">Claim #</th>
+                <!--<th width="30px">&nbsp;</th>-->
+                <th width="150px"></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+            <tr>
+                <td><input type="text" id="txtClaimID_1" name="txtClaimID_1" maxlength="7" oninput="numberOnly(this.id)" /></td>
+                <!--<td>
+                    <img src="~/img/exclamation-circle-solid.svg" id="exclamationClaimID_1" style="height:30px;width:30px;display:inline;" />
+                    <img src="~/img/check-circle-solid.svg" id="checkClaimID_1" style="height:30px;width:30px;display:none;" />
+                </td>-->
+                <td><img src="~/img/plus-circle-solid.svg" onclick="Add()" style="height:30px;width:30px;" /></td>
+            </tr>
+            <tr>
+                <td colspan="6" align="right">
+                    <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" />
+                    &nbsp;&nbsp;&nbsp;
+                    <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel" onclick="javascript:window.location='../Home/ProcessClaim';" />
+                </td>
+            </tr>
+        </tfoot>
+    </table>
 </div>
 
 

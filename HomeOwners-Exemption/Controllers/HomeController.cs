@@ -130,35 +130,19 @@ namespace Homeowners_Ex_New.Controllers
             return View(model);
         }
 
-        public string GetClaimInfo(IEnumerable<int> ClaimIDList, IEnumerable<int> AINList, string ClaimStatus, string ClaimReceivedDate, string AssigneeSupervisor, string AssigneeStaff)
+        public string GetClaimInfo(IEnumerable<int> ClaimIDList, string ClaimStatus, string AssigneeSupervisor, string AssigneeStaff)
         {
             string strAssignor = User.FindFirst("Name").Value;
 
             DataTable dt_tmpClaimID = new DataTable();
             dt_tmpClaimID.Columns.Add("ClaimID", typeof(string));
-            dt_tmpClaimID.Columns.Add("AIN", typeof(string));
             DataRow tmpClaimID;
 
-            if (ClaimStatus == "2")
+            foreach (int claimID in ClaimIDList)
             {
-                List<int> lClaimIDList = ClaimIDList.ToList();
-                List<int> lAINList = AINList.ToList();
-                for (int i = 0; i < lClaimIDList.Count; i++)
-                {
-                    tmpClaimID = dt_tmpClaimID.NewRow();
-                    tmpClaimID["ClaimID"] = Convert.ToString(lClaimIDList[i]);
-                    tmpClaimID["AIN"] = Convert.ToString(lAINList[i]);
-                    dt_tmpClaimID.Rows.Add(tmpClaimID);
-                }
-            }
-            else
-            {
-                foreach (int claimID in ClaimIDList)
-                {
-                    tmpClaimID = dt_tmpClaimID.NewRow();
-                    tmpClaimID["ClaimID"] = Convert.ToString(claimID);
-                    dt_tmpClaimID.Rows.Add(tmpClaimID);
-                }
+                tmpClaimID = dt_tmpClaimID.NewRow();
+                tmpClaimID["ClaimID"] = Convert.ToString(claimID);
+                dt_tmpClaimID.Rows.Add(tmpClaimID);
             }
 
             string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
@@ -167,18 +151,13 @@ namespace Homeowners_Ex_New.Controllers
             cmd.Connection = cnn;
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            if (ClaimStatus == "2") //Claim Received
+            if (ClaimStatus == "3") //Supervisor Workload
             {
                 cmd.CommandText = "sp_ClaimReceived";
                 //cmd.Parameters.Add(new SqlParameter("@ClaimStatusRefID", ClaimStatus));
                 //cmd.Parameters.Add(new SqlParameter("@ClaimDate", Convert.ToDateTime(ClaimReceivedDate)));
                 //cmd.Parameters.Add(new SqlParameter("@ReceivedBy", strAssignor));
                 cmd.Parameters.Add(new SqlParameter("@tvpClaimID", dt_tmpClaimID));
-            }
-            else if (ClaimStatus == "3") //Supervisor Workload
-            {
-
-
             }
             else if (ClaimStatus == "4") //Staff Reivew
             {
@@ -198,6 +177,11 @@ namespace Homeowners_Ex_New.Controllers
 
         public string ValidateInfo(string ClaimID, string AIN, string ClaimStatus, string ClaimReceivedDate)
         {
+            if (ClaimID == null)
+                ClaimID = "";
+            if (AIN == null)
+                AIN = "";
+
             string strAssignor = User.FindFirst("Name").Value;
             string result = "";
 
@@ -250,13 +234,13 @@ namespace Homeowners_Ex_New.Controllers
             List<SelectListItem> li = new List<SelectListItem>();
             if (User.FindFirst("RoleTitle").Value == "3")
             {
-                li.Add(new SelectListItem { Text = "Select Status", Value = "0" });
+                //li.Add(new SelectListItem { Text = "Select Status", Value = "0" });
                 li.Add(new SelectListItem { Text = "Claim Received", Value = "2" });
                 li.Add(new SelectListItem { Text = "Supervisor Workload", Value = "3" });
             }
             else
             {
-                li.Add(new SelectListItem { Text = "Select Status", Value = "0" });
+                //li.Add(new SelectListItem { Text = "Select Status", Value = "0" });
                 li.Add(new SelectListItem { Text = "Claim Received", Value = "2" });
                 li.Add(new SelectListItem { Text = "Supervisor Workload", Value = "3" });
                 li.Add(new SelectListItem { Text = "Staff Review", Value = "4" });
