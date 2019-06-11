@@ -140,22 +140,29 @@ namespace Homeowners_Ex_New.Controllers
         public string ValidateInfo(string ClaimID, string AIN, string ClaimStatus, string ClaimReceivedDate)
         {
             string strAssignor = User.FindFirst("Name").Value;
+            string result = "";
 
-            //string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
-            //SqlConnection cnn = new SqlConnection(cnnString);
-            //SqlCommand cmd = new SqlCommand();
-            //cmd.Connection = cnn;
-            //cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            //cmd.CommandText = "sp_ClaimReceived";
-            //cmd.Parameters.Add(new SqlParameter("@ClaimStatusRefID", ClaimStatus));
-            //cmd.Parameters.Add(new SqlParameter("@ClaimDate", Convert.ToDateTime(ClaimReceivedDate)));
-            //cmd.Parameters.Add(new SqlParameter("@ReceivedBy", strAssignor));
-            //cmd.Parameters.Add(new SqlParameter("@tvpClaimID", dt_tmpClaimID));
-            //cnn.Open();
-            //object o = cmd.ExecuteScalar();
-            //cnn.Close();
+            string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
+            SqlConnection cnn = new SqlConnection(cnnString);
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader rdr = null;
 
-            return "Mail Address: 100 Temple Ave, Los Angeles, CA 90000\n\n";
+            cmd.Connection = cnn;
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.CommandText = "sp_chk_ClaimID_AIN";
+            cmd.Parameters.Add(new SqlParameter("@ClaimStatusRefID", ClaimStatus));
+            cmd.Parameters.Add(new SqlParameter("@ClaimID", ClaimID));
+            cmd.Parameters.Add(new SqlParameter("@AIN", AIN));
+
+            cnn.Open();   
+            rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                result = rdr[0].ToString();
+            }
+            cnn.Close();
+
+            return result;
         }
 
         public string ProcessInfo(string ClaimID, string AIN, string ClaimStatus, string ClaimReceivedDate)
