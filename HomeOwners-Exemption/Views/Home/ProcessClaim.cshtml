@@ -96,6 +96,15 @@
     $(document).ready(function () {
         $("#ddClaimStatus").change(function () {
             var statusText = $("#ddClaimStatus option:selected").text();
+            //if (statusText == "Claim Received") {
+            //    document.getElementById("tblClaims").style.display = "inline";
+            //    document.getElementById("dvNotClaimReceived").style.visibility = "hidden";
+            //}
+            //else {
+             //   document.getElementById("tblClaims").style.display = "none";
+            //    document.getElementById("dvNotClaimReceived").style.visibility = "visible";
+            //}
+
 
             if (statusText == "Select Status") {
                 document.getElementById("txtClaimID").disabled = true;
@@ -234,39 +243,85 @@
                 confirmBox(returnData);
         
                 function confirmBox(displayData)
-                {
-                    var data = displayData + "Do you want to process this claim?"
-                    if (confirm(data))
-                    {
-                        //Click OK
-                        Add();
-                        document.getElementById("exclamationClaimID").style.display = "inline";
-                        document.getElementById("exclamationAIN").style.display = "inline";
-                        document.getElementById("checkClaimID").style.display = "none";
-                        document.getElementById("checkAIN").style.display = "none";
+                {   
+                    if (displayData.includes("ERROR", 0) || displayData.includes("ALERT", 0)) {
+                        var claimError = "";
+                        var ainError = "";
+                        var start;
+                        var end;
+                        data = displayData.toString();
+                        if (displayData.includes("ERROR", 0)) {
+                            document.getElementById("exclamationClaimID").style.display = "inline";
+                            document.getElementById("checkClaimID").style.display = "none";
+                            start = displayData.indexOf("ERROR");
+                            end = displayData.indexOf("|");
+                            //alert(displayData.substring(start, end));
+                            claimError = displayData.substring(start, end) + '\n';
+                        }
+                        else {
+                            document.getElementById("exclamationClaimID").style.display = "none";
+                            document.getElementById("checkClaimID").style.display = "inline";
+                        }
+
+                        if(displayData.includes("ALERT", 0)) {
+                            document.getElementById("exclamationAIN").style.display = "inline";
+                            document.getElementById("checkAIN").style.display = "none";
+                            start = displayData.indexOf("ALERT");
+                            //alert(displayData.substring(start));
+                            ainError = displayData.substring(start);
+                        }
+                        else {
+                            document.getElementById("exclamationAIN").style.display = "none";
+                            document.getElementById("checkAIN").style.display = "inline";
+                        }
                         document.getElementById("txtClaimID").focus();
 
-                        $.ajax({
-                            url: '@Url.Action("ProcessInfo", "Home")',
-                            type: "POST",
-                            data: { ClaimID: claimID, AIN: AIN, ClaimStatus: status, ClaimReceivedDate: receivedDate},
-                            traditional: true,
-                            success: function () {
-                                alert("Processed!");
-                            },
-                            error: function () {
-                                alert("Fail to process!");
-                            }
-                        }); 
+                        alert(claimError + ainError);
                     }
-                    else
-                    {
-                        //Click CANCEL
-                        document.getElementById("exclamationClaimID").style.display = "none";
-                        document.getElementById("exclamationAIN").style.display = "none";
-                        document.getElementById("checkClaimID").style.display = "inline";
-                        document.getElementById("checkAIN").style.display = "inline";
-                        document.getElementById("txtClaimID").focus();
+                    else {
+                        var ain = "";
+                        var owner = "";
+                        var address = "";
+                        var rest = "";
+                        var result = "";
+
+                        ain = displayData.substring(1, displayData.indexOf("$") - displayData.indexOf("|"));
+                        rest = displayData.substring(displayData.indexOf("$"));
+                        owner = rest.substring(1, rest.indexOf("!"));
+                        address = rest.substring(rest.indexOf("!")+1);
+
+                        result = "AIN: " + ain + "\nOwner: " + owner + "\nAddress: " + address + "\n\nDo you want to process this claim?";
+
+                        if (confirm(result)) {
+                            //Click OK
+                            Add();
+                            document.getElementById("exclamationClaimID").style.display = "inline";
+                            document.getElementById("exclamationAIN").style.display = "inline";
+                            document.getElementById("checkClaimID").style.display = "none";
+                            document.getElementById("checkAIN").style.display = "none";
+                            document.getElementById("txtClaimID").focus();
+
+                            $.ajax({
+                                url: '@Url.Action("ProcessInfo", "Home")',
+                                type: "POST",
+                                data: { ClaimID: claimID, AIN: AIN, ClaimStatus: status, ClaimReceivedDate: receivedDate },
+                                traditional: true,
+                                success: function () {
+                                    alert("Processed!");
+                                },
+                                error: function () {
+                                    alert("Fail to process!");
+                                }
+                            });
+                        }
+                        else {
+                            //Click CANCEL
+                            document.getElementById("exclamationClaimID").style.display = "none";
+                            document.getElementById("exclamationAIN").style.display = "none";
+                            document.getElementById("checkClaimID").style.display = "inline";
+                            document.getElementById("checkAIN").style.display = "inline";
+                            document.getElementById("txtClaimID").focus();
+                        }
                     }
                 }
             },
@@ -327,7 +382,7 @@
 </table>
 <br />
 <br />
-<div text-align="center">
+<div text-align="center" id="dvClaimReceived" style="visibility:visible">
     <table id="tblClaims" cellpadding="0" cellspacing="0" border="1">
         <thead>
             <tr>
@@ -352,19 +407,13 @@
                     <img src="~/img/check-circle-solid.svg" id="checkAIN" style="height:30px;width:30px;display:none;" />
                 </td>
                 <td>
-                    <!--<img src="~/img/plus-circle-solid.svg" onclick="Add()" style="height:30px;width:30px;" title="Add another record" />-->
                     <img src="~/img/search.jpg" onclick="ValidateInfo()" style="height:30px;width:30px;" title="Search" />
                 </td>
             </tr>
-            <!--<tr>
-            <td colspan="6" align="right">
-                <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" />
-                &nbsp;&nbsp;&nbsp;
-                <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel" onclick="javascript:window.location='../Home/ProcessClaim';" />
-            </td>
-        </tr>-->
         </tfoot>
     </table>
+
+    
 </div>
 
 
