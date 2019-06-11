@@ -12,6 +12,7 @@ namespace HomeOwners_Exemption.Models
     public class ProcessClaim
     {
         public string ClaimStatus { get; set; }
+        public IEnumerable<SelectListItem> StatusList { get; set; }
         public string ClaimReceivedDate { get; set; }
         public string Supervisor { get; set; }
         public string Staff { get; set; }
