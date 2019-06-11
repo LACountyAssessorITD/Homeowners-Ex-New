@@ -101,7 +101,7 @@
             //    document.getElementById("dvNotClaimReceived").style.visibility = "hidden";
             //}
             //else {
-            //    document.getElementById("dvClaimReceived").style.visibility = "hidden";
+             //   document.getElementById("tblClaims").style.display = "none";
             //    document.getElementById("dvNotClaimReceived").style.visibility = "visible";
             //}
 
@@ -413,36 +413,7 @@
         </tfoot>
     </table>
 
-    <table id="tblClaimsOther" cellpadding="0" cellspacing="0" border="1" style="display:none;">
-        <thead>
-            <tr>
-                <th width="100px">Claim #</th>
-                <th width="30px">&nbsp;</th>
-                <th width="150px"><input type="submit" class="btn btn-primary bg-3" id="SubmitClear" value="Clear" onclick="ClearInfo();" /></th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-        <tfoot>
-            <tr>
-                <td><input type="text" id="txtClaimID" name="txtClaimID" maxlength="7" oninput="numberOnly(this.id)" disabled /></td>
-                <td>
-                    <img src="~/img/exclamation-circle-solid.svg" id="exclamationClaimID" style="height:30px;width:30px;display:inline;" />
-                    <img src="~/img/check-circle-solid.svg" id="checkClaimID" style="height:30px;width:30px;display:none;" />
-                </td>
-                <td>
-                    <!--<img src="~/img/plus-circle-solid.svg" onclick="Add()" style="height:30px;width:30px;" title="Add another record" />-->
-                    <img src="~/img/search.jpg" onclick="ValidateInfo()" style="height:30px;width:30px;" title="Search" />
-                </td>
-            </tr>
-            <!--<tr>
-                <td colspan="6" align="right">
-                    <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" />
-                    &nbsp;&nbsp;&nbsp;
-                    <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel" onclick="javascript:window.location='../Home/ProcessClaim';" />
-                </td>
-            </tr>-->
-        </tfoot>
-    </table>
+    
 </div>
 
 

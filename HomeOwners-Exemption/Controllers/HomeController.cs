@@ -205,19 +205,19 @@ namespace Homeowners_Ex_New.Controllers
         {
             string strAssignor = User.FindFirst("Name").Value;
 
-            //string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
-            //SqlConnection cnn = new SqlConnection(cnnString);
-            //SqlCommand cmd = new SqlCommand();
-            //cmd.Connection = cnn;
-            //cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            //cmd.CommandText = "sp_ClaimReceived";
-            //cmd.Parameters.Add(new SqlParameter("@ClaimStatusRefID", ClaimStatus));
-            //cmd.Parameters.Add(new SqlParameter("@ClaimDate", Convert.ToDateTime(ClaimReceivedDate)));
-            //cmd.Parameters.Add(new SqlParameter("@ReceivedBy", strAssignor));
-            //cmd.Parameters.Add(new SqlParameter("@tvpClaimID", dt_tmpClaimID));
-            //cnn.Open();
-            //object o = cmd.ExecuteScalar();
-            //cnn.Close();
+            string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
+            SqlConnection cnn = new SqlConnection(cnnString);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = cnn;
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.CommandText = "sp_create_ClaimID_AIN";
+            cmd.Parameters.Add(new SqlParameter("@ClaimID", ClaimID));
+            cmd.Parameters.Add(new SqlParameter("@AIN", AIN));
+            cmd.Parameters.Add(new SqlParameter("@ClaimDate", ClaimReceivedDate));
+            cmd.Parameters.Add(new SqlParameter("@Claimuser", strAssignor));
+            cnn.Open();
+            object o = cmd.ExecuteNonQuery();
+            cnn.Close();
 
             return "1";
         }
