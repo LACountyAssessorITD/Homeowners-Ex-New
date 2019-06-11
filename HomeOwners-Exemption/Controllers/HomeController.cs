@@ -43,8 +43,14 @@ namespace Homeowners_Ex_New.Controllers
             var supList = _context.Staffs.FromSql("sp_getSupervisors").ToListAsync().Result.ToList();
             staffList.AddRange(supList);
 
-
-            List<string> statusList = new List<string>(new string[]
+            Dictionary<string, StatusCount> statusList = new Dictionary<string, StatusCount>();
+            statusList.Add("Preprint Sent", new StatusCount(0,0));
+            statusList.Add("Claim Received", new StatusCount(0, 0));
+            statusList.Add("Supervisor Workload", new StatusCount(0, 0));
+            statusList.Add("Staff Review", new StatusCount(0, 0));
+            statusList.Add("Hold", new StatusCount(0, 0));
+            statusList.Add("Closed", new StatusCount(0, 0));
+            List<string> statusID = new List<string>(new string[]
             {
                 "Preprint Sent",
                 "Claim Received",
@@ -53,16 +59,33 @@ namespace Homeowners_Ex_New.Controllers
                 "Hold",
                 "Closed"
             });
-
-
+            var statusDbList = _context.statusList.FromSql("sp_getCountsByStatus").ToListAsync().Result.ToList();
+            foreach (var item in statusDbList)
+            {
+                statusList[item.ClaimStatusRef] = new StatusCount(item.OrderCount, item.Late);
+             }
             var EmpID = new SqlParameter("@usersID", "471413");
             var claimList = _context.MyClaims.FromSql("sp_getListOfAssignedClaim @usersID", EmpID).ToListAsync().Result.ToList();
-            
+
+            var value = statusList[statusID[0]].Count;
 
             model.staff = staffList;
             model.claims = claimList;
-            model.status = statusList;
+            model.status = statusID;
+            model.statusId = statusList;
             return View( model);
+        }
+        public class StatusCount
+        {
+            public int Count { get; set; }
+            public int Late { get; set; }
+            public int Current { get; set; }
+            public StatusCount( int count, int late)
+            {
+                Count = count;
+                Late = late;
+                Current = count - late;
+            }
         }
 
         [HttpPost]
