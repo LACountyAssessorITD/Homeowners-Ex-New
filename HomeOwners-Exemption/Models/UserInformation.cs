@@ -12,5 +12,6 @@ namespace HomeOwners_Exemption.Models
         public string EmployeeID { get; set; }
         public string Name { get; set; }
         public string RoleTitle { get; set; }
+        public int RoleID { get; set; }
     }
 }

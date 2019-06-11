@@ -44,7 +44,7 @@ namespace HomeOwners_Exemption.Services
                         }
 
 
-                        user = new User(username,modelUser.Name, modelUser.RoleTitle);
+                        user = new User(username,modelUser.Name, modelUser.RoleTitle, modelUser.RoleID);
                         // User authenticated and authorized
                         var identities = new List<ClaimsIdentity> { new ClaimsIdentity("custom auth type") };
                         var ticket = new AuthenticationTicket(new ClaimsPrincipal(identities), username);

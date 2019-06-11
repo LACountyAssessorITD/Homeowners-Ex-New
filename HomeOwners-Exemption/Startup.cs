@@ -52,29 +52,7 @@ namespace Homeowners_Ex_New
                 options.UseSqlServer(Configuration.GetConnectionString("hox_connect"));
             });
             services.AddSingleton<IUserService>(new AdminUserService());
-            //services.Configure<CookiePolicyOptions>(options =>
-            //{
-            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-            //    options.CheckConsentNeeded = context => true;
-            //    options.MinimumSameSitePolicy = SameSiteMode.None;
-            //});
-            //services.ConfigureApplicationCookie(options => {
-
-            //    options.Events = new CookieAuthenticationEvents
-            //    {
-            //        OnRedirectToLogin = ctx =>
-            //        {
-            //            var requestPath = ctx.Request.Path;
-            //            if (requestPath.Value == "/Home")
-            //            {
-            //                ctx.Response.Redirect("/auth/signin");
-            //            }
-                        
-            //            return Task.CompletedTask;
-            //        }
-            //    };
-
-            //});
+        
 
             services.AddAuthentication(options =>
             {
