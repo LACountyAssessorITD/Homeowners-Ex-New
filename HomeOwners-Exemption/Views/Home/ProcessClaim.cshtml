@@ -8,18 +8,59 @@
 <link href="~/lib/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="~/js/site.js" type="text/javascript"></script>
 <script type="text/javascript">
+
+    /////////////////////////////////////////////////////////////////////
+    // For Claim Received Table
+    function Add_ClaimReceived() {
+        AddRow_ClaimReceived($("#txtClaimID").val(), $("#txtAIN").val());
+        $("#txtClaimID").val("");
+        $("#txtAIN").val("");
+    };
+
+    function AddRow_ClaimReceived(claimid, ain) {
+        //Get the reference of the Table's TBODY element.
+        var tBody = $("#tblClaims > TBODY")[0];
+
+        //Add Row.
+        row = tBody.insertRow(-1);
+
+        //Add ClaimID cell.
+        var cell = $(row.insertCell(-1));
+        cell.html(claimid);
+
+        cell = $(row.insertCell(-1));
+        var imgCheck = $("<img />");
+        imgCheck.attr("src", "/img/check-circle-solid.svg");
+        imgCheck.attr("style", "height:30px;width:30px;");
+        cell.append(imgCheck);
+
+        //Add AIN cell.
+        cell = $(row.insertCell(-1));
+        cell.html(ain);
+
+        cell = $(row.insertCell(-1));
+        var imgCheck = $("<img />");
+        imgCheck.attr("src", "/img/check-circle-solid.svg");
+        imgCheck.attr("style", "height:30px;width:30px;");
+        cell.append(imgCheck);
+
+        //Add Process cell.
+        cell = $(row.insertCell(-1));
+        var lblProcessed = $("<label style=\"height:30px;width:30px;color:green;\">Processed</label>");
+        cell.append(lblProcessed);
+    };
+    /////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////
+    // For Not Claim Received Table
     function Add() {
-        //var howManyRows = document.getElementById("tblClaims_1").rows.length;
-        //if ((howManyRows - 3) < 10) {
-            AddRow($("#txtClaimID_1").val());
-            $("#txtClaimID_1").val("");
-        //}
+        AddRow($("#txtClaimID_1").val());
+        $("#txtClaimID_1").val("");
     };
 
     function AddRow(claimid) {
-        //alert(document.getElementById("txtClaimDate").value);
-        //Get the reference of the Table's TBODY element.
         var tBody = $("#tblClaims_1 > TBODY")[0];
 
         //Add Row.
@@ -31,15 +72,12 @@
 
         //Add Button cell.
         cell = $(row.insertCell(-1));
-        //cell.html();
         var btnRemove = $("<img />");
         btnRemove.attr("src", "/img/minus-circle-solid.svg");
         btnRemove.attr("style", "height:30px;width:30px;");
         btnRemove.attr("onclick", "Remove(this);");
         btnRemove.val("Remove");
         cell.append(btnRemove);
-        //var lblProcessed = $("<label style=\"height:30px;width:30px;color:green;\">Processed</label>");
-        //cell.append(lblProcessed);
     };
 
     function Remove(button) {
@@ -54,6 +92,7 @@
             table.deleteRow(row[0].rowIndex);
         }
     };
+    /////////////////////////////////////////////////////////////////////
 
     // Enter number only
     function numberOnly(id) {
@@ -66,17 +105,39 @@
     }
 
     // Hit "Enter" to insert the data
-    $(document).on("keypress", "form", function (event) {
-        if (event.keyCode == 13) {
-            return event.keyCode != 13;
+    //$(document).on("keypress", "form", function (event) {
+    //    if (event.keyCode == 13) {
+    //        return event.keyCode != 13;
+    //    }
+    //});
+
+    function todayDate() {
+        var today = new Date();
+        var mm = today.getMonth() + 1; //January is 0!
+        var dd = today.getDate();
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
         }
-    });
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        var today = mm + '/' + dd + '/' + yyyy;
+
+        return today;
+    }
 
     // Populate the dropdown
     $(document).ready(function () {
         $("#ddClaimStatus").change(function () {
             var statusText = $("#ddClaimStatus option:selected").text();
-            if (statusText == "Claim Received") {
+
+            //Tables
+            if (statusText == "Select Status") {
+                document.getElementById("dvClaimReceived").style.visibility = "hidden";
+                document.getElementById("dvNotClaimReceived").style.visibility = "hidden";
+            }
+            else if (statusText == "Claim Received") {
                 document.getElementById("dvClaimReceived").style.visibility = "visible";
                 document.getElementById("dvNotClaimReceived").style.visibility = "hidden";
             }
@@ -85,28 +146,23 @@
                 document.getElementById("dvNotClaimReceived").style.visibility = "visible";
             }
 
-            if (statusText == "Claim Received") {
-                document.getElementById("txtClaimID").disabled = false;
-                document.getElementById("txtAIN").disabled = false;
+            if (statusText == "Select Status") {
+                document.getElementById("lblClaimReceivedDate").style.display = "none";
+                document.getElementById("txtClaimReceivedDate").style.display = "none";
+                document.getElementById("txtClaimReceivedDate").value = "";
+                document.getElementById("lblAssignTo").style.display = "none";
+                document.getElementById("ddSupervisors").style.display = "none";
+                document.getElementById("ddSupervisors").selectedIndex = "0";
+                document.getElementById("lblAssignToStaff").style.display = "none";
+                document.getElementById("ddStaffs").style.display = "none";
+                document.getElementById("ddStaffs").selectedIndex = "0";
             }
 
+            //Claim Received input box
             if (statusText == "Claim Received") {
                 document.getElementById("lblClaimReceivedDate").style.display = "inline";
-                document.getElementById("txtClaimReceivedDate").style.display = "inline";
-
-                
-                var today = new Date();
-                var mm = today.getMonth() + 1; //January is 0!
-                var dd = today.getDate();
-                var yyyy = today.getFullYear();
-                if (dd < 10) {
-                    dd = '0' + dd;
-                }
-                if (mm < 10) {
-                    mm = '0' + mm;
-                }
-                var today = mm + '/' + dd + '/' + yyyy;
-                document.getElementById("txtClaimReceivedDate").value = today;
+                document.getElementById("txtClaimReceivedDate").style.display = "inline";     
+                document.getElementById("txtClaimReceivedDate").value = todayDate();
             }
             else {
                 document.getElementById("lblClaimReceivedDate").style.display = "none";
@@ -114,6 +170,7 @@
                 document.getElementById("txtClaimReceivedDate").value = "";
             }
 
+            //Supervisor Workload dropdown
             if (statusText == "Supervisor Workload") {
                 document.getElementById("lblAssignTo").style.display = "inline";
                 document.getElementById("ddSupervisors").style.display = "inline";
@@ -125,6 +182,7 @@
                 document.getElementById("ddSupervisors").selectedIndex = "0";
             }
 
+            //Staff Review dropdown
             if (statusText == "Staff Review") {
                 document.getElementById("lblAssignToStaff").style.display = "inline";
                 document.getElementById("ddStaffs").style.display = "inline";
@@ -135,6 +193,10 @@
                 document.getElementById("ddStaffs").style.display = "none";
                 document.getElementById("ddStaffs").selectedIndex = "0";
             }
+
+            document.getElementById("txtClaimID").value = "";
+            document.getElementById("txtAIN").value = "";
+            document.getElementById("txtClaimID_1").value = "";
         });
     });
 
@@ -188,7 +250,7 @@
     {
         // Get the value from the input text box
         var claimID = "";
-        clamID = document.getElementById("txtClaimID").value;
+        claimID = document.getElementById("txtClaimID").value;
         var AIN = "";
         AIN = document.getElementById("txtAIN").value;
 
@@ -197,104 +259,126 @@
         var status = e.options[e.selectedIndex].value;
 
         // Get the claim received date
-        var receivedDate = document.getElementById("txtClaimReceivedDate").value;
+        var receivedDate = document.getElementById("txtClaimReceivedDate").value.trim();
 
-        $.ajax({
-            url: '@Url.Action("ValidateInfo", "Home")',
-            type: "POST",
-            data: { ClaimID: claimID, AIN: AIN, ClaimStatus: status, ClaimReceivedDate: receivedDate},
-            traditional: true,
-            success: function (returnData) {
-                //alert("Validated!");
-                confirmBox(returnData);
-        
-                function confirmBox(displayData)
-                {   
-                    if (displayData.includes("ERROR", 0) || displayData.includes("ALERT", 0)) {
-                        var claimError = "";
-                        var ainError = "";
-                        var start;
-                        var end;
-                        data = displayData.toString();
-                        if (displayData.includes("ERROR", 0)) {
-                            document.getElementById("exclamationClaimID").style.display = "inline";
-                            document.getElementById("checkClaimID").style.display = "none";
-                            start = displayData.indexOf("ERROR");
-                            end = displayData.indexOf("|");
-                            //alert(displayData.substring(start, end));
-                            claimError = displayData.substring(start, end) + '\n';
+        if (claimID == "")
+            alert("Claim # is empty");
+        else if (AIN == "")
+            alert("AIN is empty");
+        else if (receivedDate == "")
+            alert("Claim Received Date is empty");
+        else {
+            if (isDate(receivedDate))
+            {
+                $.ajax({
+                    url: '@Url.Action("ValidateInfo", "Home")',
+                    type: "POST",
+                    data: { ClaimID: claimID, AIN: AIN, ClaimStatus: status, ClaimReceivedDate: receivedDate },
+                    traditional: true,
+                    success: function (returnData) {
+                        if (returnData == "-1") {
+                            alert("Fail to validate!");
                         }
                         else {
-                            document.getElementById("exclamationClaimID").style.display = "none";
-                            document.getElementById("checkClaimID").style.display = "inline";
+                            //alert("Validated!");
+                            confirmBox(returnData);
                         }
 
-                        if(displayData.includes("ALERT", 0)) {
-                            document.getElementById("exclamationAIN").style.display = "inline";
-                            document.getElementById("checkAIN").style.display = "none";
-                            start = displayData.indexOf("ALERT");
-                            //alert(displayData.substring(start));
-                            ainError = displayData.substring(start);
-                        }
-                        else {
-                            document.getElementById("exclamationAIN").style.display = "none";
-                            document.getElementById("checkAIN").style.display = "inline";
-                        }
-                        document.getElementById("txtClaimID").focus();
-
-                        alert(claimError + ainError);
-                    }
-                    else {
-                        var ain = "";
-                        var owner = "";
-                        var address = "";
-                        var rest = "";
-                        var result = "";
-
-                        ain = displayData.substring(1, displayData.indexOf("$") - displayData.indexOf("|"));
-                        rest = displayData.substring(displayData.indexOf("$"));
-                        owner = rest.substring(1, rest.indexOf("!"));
-                        address = rest.substring(rest.indexOf("!")+1);
-
-                        result = "AIN: " + ain + "\nOwner: " + owner + "\nAddress: " + address + "\n\nDo you want to process this claim?";
-
-                        if (confirm(result)) {
-                            //Click OK
-                            Add();
-                            document.getElementById("exclamationClaimID").style.display = "inline";
-                            document.getElementById("exclamationAIN").style.display = "inline";
-                            document.getElementById("checkClaimID").style.display = "none";
-                            document.getElementById("checkAIN").style.display = "none";
-                            document.getElementById("txtClaimID").focus();
-
-                            $.ajax({
-                                url: '@Url.Action("ProcessInfo", "Home")',
-                                type: "POST",
-                                data: { ClaimID: claimID, AIN: AIN, ClaimStatus: status, ClaimReceivedDate: receivedDate },
-                                traditional: true,
-                                success: function () {
-                                    alert("Processed!");
-                                },
-                                error: function () {
-                                    alert("Fail to process!");
+                        function confirmBox(displayData) {
+                            if (displayData.includes("ERROR", 0) || displayData.includes("ALERT", 0)) {
+                                var claimError = "";
+                                var ainError = "";
+                                var start;
+                                var end;
+                                data = displayData.toString();
+                                if (displayData.includes("ERROR", 0)) {
+                                    document.getElementById("exclamationClaimID").style.display = "inline";
+                                    document.getElementById("checkClaimID").style.display = "none";
+                                    start = displayData.indexOf("ERROR");
+                                    end = displayData.indexOf("|");
+                                    //alert(displayData.substring(start, end));
+                                    claimError = displayData.substring(start, end) + '\n';
                                 }
-                            });
+                                else {
+                                    document.getElementById("exclamationClaimID").style.display = "none";
+                                    document.getElementById("checkClaimID").style.display = "inline";
+                                }
+
+                                if (displayData.includes("ALERT", 0)) {
+                                    document.getElementById("exclamationAIN").style.display = "inline";
+                                    document.getElementById("checkAIN").style.display = "none";
+                                    start = displayData.indexOf("ALERT");
+                                    //alert(displayData.substring(start));
+                                    ainError = displayData.substring(start);
+                                }
+                                else {
+                                    document.getElementById("exclamationAIN").style.display = "none";
+                                    document.getElementById("checkAIN").style.display = "inline";
+                                }
+                                document.getElementById("txtClaimID").focus();
+
+                                alert(claimError + ainError);
+                            }
+                            else {
+                                var ain = "";
+                                var owner = "";
+                                var address = "";
+                                var rest = "";
+                                var result = "";
+                                            
+                                ain = displayData.substring(1, displayData.indexOf("$") - displayData.indexOf("|"));
+                                rest = displayData.substring(displayData.indexOf("$"));
+                                owner = rest.substring(1, rest.indexOf("!"));
+                                address = rest.substring(rest.indexOf("!") + 1);
+
+                                result = "AIN: " + ain + "\nOwner: " + owner + "\nAddress: " + address + "\n\nDo you want to process this claim?";
+
+                                if (confirm(result)) {
+                                    //Click OK
+                                    $.ajax({
+                                        url: '@Url.Action("ProcessInfo", "Home")',
+                                        type: "POST",
+                                        data: { ClaimID: claimID, AIN: AIN, ClaimStatus: status, ClaimReceivedDate: receivedDate },
+                                        traditional: true,
+                                        success: function (data) {
+                                            if (data == "-1")
+                                                alert("Fail to process!");
+                                            else
+                                                alert("Processed!");
+                                        },
+                                        error: function () {
+                                            alert("Fail to process!");
+                                        }
+                                    });
+
+                                    Add_ClaimReceived();
+                                    document.getElementById("exclamationClaimID").style.display = "inline";
+                                    document.getElementById("exclamationAIN").style.display = "inline";
+                                    document.getElementById("checkClaimID").style.display = "none";
+                                    document.getElementById("checkAIN").style.display = "none";
+                                    document.getElementById("txtClaimID").value = "";
+                                    document.getElementById("txtAIN").value = "";
+                                    document.getElementById("txtClaimID").focus();
+                                }
+                                else {
+                                    //Click CANCEL
+                                    document.getElementById("exclamationClaimID").style.display = "none";
+                                    document.getElementById("exclamationAIN").style.display = "none";
+                                    document.getElementById("checkClaimID").style.display = "inline";
+                                    document.getElementById("checkAIN").style.display = "inline";
+                                    document.getElementById("txtClaimID").focus();
+                                }
+                            }
                         }
-                        else {
-                            //Click CANCEL
-                            document.getElementById("exclamationClaimID").style.display = "none";
-                            document.getElementById("exclamationAIN").style.display = "none";
-                            document.getElementById("checkClaimID").style.display = "inline";
-                            document.getElementById("checkAIN").style.display = "inline";
-                            document.getElementById("txtClaimID").focus();
-                        }
+                    },
+                    error: function () {
+                        alert("Fail to validate!");
                     }
-                }
-            },
-            error: function () {
-                alert("Fail to validate!");
+                });
             }
-        }); 
+            else
+                alert ("Claim Received Date is invalid")
+        }
     }
 
     function ClearInfo()
@@ -328,7 +412,7 @@
                 @Html.DropDownListFor(model => model.ClaimStatus, Model.StatusList, new { style = "width:250px;", @id = "ddClaimStatus", @class = "form-control", @label = "Claim Status:", autofocus = "autofocus" })
             </label>
         </td>
-        <td width="300px">
+        <td width="400px">
             <label id="lblAssignTo" style="font-weight:bold;display:none;">
                 Assign To:
                 @Html.DropDownListFor(model => model.Supervisor, Model.Supervisors, new { style = "width:250px;display:none;", @id = "ddSupervisors", @class = "form-control dropdown-text" })
@@ -339,8 +423,8 @@
                 @Html.DropDownListFor(model => model.Staff, Model.Staffs, new { style = "width:250px;display:none;", @id = "ddStaffs", @class = "form-control dropdown-text" })
             </label>
 
-            <label id="lblClaimReceivedDate" style="font-weight:bold;display:inline;">
-                Claim Received Date:
+            <label id="lblClaimReceivedDate" style="font-weight:bold;display:none;">
+                Claim Received Date: <font color="#CC0000"><b>(mm/dd/yyyy)</b></font>
                 @Html.TextBoxFor(model => model.ClaimReceivedDate, new { style = "width:250px;", @id = "txtClaimReceivedDate", @name = "txtClaimReceivedDate", maxlength = 10, @class = "form-control input-text" })
             </label>
         </td>
@@ -348,7 +432,7 @@
 </table>
 <br />
 <br />
-<div text-align="center" id="dvClaimReceived" style="visibility:visible;">
+<div text-align="center" id="dvClaimReceived" style="visibility:hidden;">
     <table id="tblClaims" cellpadding="0" cellspacing="0" border="1">
         <thead>
             <tr>
