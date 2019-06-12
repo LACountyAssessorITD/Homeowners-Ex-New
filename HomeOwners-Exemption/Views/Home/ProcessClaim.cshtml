@@ -10,17 +10,57 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="~/js/site.js" type="text/javascript"></script>
 <script type="text/javascript">
+
+    /////////////////////////////////////////////////////////////////////
+    // For Claim Received Table
+    function Add_ClaimReceived() {
+        AddRow_ClaimReceived($("#txtClaimID").val(), $("#txtAIN").val());
+        $("#txtClaimID").val("");
+        $("#txtAIN").val("");
+    };
+
+    function AddRow_ClaimReceived(claimid, ain) {
+        //Get the reference of the Table's TBODY element.
+        var tBody = $("#tblClaims > TBODY")[0];
+
+        //Add Row.
+        row = tBody.insertRow(-1);
+
+        //Add ClaimID cell.
+        var cell = $(row.insertCell(-1));
+        cell.html(claimid);
+
+        cell = $(row.insertCell(-1));
+        var imgCheck = $("<img />");
+        imgCheck.attr("src", "/img/check-circle-solid.svg");
+        imgCheck.attr("style", "height:30px;width:30px;");
+        cell.append(imgCheck);
+
+        //Add AIN cell.
+        cell = $(row.insertCell(-1));
+        cell.html(ain);
+
+        cell = $(row.insertCell(-1));
+        var imgCheck = $("<img />");
+        imgCheck.attr("src", "/img/check-circle-solid.svg");
+        imgCheck.attr("style", "height:30px;width:30px;");
+        cell.append(imgCheck);
+
+        //Add Process cell.
+        cell = $(row.insertCell(-1));
+        var lblProcessed = $("<label style=\"height:30px;width:30px;color:green;\">Processed</label>");
+        cell.append(lblProcessed);
+    };
+    /////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////
+    // For Not Claim Received Table
     function Add() {
-        //var howManyRows = document.getElementById("tblClaims_1").rows.length;
-        //if ((howManyRows - 3) < 10) {
-            AddRow($("#txtClaimID_1").val());
-            $("#txtClaimID_1").val("");
-        //}
+        AddRow($("#txtClaimID_1").val());
+        $("#txtClaimID_1").val("");
     };
 
     function AddRow(claimid) {
-        //alert(document.getElementById("txtClaimDate").value);
-        //Get the reference of the Table's TBODY element.
         var tBody = $("#tblClaims_1 > TBODY")[0];
 
         //Add Row.
@@ -32,15 +72,12 @@
 
         //Add Button cell.
         cell = $(row.insertCell(-1));
-        //cell.html();
         var btnRemove = $("<img />");
         btnRemove.attr("src", "/img/minus-circle-solid.svg");
         btnRemove.attr("style", "height:30px;width:30px;");
         btnRemove.attr("onclick", "Remove(this);");
         btnRemove.val("Remove");
         cell.append(btnRemove);
-        //var lblProcessed = $("<label style=\"height:30px;width:30px;color:green;\">Processed</label>");
-        //cell.append(lblProcessed);
     };
 
     function Remove(button) {
@@ -55,6 +92,7 @@
             table.deleteRow(row[0].rowIndex);
         }
     };
+    /////////////////////////////////////////////////////////////////////
 
     // Enter number only
     function numberOnly(id) {
@@ -88,58 +126,6 @@
 
         return today;
     }
-
-    function Add_ClaimReceived() {
-        //var howManyRows = document.getElementById("tblClaims_1").rows.length;
-        //if ((howManyRows - 3) < 10) {
-        AddRow_ClaimReceived($("#txtClaimID").val(), $("#txtAIN").val());
-        $("#txtClaimID").val("");
-        $("#txtAIN").val("");
-        //}
-    };
-
-    function AddRow_ClaimReceived(claimid, ain) {
-        //alert(document.getElementById("txtClaimDate").value);
-        //Get the reference of the Table's TBODY element.
-        var tBody = $("#tblClaims > TBODY")[0];
-
-        //Add Row.
-        row = tBody.insertRow(-1);
-
-        //Add ClaimID cell.
-        var cell = $(row.insertCell(-1));
-        cell.html(claimid);
-
-        ell = $(row.insertCell(-1));
-        //cell.html();
-        var imgCheck = $("<img />");
-        imgCheck.attr("src", "/img/check-circle-solid.svg");
-        imgCheck.attr("style", "height:30px;width:30px;");
-        cell.append(imgCheck);
-
-        //Add AIN cell.
-        cell = $(row.insertCell(-1));
-        cell.html(ain);
-
-        cell = $(row.insertCell(-1));
-        //cell.html();
-        var imgCheck = $("<img />");
-        imgCheck.attr("src", "/img/check-circle-solid.svg");
-        imgCheck.attr("style", "height:30px;width:30px;");
-        cell.append(imgCheck);
-
-        //Add Button cell.
-        cell = $(row.insertCell(-1));
-        //cell.html();
-        //var btnRemove = $("<img />");
-        //btnRemove.attr("src", "/img/minus-circle-solid.svg");
-        //btnRemove.attr("style", "height:30px;width:30px;");
-        //btnRemove.attr("onclick", "Remove(this);");
-        //btnRemove.val("Remove");
-        //cell.append(btnRemove);
-        var lblProcessed = $("<label style=\"height:30px;width:30px;color:green;\">Processed</label>");
-        cell.append(lblProcessed);
-    };
 
     // Populate the dropdown
     $(document).ready(function () {
@@ -339,16 +325,7 @@
                                 var address = "";
                                 var rest = "";
                                 var result = "";
-
-                                Add_ClaimReceived();
-                                document.getElementById("exclamationClaimID").style.display = "inline";
-                                document.getElementById("exclamationAIN").style.display = "inline";
-                                document.getElementById("checkClaimID").style.display = "none";
-                                document.getElementById("checkAIN").style.display = "none";
-                                document.getElementById("txtClaimID").value = "";
-                                document.getElementById("txtAIN").value = "";
-                                document.getElementById("txtClaimID").focus();
-
+                                            
                                 ain = displayData.substring(1, displayData.indexOf("$") - displayData.indexOf("|"));
                                 rest = displayData.substring(displayData.indexOf("$"));
                                 owner = rest.substring(1, rest.indexOf("!"));
@@ -373,6 +350,15 @@
                                             alert("Fail to process!");
                                         }
                                     });
+
+                                    Add_ClaimReceived();
+                                    document.getElementById("exclamationClaimID").style.display = "inline";
+                                    document.getElementById("exclamationAIN").style.display = "inline";
+                                    document.getElementById("checkClaimID").style.display = "none";
+                                    document.getElementById("checkAIN").style.display = "none";
+                                    document.getElementById("txtClaimID").value = "";
+                                    document.getElementById("txtAIN").value = "";
+                                    document.getElementById("txtClaimID").focus();
                                 }
                                 else {
                                     //Click CANCEL
