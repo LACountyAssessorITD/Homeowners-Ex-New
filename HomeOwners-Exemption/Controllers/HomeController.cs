@@ -126,6 +126,7 @@ namespace Homeowners_Ex_New.Controllers
             model.StatusList = GetAllClaimStatus();
             model.Supervisors = GetAllSupervisors();
             model.Staffs = GetAllStaffs();
+            model.ClaimReceivedDate = DateTime.Now.ToString("MM/dd/yyyy");
 
             return View(model);
         }
@@ -185,48 +186,61 @@ namespace Homeowners_Ex_New.Controllers
             string strAssignor = User.FindFirst("Name").Value;
             string result = "";
 
-            string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
-            SqlConnection cnn = new SqlConnection(cnnString);
-            SqlCommand cmd = new SqlCommand();
-            SqlDataReader rdr = null;
-
-            cmd.Connection = cnn;
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "sp_chk_ClaimID_AIN";
-            cmd.Parameters.Add(new SqlParameter("@ClaimStatusRefID", ClaimStatus));
-            cmd.Parameters.Add(new SqlParameter("@ClaimID", ClaimID));
-            cmd.Parameters.Add(new SqlParameter("@AIN", AIN));
-
-            cnn.Open();   
-            rdr = cmd.ExecuteReader();
-            while (rdr.Read())
+            try
             {
-                result = rdr[0].ToString();
-            }
-            cnn.Close();
+                string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
+                SqlConnection cnn = new SqlConnection(cnnString);
+                SqlCommand cmd = new SqlCommand();
+                SqlDataReader rdr = null;
 
-            return result;
+                cmd.Connection = cnn;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "sp_chk_ClaimID_AIN";
+                cmd.Parameters.Add(new SqlParameter("@ClaimStatusRefID", ClaimStatus));
+                cmd.Parameters.Add(new SqlParameter("@ClaimID", ClaimID));
+                cmd.Parameters.Add(new SqlParameter("@AIN", AIN));
+
+                cnn.Open();
+                rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    result = rdr[0].ToString();
+                }
+                cnn.Close();
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                return "0";
+            }
         }
 
         public string ProcessInfo(string ClaimID, string AIN, string ClaimStatus, string ClaimReceivedDate)
         {
             string strAssignor = User.FindFirst("Name").Value;
+            try
+            {
+                string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
+                SqlConnection cnn = new SqlConnection(cnnString);
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = cnn;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "sp_create_ClaimID_AIN";
+                cmd.Parameters.Add(new SqlParameter("@ClaimID", ClaimID));
+                cmd.Parameters.Add(new SqlParameter("@AIN", AIN));
+                cmd.Parameters.Add(new SqlParameter("@ClaimDate", ClaimReceivedDate));
+                cmd.Parameters.Add(new SqlParameter("@Claimuser", strAssignor));
+                cnn.Open();
+                object o = cmd.ExecuteNonQuery();
+                cnn.Close();
 
-            string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
-            SqlConnection cnn = new SqlConnection(cnnString);
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = cnn;
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.CommandText = "sp_create_ClaimID_AIN";
-            cmd.Parameters.Add(new SqlParameter("@ClaimID", ClaimID));
-            cmd.Parameters.Add(new SqlParameter("@AIN", AIN));
-            cmd.Parameters.Add(new SqlParameter("@ClaimDate", ClaimReceivedDate));
-            cmd.Parameters.Add(new SqlParameter("@Claimuser", strAssignor));
-            cnn.Open();
-            object o = cmd.ExecuteNonQuery();
-            cnn.Close();
-
-            return "1";
+                return "1";
+            }
+            catch (Exception e)
+            {
+                return "0";
+            }
         }
 
         private IEnumerable<SelectListItem> GetAllClaimStatus()
