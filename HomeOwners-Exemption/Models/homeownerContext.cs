@@ -14,7 +14,9 @@ namespace HomeOwners_Exemption.Models
             : base(options)
         {
         }
-
+        public virtual DbSet<ClaimActionRefDropdown> ClaimAction { get; set; }
+        public virtual DbSet<FindReasonRefDropdown> FindingReason { get; set; }
+        public virtual DbSet<ClaimStatusRefDropdown> ClaimStatus { get; set; }
         public virtual DbSet<ClaimStatusRefList> statusList { get; set; }
         public virtual DbSet<MyClaims> MyClaims { get; set; }
         //public virtual DbSet<User> user { get; set; }
@@ -22,7 +24,7 @@ namespace HomeOwners_Exemption.Models
         public virtual DbSet<Supervisors> Supervisors { get; set; }
         public virtual DbSet<Claim> Claim { get; set; }
         public virtual DbSet<UserInformation> user { get; set; }
-        public virtual DbSet<ClaimActionRef> ClaimActionRef { get; set; }
+       
         public virtual DbSet<ClaimTable> ClaimTable { get; set; }
         public virtual DbSet<ClaimantTable> ClaimantTable { get; set; }
         public virtual DbSet<ClaimsList> ClaimsList { get; set; }
@@ -52,18 +54,7 @@ namespace HomeOwners_Exemption.Models
 
            
 
-            modelBuilder.Entity<ClaimActionRef>(entity =>
-            {
-                entity.Property(e => e.ClaimActionRefId)
-                    .HasColumnName("ClaimActionRefID")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.ClaimActionRef1)
-                    .IsRequired()
-                    .HasColumnName("ClaimActionRef")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-            });
+         
 
             modelBuilder.Entity<ClaimTable>(entity =>
             {

@@ -50,6 +50,7 @@ namespace Homeowners_Ex_New.Controllers
             statusList.Add("Staff Review", new StatusCount(0, 0));
             statusList.Add("Hold", new StatusCount(0, 0));
             statusList.Add("Closed", new StatusCount(0, 0));
+
             List<string> statusID = new List<string>(new string[]
             {
                 "Preprint Sent",
@@ -59,6 +60,7 @@ namespace Homeowners_Ex_New.Controllers
                 "Hold",
                 "Closed"
             });
+
             var statusDbList = _context.statusList.FromSql("sp_getCountsByStatus").ToListAsync().Result.ToList();
             foreach (var item in statusDbList)
             {
@@ -101,13 +103,18 @@ namespace Homeowners_Ex_New.Controllers
 
         public IActionResult Claim(int? id)
         {
+            dynamic model = new ExpandoObject();
+
+            DropdownListClaim drop = GetDropdown();
             var modelUser = new Claim();
             ViewBag.ModelMessage = false;
             if (id != null)
             {
-                var EmpID = new SqlParameter("@EmployeeID", id);
-                 modelUser = _context.Claim.FromSql("sp_getClaim @EmployeeID", EmpID).FirstOrDefaultAsync().Result;
-                if(modelUser == null)
+                var EmpID = new SqlParameter("@ClaimID", id);
+                 modelUser = _context.Claim.FromSql("sp_getClaim @ClaimID", EmpID).FirstOrDefaultAsync().Result;
+
+                
+                if (modelUser == null)
                 {
                     ViewBag.ModelMessage= true;
                 }
@@ -116,8 +123,40 @@ namespace Homeowners_Ex_New.Controllers
             {
                 modelUser = new Claim();
             }
+           
+            ViewBag.dropdownInfo = drop;
 
             return View(modelUser);
+        }
+
+        public DropdownListClaim GetDropdown()
+        {
+            DropdownListClaim drop = new DropdownListClaim();
+
+            var temp = _context.State.FromSql("sp_States").ToListAsync().Result.ToList();
+            //drop.states = new List<SelectListItem>();
+            foreach (var item in temp)
+            {
+                drop.states.Add(new SelectListItem() { Text = item.Id, Value = item.Id });
+            }
+            
+            var tempStatus = _context.ClaimStatus.FromSql("sp_getStatus").ToListAsync().Result.ToList();
+            foreach (var item in tempStatus)
+            {
+                drop.Status.Add(new SelectListItem() { Text = item.ClaimStatusRef, Value = item.ClaimStatusRefID.ToString() });
+            }
+            var tempFinding = _context.FindingReason.FromSql("sp_getReasonRef").ToListAsync().Result.ToList();
+            foreach (var item in tempFinding)
+            {
+                drop.Reason.Add(new SelectListItem() { Text = item.FindingReasonRef, Value = item.FindingReasonRefID.ToString() });
+            }
+            var tempAction = _context.ClaimAction.FromSql("sp_getAction").ToListAsync().Result.ToList();
+            foreach (var item in tempAction)
+            {
+                drop.Action.Add(new SelectListItem() { Text = item.ClaimActionRef, Value = item.ClaimActionRefID.ToString() });
+            }
+            return drop;
+            
         }
 
         public IActionResult ProcessClaim()

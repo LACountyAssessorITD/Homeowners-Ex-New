@@ -36,7 +36,7 @@ namespace HomeOwners_Exemption.Models
         public int? ExemptRe2 { get; set; }
         public int? ClaimActionID { get; set; }
         public string ClaimActionRef { get; set; }
-        public int FindingReasonID { get; set; }
+        public int? FindingReasonID { get; set; }
         public string FindingReasonRef { get; set; }
         public int? ClaimStatusID { get; set; }
         public string ClaimStatusRef { get; set; }
