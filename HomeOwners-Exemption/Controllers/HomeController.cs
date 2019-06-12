@@ -184,35 +184,40 @@ namespace Homeowners_Ex_New.Controllers
                 AIN = "";
 
             string strAssignor = User.FindFirst("Name").Value;
-            string result = "";
 
             try
             {
-                string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
-                SqlConnection cnn = new SqlConnection(cnnString);
-                SqlCommand cmd = new SqlCommand();
-                SqlDataReader rdr = null;
+                var result = new ClaimInfo();
+                var pClaimStatus = new SqlParameter("@ClaimStatusRefID", ClaimStatus);
+                var pClaimID = new SqlParameter("@ClaimID", ClaimID);
+                var pAIN = new SqlParameter("@AIN", AIN);
+                result = _context.ClaimInfo.FromSql("sp_chk_ClaimID_AIN @ClaimStatusRefID, @ClaimID, @AIN", pClaimStatus, pClaimID, pAIN).FirstOrDefaultAsync().Result;
 
-                cmd.Connection = cnn;
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.CommandText = "sp_chk_ClaimID_AIN";
-                cmd.Parameters.Add(new SqlParameter("@ClaimStatusRefID", ClaimStatus));
-                cmd.Parameters.Add(new SqlParameter("@ClaimID", ClaimID));
-                cmd.Parameters.Add(new SqlParameter("@AIN", AIN));
+                //string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
+                //SqlConnection cnn = new SqlConnection(cnnString);
+                //SqlCommand cmd = new SqlCommand();
+                //SqlDataReader rdr = null;
 
-                cnn.Open();
-                rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    result = rdr[0].ToString();
-                }
-                cnn.Close();
+                //cmd.Connection = cnn;
+                //cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                //cmd.CommandText = "sp_chk_ClaimID_AIN";
+                //cmd.Parameters.Add(new SqlParameter("@ClaimStatusRefID", ClaimStatus));
+                //cmd.Parameters.Add(new SqlParameter("@ClaimID", ClaimID));
+                //cmd.Parameters.Add(new SqlParameter("@AIN", AIN));
 
-                return result;
+                //cnn.Open();
+                //rdr = cmd.ExecuteReader();
+                //while (rdr.Read())
+                //{
+                //    result = rdr[0].ToString();
+                //}
+                //cnn.Close();
+
+                return result.info;
             }
             catch (Exception e)
             {
-                return "0";
+                return "-1";
             }
         }
 
@@ -220,26 +225,14 @@ namespace Homeowners_Ex_New.Controllers
         {
             string strAssignor = User.FindFirst("Name").Value;
             try
-            {
-                string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
-                SqlConnection cnn = new SqlConnection(cnnString);
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = cnn;
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.CommandText = "sp_create_ClaimID_AIN";
-                cmd.Parameters.Add(new SqlParameter("@ClaimID", ClaimID));
-                cmd.Parameters.Add(new SqlParameter("@AIN", AIN));
-                cmd.Parameters.Add(new SqlParameter("@ClaimDate", ClaimReceivedDate));
-                cmd.Parameters.Add(new SqlParameter("@Claimuser", strAssignor));
-                cnn.Open();
-                object o = cmd.ExecuteNonQuery();
-                cnn.Close();
+            {               
+                string result = _context.Database.ExecuteSqlCommand("sp_create_ClaimID_AIN @p0,@p1,@p2,@p3", new SqlParameter("@p0", ClaimID), new SqlParameter("@p1", AIN), new SqlParameter("@p2", ClaimReceivedDate), new SqlParameter("@p3", strAssignor)).ToString(); 
 
                 return "1";
             }
             catch (Exception e)
             {
-                return "0";
+                return "-1";
             }
         }
 
@@ -248,13 +241,13 @@ namespace Homeowners_Ex_New.Controllers
             List<SelectListItem> li = new List<SelectListItem>();
             if (User.FindFirst("RoleTitle").Value == "3")
             {
-                //li.Add(new SelectListItem { Text = "Select Status", Value = "0" });
+                li.Add(new SelectListItem { Text = "Select Status", Value = "0" });
                 li.Add(new SelectListItem { Text = "Claim Received", Value = "2" });
                 li.Add(new SelectListItem { Text = "Supervisor Workload", Value = "3" });
             }
             else
             {
-                //li.Add(new SelectListItem { Text = "Select Status", Value = "0" });
+                li.Add(new SelectListItem { Text = "Select Status", Value = "0" });
                 li.Add(new SelectListItem { Text = "Claim Received", Value = "2" });
                 li.Add(new SelectListItem { Text = "Supervisor Workload", Value = "3" });
                 li.Add(new SelectListItem { Text = "Staff Review", Value = "4" });

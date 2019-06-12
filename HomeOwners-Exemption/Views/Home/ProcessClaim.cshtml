@@ -93,7 +93,13 @@
     $(document).ready(function () {
         $("#ddClaimStatus").change(function () {
             var statusText = $("#ddClaimStatus option:selected").text();
-            if (statusText == "Claim Received") {
+
+            //Tables
+            if (statusText == "Select Status") {
+                document.getElementById("dvClaimReceived").style.visibility = "hidden";
+                document.getElementById("dvNotClaimReceived").style.visibility = "hidden";
+            }
+            else if (statusText == "Claim Received") {
                 document.getElementById("dvClaimReceived").style.visibility = "visible";
                 document.getElementById("dvNotClaimReceived").style.visibility = "hidden";
             }
@@ -102,11 +108,19 @@
                 document.getElementById("dvNotClaimReceived").style.visibility = "visible";
             }
 
-            if (statusText == "Claim Received") {
-                document.getElementById("txtClaimID").disabled = false;
-                document.getElementById("txtAIN").disabled = false;
+            if (statusText == "Select Status") {
+                document.getElementById("lblClaimReceivedDate").style.display = "none";
+                document.getElementById("txtClaimReceivedDate").style.display = "none";
+                document.getElementById("txtClaimReceivedDate").value = "";
+                document.getElementById("lblAssignTo").style.display = "none";
+                document.getElementById("ddSupervisors").style.display = "none";
+                document.getElementById("ddSupervisors").selectedIndex = "0";
+                document.getElementById("lblAssignToStaff").style.display = "none";
+                document.getElementById("ddStaffs").style.display = "none";
+                document.getElementById("ddStaffs").selectedIndex = "0";
             }
 
+            //Claim Received input box
             if (statusText == "Claim Received") {
                 document.getElementById("lblClaimReceivedDate").style.display = "inline";
                 document.getElementById("txtClaimReceivedDate").style.display = "inline";     
@@ -118,6 +132,7 @@
                 document.getElementById("txtClaimReceivedDate").value = "";
             }
 
+            //Supervisor Workload dropdown
             if (statusText == "Supervisor Workload") {
                 document.getElementById("lblAssignTo").style.display = "inline";
                 document.getElementById("ddSupervisors").style.display = "inline";
@@ -129,6 +144,7 @@
                 document.getElementById("ddSupervisors").selectedIndex = "0";
             }
 
+            //Staff Review dropdown
             if (statusText == "Staff Review") {
                 document.getElementById("lblAssignToStaff").style.display = "inline";
                 document.getElementById("ddStaffs").style.display = "inline";
@@ -139,6 +155,10 @@
                 document.getElementById("ddStaffs").style.display = "none";
                 document.getElementById("ddStaffs").selectedIndex = "0";
             }
+
+            document.getElementById("txtClaimID").value = "";
+            document.getElementById("txtAIN").value = "";
+            document.getElementById("txtClaimID_1").value = "";
         });
     });
 
@@ -210,15 +230,15 @@
         else if (receivedDate == "")
             alert("Claim Received Date is empty");
         else {
-            //validatedate("111");
-            //if (validatedate(receivedDate))
+            if (isDate(receivedDate))
+            {
                 $.ajax({
                     url: '@Url.Action("ValidateInfo", "Home")',
                     type: "POST",
                     data: { ClaimID: claimID, AIN: AIN, ClaimStatus: status, ClaimReceivedDate: receivedDate },
                     traditional: true,
                     success: function (returnData) {
-                        if (returnData == "0") {
+                        if (returnData == "-1") {
                             alert("Fail to validate!");
                         }
                         else {
@@ -283,10 +303,10 @@
                                         data: { ClaimID: claimID, AIN: AIN, ClaimStatus: status, ClaimReceivedDate: receivedDate },
                                         traditional: true,
                                         success: function (data) {
-                                            if (data == "1")
-                                                alert("Processed!");
-                                            else
+                                            if (data == "-1")
                                                 alert("Fail to process!");
+                                            else
+                                                alert("Processed!");
                                         },
                                         error: function () {
                                             alert("Fail to process!");
@@ -317,7 +337,9 @@
                         alert("Fail to validate!");
                     }
                 });
-            //}
+            }
+            else
+                alert ("Claim Received Date is invalid")
         }
     }
 
@@ -363,7 +385,7 @@
                 @Html.DropDownListFor(model => model.Staff, Model.Staffs, new { style = "width:250px;display:none;", @id = "ddStaffs", @class = "form-control dropdown-text" })
             </label>
 
-            <label id="lblClaimReceivedDate" style="font-weight:bold;display:inline;">
+            <label id="lblClaimReceivedDate" style="font-weight:bold;display:none;">
                 Claim Received Date: <font color="#CC0000"><b>(mm/dd/yyyy)</b></font>
                 @Html.TextBoxFor(model => model.ClaimReceivedDate, new { style = "width:250px;", @id = "txtClaimReceivedDate", @name = "txtClaimReceivedDate", maxlength = 10, @class = "form-control input-text" })
             </label>
@@ -372,7 +394,7 @@
 </table>
 <br />
 <br />
-<div text-align="center" id="dvClaimReceived" style="visibility:visible;">
+<div text-align="center" id="dvClaimReceived" style="visibility:hidden;">
     <table id="tblClaims" cellpadding="0" cellspacing="0" border="1">
         <thead>
             <tr>
