@@ -220,8 +220,15 @@
     // For Other Status
     /////////////////////////////////////////////////////////////////////
     function Add() {
-        AddRow($("#txtClaimID_1").val());
-        $("#txtClaimID_1").val("");
+        if ($("#txtClaimID_1").val() == "")
+            alert("Claim# cannot be empty.");
+        else if ($("#txtClaimID_1").val().length < 7)
+            alert("Claim# must be 7 digits.");
+        else
+        { 
+            AddRow($("#txtClaimID_1").val());
+            $("#txtClaimID_1").val("");
+        }
     };
 
     function AddRow(claimid) {
@@ -284,21 +291,25 @@
 
             // Get the staff assignee
             e = document.getElementById("ddStaffs");
-            var staffAssignee = e.options[e.selectedIndex].value;;
+            var staffAssignee = e.options[e.selectedIndex].value;
 
-            $.ajax({
-                url: '@Url.Action("ProcessClaim", "Home")',
-                type: "POST",
-                data: { ClaimIDList: claimIDs, ClaimStatus: status, AssigneeSupervisor: supervisorAssignee, AssigneeStaff: staffAssignee},
-                traditional: true,
-                success: function () {
-                    alert("Processed!");
-                    window.location = '../Home/ProcessClaim';
-                },
-                error: function () {
-                    alert("Not Processed!");
-                }
-            }); 
+            if (supervisorAssignee == "0")
+                alert("Supervisor cannot be empty.");
+            else {
+                $.ajax({
+                    url: '@Url.Action("ProcessOtherStatus", "Home")',
+                    type: "POST",
+                    data: { ClaimIDList: claimIDs, ClaimStatus: status, AssigneeSupervisor: supervisorAssignee, AssigneeStaff: staffAssignee },
+                    traditional: true,
+                    success: function () {
+                        alert("Processed!");
+                        window.location = '../Home/ProcessClaim';
+                    },
+                    error: function () {
+                        alert("Not Processed!");
+                    }
+                });
+            }
         });
     });
     /////////////////////////////////////////////////////////////////////

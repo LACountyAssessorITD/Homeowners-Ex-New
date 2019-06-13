@@ -171,49 +171,61 @@ namespace Homeowners_Ex_New.Controllers
             return View(model);
         }
 
-        public string GetClaimInfo(IEnumerable<int> ClaimIDList, string ClaimStatus, string AssigneeSupervisor, string AssigneeStaff)
+        public string ProcessOtherStatus(IEnumerable<int> ClaimIDList, string ClaimStatus, string AssigneeSupervisor, string AssigneeStaff)
         {
             string strAssignor = User.FindFirst("Name").Value;
-
-            DataTable dt_tmpClaimID = new DataTable();
-            dt_tmpClaimID.Columns.Add("ClaimID", typeof(string));
-            DataRow tmpClaimID;
-
-            foreach (int claimID in ClaimIDList)
+            try
             {
-                tmpClaimID = dt_tmpClaimID.NewRow();
-                tmpClaimID["ClaimID"] = Convert.ToString(claimID);
-                dt_tmpClaimID.Rows.Add(tmpClaimID);
+                DataTable dt_tmpClaimID = new DataTable();
+                dt_tmpClaimID.Columns.Add("ClaimID", typeof(string));
+                dt_tmpClaimID.Columns.Add("Assignee", typeof(string));
+                dt_tmpClaimID.Columns.Add("Assignor", typeof(string));
+                DataRow tmpClaimID;
+
+                foreach (int claimID in ClaimIDList)
+                {
+                    tmpClaimID = dt_tmpClaimID.NewRow();
+                    tmpClaimID["ClaimID"] = Convert.ToString(claimID);
+                    tmpClaimID["Assignee"] = AssigneeSupervisor;
+                    tmpClaimID["Assignor"] = strAssignor;
+                    dt_tmpClaimID.Rows.Add(tmpClaimID);
+                }
+
+                //string result = _context.Database.ExecuteSqlCommand("sp_create_ClaimID_AIN @tvpClaimID", new SqlParameter("@tvpClaimID", dt_tmpClaimID)).ToString();
+                string result = _context.Database.ExecuteSqlCommand("sp_create_ClaimID_AIN @tvpClaimID", dt_tmpClaimID).ToString();
+                return "1";
+            }
+            catch (Exception e)
+            {
+                return "-1";
             }
 
-            string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
-            SqlConnection cnn = new SqlConnection(cnnString);
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = cnn;
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            ////string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
+            ////SqlConnection cnn = new SqlConnection(cnnString);
+            ////SqlCommand cmd = new SqlCommand();
+            ////cmd.Connection = cnn;
+            ////cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            if (ClaimStatus == "3") //Supervisor Workload
-            {
-                cmd.CommandText = "sp_ClaimReceived";
-                //cmd.Parameters.Add(new SqlParameter("@ClaimStatusRefID", ClaimStatus));
-                //cmd.Parameters.Add(new SqlParameter("@ClaimDate", Convert.ToDateTime(ClaimReceivedDate)));
-                //cmd.Parameters.Add(new SqlParameter("@ReceivedBy", strAssignor));
-                cmd.Parameters.Add(new SqlParameter("@tvpClaimID", dt_tmpClaimID));
-            }
-            else if (ClaimStatus == "4") //Staff Reivew
-            {
+            ////if (ClaimStatus == "3") //Supervisor Workload
+            ////{
+            ////    cmd.CommandText = "sp_ClaimReceived";
+            ////    //cmd.Parameters.Add(new SqlParameter("@ClaimStatusRefID", ClaimStatus));
+            ////    //cmd.Parameters.Add(new SqlParameter("@ClaimDate", Convert.ToDateTime(ClaimReceivedDate)));
+            ////    //cmd.Parameters.Add(new SqlParameter("@ReceivedBy", strAssignor));
+            ////    cmd.Parameters.Add(new SqlParameter("@tvpClaimID", dt_tmpClaimID));
+            ////}
+            ////else if (ClaimStatus == "4") //Staff Reivew
+            ////{
 
-            }
-            else //"6" Case Closed or "7" Hold
-            {
+            ////}
+            ////else //"6" Case Closed or "7" Hold
+            ////{
 
-            }
+            ////}
 
-            cnn.Open();
-            object o = cmd.ExecuteScalar();
-            cnn.Close();
-
-            return "1";
+            ////cnn.Open();
+            ////object o = cmd.ExecuteScalar();
+            ////cnn.Close();
         }
 
         public string ValidateInfo(string ClaimID, string AIN, string ClaimStatus, string ClaimReceivedDate)
@@ -276,7 +288,7 @@ namespace Homeowners_Ex_New.Controllers
             List<Supervisors> lSupervisors = new List<Supervisors>();
             lSupervisors = _context.Supervisors.FromSql("sp_getSupervisors").ToListAsync().Result.ToList();
             List<SelectListItem> li = new List<SelectListItem>();
-            li.Add(new SelectListItem { Text = "Select Supervisor", Value = "" });
+            li.Add(new SelectListItem { Text = "Select Supervisor", Value = "0" });
             foreach (var oneSupervisor in lSupervisors)
             {
                 //if (oneSupervisor.Users != User.FindFirst("UserName").Value)
@@ -291,7 +303,7 @@ namespace Homeowners_Ex_New.Controllers
             List<Staffs> lStaffs = new List<Staffs>();
             lStaffs = _context.Staffs.FromSql("sp_getStaff").ToListAsync().Result.ToList();
             List<SelectListItem> li = new List<SelectListItem>();
-            li.Add(new SelectListItem { Text = "Select Staff", Value = "" });
+            li.Add(new SelectListItem { Text = "Select Staff", Value = "0" });
             foreach (var oneStaff in lStaffs)
             {
                 li.Add(new SelectListItem { Text = oneStaff.Users, Value = oneStaff.EmployeeID });
