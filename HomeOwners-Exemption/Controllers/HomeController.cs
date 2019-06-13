@@ -9,16 +9,14 @@ using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using HomeOwners_Exemption.Models;
 using Microsoft.AspNetCore.Authorization;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Claim = HomeOwners_Exemption.Models.Claim;
 using Microsoft.Extensions.Configuration;
 using System.Dynamic;
 using System.Data;
 
-namespace Homeowners_Ex_New.Controllers
+namespace HomeOwners_Exemption.Controllers
 {
     [Authorize]
     public class HomeController : Controller
@@ -66,7 +64,7 @@ namespace Homeowners_Ex_New.Controllers
             {
                 statusList[item.ClaimStatusRef] = new StatusCount(item.OrderCount, item.Late);
              }
-            var EmpID = new SqlParameter("@usersID", "471413");
+            var EmpID = new SqlParameter("@usersID", User.Identity.Name);
             var claimList = _context.MyClaims.FromSql("sp_getListOfAssignedClaim @usersID", EmpID).ToListAsync().Result.ToList();
 
             var value = statusList[statusID[0]].Count;
@@ -127,6 +125,27 @@ namespace Homeowners_Ex_New.Controllers
             ViewBag.dropdownInfo = drop;
 
             return View(modelUser);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Claim(Claim claim)
+        {
+            if (ModelState.IsValid)
+            {
+                UpdateClaim updClaim = new UpdateClaim(claim);
+                List<SqlParameter> parameter = updClaim.parameterMap;
+
+                var result = _context.Database.ExecuteSqlCommand("sp_updClaim @claimID, @ClaimStatusRefID, @AssigneeID, @AssignorID, @claimant, @claimantSSN, @spouse, @spouseSSN, @mailingStName, @mailingApt, @mailingCity, @mailingState, @mailingZip, @priorAPN, @dateMovedOut, @priorStName, @priorApt, @priorCity, @priorState, @priorZip, @ClaimActionRefID, @FindingReasonRefID, @Late, @Comments, @rollTaxYear, @suppTaxYear, @exemptRE, @exemptRE2"
+                                                                , parameter[0], parameter[1], parameter[2], parameter[3], parameter[4]
+                                                                , parameter[5], parameter[6], parameter[7], parameter[8], parameter[9]
+                                                                , parameter[10], parameter[11], parameter[12], parameter[13], parameter[14]
+                                                                , parameter[15], parameter[16], parameter[17], parameter[18], parameter[19]
+                                                                , parameter[20], parameter[21], parameter[22], parameter[23], parameter[24]
+                                                                , parameter[25], parameter[26] ,parameter[27]);
+                return RedirectToAction(nameof(Claim));
+            }
+            return View("Claim", "Home");
         }
 
 

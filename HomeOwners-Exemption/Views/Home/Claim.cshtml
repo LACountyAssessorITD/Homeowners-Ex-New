@@ -29,19 +29,19 @@
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label asp-for="Assignor" class="">Assignor:</label>
-                        <input asp-for="Assignor" class="" />
+                        <label asp-for="AssignorID" class="">Assignor:</label>
+                        <input asp-for="AssignorID" class="" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="ClaimStatusRef" id="" class="">Claim Status:</label>
-                        <select asp-for="ClaimStatusRef" asp-items="ViewBag.dropdownInfo.Status"></select>
+                        <label asp-for="ClaimStatusID" id="" class="">Claim Status:</label>
+                        <select asp-for="ClaimStatusID" asp-items="ViewBag.dropdownInfo.Status"></select>
                         @*<input asp-for="ClaimStatusRef" class="" />*@
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label asp-for="Assignee" class="">Assignee:</label>
-                        <input asp-for="Assignee" class="" />
+                        <label asp-for="AssigneeID" class="">Assignee:</label>
+                        <input asp-for="AssigneeID" class="" />
                     </div>
                     <div class="form-group">
                         <label asp-for="CreatedDate" class="">Date:</label>
@@ -269,9 +269,9 @@
                             <select asp-for="ClaimActionID" asp-items="ViewBag.dropdownInfo.Action"></select>
                         </div>
                         <div class="col-7">
-                            <label style="" asp-for="FindingReasonRef" class="">Finding Reason:</label>
+                            <label style="" asp-for="FindingReasonID" class="">Finding Reason:</label>
                             @*<input asp-for="FindingReasonRef" />*@
-                            <select asp-for="FindingReasonRef" asp-items="ViewBag.dropdownInfo.Reason"></select>
+                            <select asp-for="FindingReasonID" asp-items="ViewBag.dropdownInfo.Reason"></select>
                         </div>
                     </div>
                 </div>

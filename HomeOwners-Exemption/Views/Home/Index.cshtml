@@ -45,22 +45,25 @@
                         </div>
                     </div>
                 </div>
-                @for (int i = 0; i < Model.status.Count; i++)
+                @foreach (var entry in Model.statusId)
                 {
-                    <div class="row">
-                        <div class="col-6">
-                            <p>@Model.status[i]</p>
+                    @if (entry.Key != "Preprint Sent")
+                    {
+                        <div class="row">
+                            <div class="col-6">
+                                <p>@entry.Key</p>
+                            </div>
+                            <div class="col-2">
+                                <p>@entry.Value.Count</p>
+                            </div>
+                            <div class="col-2">
+                                <p>@entry.Value.Current</p>
+                            </div>
+                            <div class="col-2">
+                                <p>@entry.Value.Late</p>
+                            </div>
                         </div>
-                        <div class="col-2">
-                            <p>@Model.statusId[Model.status[i]].Count</p>
-                        </div>
-                        <div class="col-2">
-                            <p>@Model.statusId[Model.status[i]].Current</p>
-                        </div>
-                        <div class="col-2">
-                            <p>@Model.statusId[Model.status[i]].Late</p>
-                        </div>
-                    </div>
+                    }
 
                 }
             </div>
