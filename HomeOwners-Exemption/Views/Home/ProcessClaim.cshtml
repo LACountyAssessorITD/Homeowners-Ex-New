@@ -312,6 +312,19 @@
             }
         });
     });
+
+    $(document).ready(function () {
+        $('#txtClaimID_1').on('keypress', function () {
+            if (event.keyCode == 13) {
+                if ($("#txtClaimID_1").val() == "")
+                    alert("Claim# cannot be empty.");
+                else if ($("#txtClaimID_1").val().length < 7)
+                    alert("Claim# must be 7 digits.");
+                else
+                    Add();
+            }
+        });
+    });
     /////////////////////////////////////////////////////////////////////
 
     // Enter number only

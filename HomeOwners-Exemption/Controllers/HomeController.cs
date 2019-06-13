@@ -211,8 +211,12 @@ namespace HomeOwners_Exemption.Controllers
                     dt_tmpClaimID.Rows.Add(tmpClaimID);
                 }
 
-                string result = _context.Database.ExecuteSqlCommand("sp_prepClaimID2 @tvpClaimID", new SqlParameter("@tvpClaimID", dt_tmpClaimID)).ToString();
-                //string result = _context.Database.ExecuteSqlCommand("sp_prepClaimID2 @tvpClaimID", dt_tmpClaimID).ToString();
+                var parameter = new SqlParameter("@tvpClaimID", SqlDbType.Structured);
+                parameter.TypeName = "tvpClaimID";
+                parameter.Value = dt_tmpClaimID;
+
+                string result = _context.Database.ExecuteSqlCommand("exec sp_prepClaimID2 @tvpClaimID", parameter).ToString();
+
                 return "1";
             }
             catch (Exception e)
@@ -225,24 +229,11 @@ namespace HomeOwners_Exemption.Controllers
             ////SqlCommand cmd = new SqlCommand();
             ////cmd.Connection = cnn;
             ////cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
-            ////if (ClaimStatus == "3") //Supervisor Workload
-            ////{
             ////    cmd.CommandText = "sp_ClaimReceived";
             ////    //cmd.Parameters.Add(new SqlParameter("@ClaimStatusRefID", ClaimStatus));
             ////    //cmd.Parameters.Add(new SqlParameter("@ClaimDate", Convert.ToDateTime(ClaimReceivedDate)));
             ////    //cmd.Parameters.Add(new SqlParameter("@ReceivedBy", strAssignor));
             ////    cmd.Parameters.Add(new SqlParameter("@tvpClaimID", dt_tmpClaimID));
-            ////}
-            ////else if (ClaimStatus == "4") //Staff Reivew
-            ////{
-
-            ////}
-            ////else //"6" Case Closed or "7" Hold
-            ////{
-
-            ////}
-
             ////cnn.Open();
             ////object o = cmd.ExecuteScalar();
             ////cnn.Close();
