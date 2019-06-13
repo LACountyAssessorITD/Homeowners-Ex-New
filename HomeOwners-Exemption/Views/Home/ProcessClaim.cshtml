@@ -12,7 +12,8 @@
 <script type="text/javascript">
 
     /////////////////////////////////////////////////////////////////////
-    // For Claim Received Table
+    // For Claim Received Status
+    /////////////////////////////////////////////////////////////////////
     function Add_ClaimReceived() {
         AddRow_ClaimReceived($("#txtClaimID").val(), $("#txtAIN").val());
         $("#txtClaimID").val("");
@@ -51,201 +52,7 @@
         var lblProcessed = $("<label style=\"height:30px;width:30px;color:green;\">Processed</label>");
         cell.append(lblProcessed);
     };
-    /////////////////////////////////////////////////////////////////////
 
-    /////////////////////////////////////////////////////////////////////
-    // For Not Claim Received Table
-    function Add() {
-        AddRow($("#txtClaimID_1").val());
-        $("#txtClaimID_1").val("");
-    };
-
-    function AddRow(claimid) {
-        var tBody = $("#tblClaims_1 > TBODY")[0];
-
-        //Add Row.
-        row = tBody.insertRow(-1);
-
-        //Add ClaimID cell.
-        var cell = $(row.insertCell(-1));
-        cell.html(claimid);
-
-        //Add Button cell.
-        cell = $(row.insertCell(-1));
-        var btnRemove = $("<img />");
-        btnRemove.attr("src", "/img/minus-circle-solid.svg");
-        btnRemove.attr("style", "height:30px;width:30px;");
-        btnRemove.attr("onclick", "Remove(this);");
-        btnRemove.val("Remove");
-        cell.append(btnRemove);
-    };
-
-    function Remove(button) {
-        //Determine the reference of the Row using the Button.
-        var row = $(button).closest("TR");
-        var name = $("TD", row).eq(0).html();
-        if (confirm("Do you want to delete Claim #: " + name)) {
-            //Get the reference of the Table.
-            var table = $("#tblClaims_1")[0];
-
-            //Delete the Table row using it's Index.
-            table.deleteRow(row[0].rowIndex);
-        }
-    };
-    /////////////////////////////////////////////////////////////////////
-
-    // Enter number only
-    function numberOnly(id) {
-        // Get element by id which passed as parameter within HTML element event
-        var element = document.getElementById(id);
-        // Use numbers only pattern, from 0 to 9
-        var regex = /[^0-9]/gi;
-        // This removes any other character but numbers as entered by user
-        element.value = element.value.replace(regex, "");
-    }
-
-    // Hit "Enter" to insert the data
-    //$(document).on("keypress", "form", function (event) {
-    //    if (event.keyCode == 13) {
-    //        return event.keyCode != 13;
-    //    }
-    //});
-
-    function todayDate() {
-        var today = new Date();
-        var mm = today.getMonth() + 1; //January is 0!
-        var dd = today.getDate();
-        var yyyy = today.getFullYear();
-        if (dd < 10) {
-            dd = '0' + dd;
-        }
-        if (mm < 10) {
-            mm = '0' + mm;
-        }
-        var today = mm + '/' + dd + '/' + yyyy;
-
-        return today;
-    }
-
-    // Populate the dropdown
-    $(document).ready(function () {
-        $("#ddClaimStatus").change(function () {
-            var statusText = $("#ddClaimStatus option:selected").text();
-
-            //Tables
-            if (statusText == "Select Status") {
-                document.getElementById("dvClaimReceived").style.visibility = "hidden";
-                document.getElementById("dvNotClaimReceived").style.visibility = "hidden";
-            }
-            else if (statusText == "Claim Received") {
-                document.getElementById("dvClaimReceived").style.visibility = "visible";
-                document.getElementById("dvNotClaimReceived").style.visibility = "hidden";
-            }
-            else {
-                document.getElementById("dvClaimReceived").style.visibility = "hidden";
-                document.getElementById("dvNotClaimReceived").style.visibility = "visible";
-            }
-
-            if (statusText == "Select Status") {
-                document.getElementById("lblClaimReceivedDate").style.display = "none";
-                document.getElementById("txtClaimReceivedDate").style.display = "none";
-                document.getElementById("txtClaimReceivedDate").value = "";
-                document.getElementById("lblAssignTo").style.display = "none";
-                document.getElementById("ddSupervisors").style.display = "none";
-                document.getElementById("ddSupervisors").selectedIndex = "0";
-                document.getElementById("lblAssignToStaff").style.display = "none";
-                document.getElementById("ddStaffs").style.display = "none";
-                document.getElementById("ddStaffs").selectedIndex = "0";
-            }
-
-            //Claim Received input box
-            if (statusText == "Claim Received") {
-                document.getElementById("lblClaimReceivedDate").style.display = "inline";
-                document.getElementById("txtClaimReceivedDate").style.display = "inline";     
-                document.getElementById("txtClaimReceivedDate").value = todayDate();
-            }
-            else {
-                document.getElementById("lblClaimReceivedDate").style.display = "none";
-                document.getElementById("txtClaimReceivedDate").style.display = "none";
-                document.getElementById("txtClaimReceivedDate").value = "";
-            }
-
-            //Supervisor Workload dropdown
-            if (statusText == "Supervisor Workload") {
-                document.getElementById("lblAssignTo").style.display = "inline";
-                document.getElementById("ddSupervisors").style.display = "inline";
-                document.getElementById("ddSupervisors").selectedIndex = "0";
-            }
-            else {
-                document.getElementById("lblAssignTo").style.display = "none";
-                document.getElementById("ddSupervisors").style.display = "none";
-                document.getElementById("ddSupervisors").selectedIndex = "0";
-            }
-
-            //Staff Review dropdown
-            if (statusText == "Staff Review") {
-                document.getElementById("lblAssignToStaff").style.display = "inline";
-                document.getElementById("ddStaffs").style.display = "inline";
-                document.getElementById("ddStaffs").selectedIndex = "0";
-            }
-            else {
-                document.getElementById("lblAssignToStaff").style.display = "none";
-                document.getElementById("ddStaffs").style.display = "none";
-                document.getElementById("ddStaffs").selectedIndex = "0";
-            }
-
-            document.getElementById("txtClaimID").value = "";
-            document.getElementById("txtAIN").value = "";
-            document.getElementById("txtClaimID_1").value = "";
-        });
-    });
-
-    // Send the data to the controller when click the "Process" button
-    $(document).ready(function () {
-        $('#SubmitProcess').on('click', function () {
-            var claimIDs = [];
-
-            //Get the values from the cells
-            var tbl = document.getElementById("tblClaims_1");         
-            var tblRows = tbl.getElementsByTagName("tr");
-            if (tblRows.length > 3) {
-                for (var i = 1; i<tblRows.length-2; i++) {
-                    claimIDs.push(tbl.rows[i].cells[0].innerHTML);
-                }
-            }
-
-            // Get the value from the input text box
-            claimIDs.push(document.getElementById("txtClaimID_1").value);
-
-            // Get the claim status
-            var e = document.getElementById("ddClaimStatus");
-            var status = e.options[e.selectedIndex].value;
-
-            // Get the supervisor assignee
-            e = document.getElementById("ddSupervisors");
-            var supervisorAssignee = e.options[e.selectedIndex].value;
-
-            // Get the staff assignee
-            e = document.getElementById("ddStaffs");
-            var staffAssignee = e.options[e.selectedIndex].value;;
-
-            $.ajax({
-                url: '@Url.Action("GetClaimInfo", "Home")',
-                type: "POST",
-                data: { ClaimIDList: claimIDs, ClaimStatus: status, AssigneeSupervisor: supervisorAssignee, AssigneeStaff: staffAssignee},
-                traditional: true,
-                success: function () {
-                    alert("Processed!");
-                    window.location = '../Home/ProcessClaim';
-                },
-                error: function () {
-                    alert("Not Processed!");
-                }
-            }); 
-        });
-    });
-
-    // For Claim Received Status Only
     // Send the data to the controller when click the "Search" button
     function ValidateInfo()
     {
@@ -264,17 +71,17 @@
         var today = new Date();
 
         if (claimID == "")
-            alert("Claim # is empty");
+            alert("Claim# cannot be empty.");
         else if (claimID.length < 7)
-            alert("Claim # must be 7 digits");
+            alert("Claim# must be 7 digits.");
         else if (AIN == "")
-            alert("AIN is empty");
+            alert("AIN cannot be empty.");
         else if (AIN.length < 10)
-            alert("AIN must be 10 digits")
+            alert("AIN must be 10 digits.")
         else if (receivedDate == "")
-            alert("Claim Received Date is empty");
+            alert("Claim Received Date cannot be empty.");
         else if (isDate(receivedDate) == false)
-            alert("Claim Received Date is invalid");
+            alert("Invalid date format.");
         else {
             var newReceivedDate = new Date(receivedDate); //change format
             if (newReceivedDate <= today) {
@@ -388,15 +195,13 @@
                 }); 
             }
             else
-                alert("Claim Received Date cannot be bigger than today");    
+                alert("Claim Received Date cannot be in future.");    
         }
     }
 
-    function ClearInfo()
-    {
+    function ClearInfo() {
         var table = document.getElementById("tblClaims");
-        if (table.rows.length > 2)
-        {
+        if (table.rows.length > 2) {
             for (var i = table.rows.length - 2; i > 0; i--) {
                 table.deleteRow(i);
             }
@@ -409,6 +214,200 @@
         document.getElementById("checkAIN").style.display = "none";
         document.getElementById("txtClaimID").focus();
     }
+    /////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////
+    // For Other Status
+    /////////////////////////////////////////////////////////////////////
+    function Add() {
+        AddRow($("#txtClaimID_1").val());
+        $("#txtClaimID_1").val("");
+    };
+
+    function AddRow(claimid) {
+        var tBody = $("#tblClaims_1 > TBODY")[0];
+
+        //Add Row.
+        row = tBody.insertRow(-1);
+
+        //Add ClaimID cell.
+        var cell = $(row.insertCell(-1));
+        cell.html(claimid);
+
+        //Add Button cell.
+        cell = $(row.insertCell(-1));
+        var btnRemove = $("<img />");
+        btnRemove.attr("src", "/img/minus-circle-solid.svg");
+        btnRemove.attr("style", "height:30px;width:30px;");
+        btnRemove.attr("onclick", "Remove(this);");
+        btnRemove.val("Remove");
+        cell.append(btnRemove);
+    };
+
+    function Remove(button) {
+        //Determine the reference of the Row using the Button.
+        var row = $(button).closest("TR");
+        var name = $("TD", row).eq(0).html();
+        if (confirm("Do you want to delete Claim #: " + name)) {
+            //Get the reference of the Table.
+            var table = $("#tblClaims_1")[0];
+
+            //Delete the Table row using it's Index.
+            table.deleteRow(row[0].rowIndex);
+        }
+    };
+
+     // Send the data to the controller when click the "Process" button
+    $(document).ready(function () {
+        $('#SubmitProcess').on('click', function () {
+            var claimIDs = [];
+
+            //Get the values from the cells
+            var tbl = document.getElementById("tblClaims_1");         
+            var tblRows = tbl.getElementsByTagName("tr");
+            if (tblRows.length > 3) {
+                for (var i = 1; i<tblRows.length-2; i++) {
+                    claimIDs.push(tbl.rows[i].cells[0].innerHTML);
+                }
+            }
+
+            // Get the value from the input text box
+            claimIDs.push(document.getElementById("txtClaimID_1").value);
+
+            // Get the claim status
+            var e = document.getElementById("ddClaimStatus");
+            var status = e.options[e.selectedIndex].value;
+
+            // Get the supervisor assignee
+            e = document.getElementById("ddSupervisors");
+            var supervisorAssignee = e.options[e.selectedIndex].value;
+
+            // Get the staff assignee
+            e = document.getElementById("ddStaffs");
+            var staffAssignee = e.options[e.selectedIndex].value;;
+
+            $.ajax({
+                url: '@Url.Action("ProcessClaim", "Home")',
+                type: "POST",
+                data: { ClaimIDList: claimIDs, ClaimStatus: status, AssigneeSupervisor: supervisorAssignee, AssigneeStaff: staffAssignee},
+                traditional: true,
+                success: function () {
+                    alert("Processed!");
+                    window.location = '../Home/ProcessClaim';
+                },
+                error: function () {
+                    alert("Not Processed!");
+                }
+            }); 
+        });
+    });
+    /////////////////////////////////////////////////////////////////////
+
+    // Enter number only
+    function numberOnly(id) {
+        // Get element by id which passed as parameter within HTML element event
+        var element = document.getElementById(id);
+        // Use numbers only pattern, from 0 to 9
+        var regex = /[^0-9]/gi;
+        // This removes any other character but numbers as entered by user
+        element.value = element.value.replace(regex, "");
+    }
+
+    // Hit "Enter" to insert the data
+    //$(document).on("keypress", "form", function (event) {
+    //    if (event.keyCode == 13) {
+    //        return event.keyCode != 13;
+    //    }
+    //});
+
+    function todayDate() {
+        var today = new Date();
+        var mm = today.getMonth() + 1; //January is 0!
+        var dd = today.getDate();
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        var today = mm + '/' + dd + '/' + yyyy;
+
+        return today;
+    }
+
+    // Populate the dropdown
+    $(document).ready(function () {
+        $("#ddClaimStatus").change(function () {
+            var statusText = $("#ddClaimStatus option:selected").text();
+
+            //Tables
+            if (statusText == "Select Status") {
+                document.getElementById("dvClaimReceived").style.visibility = "hidden";
+                document.getElementById("dvNotClaimReceived").style.visibility = "hidden";
+            }
+            else if (statusText == "Claim Received") {
+                document.getElementById("dvClaimReceived").style.visibility = "visible";
+                document.getElementById("dvNotClaimReceived").style.visibility = "hidden";
+            }
+            else {
+                document.getElementById("dvClaimReceived").style.visibility = "hidden";
+                document.getElementById("dvNotClaimReceived").style.visibility = "visible";
+            }
+
+            if (statusText == "Select Status") {
+                document.getElementById("lblClaimReceivedDate").style.display = "none";
+                document.getElementById("txtClaimReceivedDate").style.display = "none";
+                document.getElementById("txtClaimReceivedDate").value = "";
+                document.getElementById("lblAssignTo").style.display = "none";
+                document.getElementById("ddSupervisors").style.display = "none";
+                document.getElementById("ddSupervisors").selectedIndex = "0";
+                document.getElementById("lblAssignToStaff").style.display = "none";
+                document.getElementById("ddStaffs").style.display = "none";
+                document.getElementById("ddStaffs").selectedIndex = "0";
+            }
+
+            //Claim Received input box
+            if (statusText == "Claim Received") {
+                document.getElementById("lblClaimReceivedDate").style.display = "inline";
+                document.getElementById("txtClaimReceivedDate").style.display = "inline";     
+                document.getElementById("txtClaimReceivedDate").value = todayDate();
+            }
+            else {
+                document.getElementById("lblClaimReceivedDate").style.display = "none";
+                document.getElementById("txtClaimReceivedDate").style.display = "none";
+                document.getElementById("txtClaimReceivedDate").value = "";
+            }
+
+            //Supervisor Workload dropdown
+            if (statusText == "Supervisor Workload") {
+                document.getElementById("lblAssignTo").style.display = "inline";
+                document.getElementById("ddSupervisors").style.display = "inline";
+                document.getElementById("ddSupervisors").selectedIndex = "0";
+            }
+            else {
+                document.getElementById("lblAssignTo").style.display = "none";
+                document.getElementById("ddSupervisors").style.display = "none";
+                document.getElementById("ddSupervisors").selectedIndex = "0";
+            }
+
+            //Staff Review dropdown
+            if (statusText == "Staff Review") {
+                document.getElementById("lblAssignToStaff").style.display = "inline";
+                document.getElementById("ddStaffs").style.display = "inline";
+                document.getElementById("ddStaffs").selectedIndex = "0";
+            }
+            else {
+                document.getElementById("lblAssignToStaff").style.display = "none";
+                document.getElementById("ddStaffs").style.display = "none";
+                document.getElementById("ddStaffs").selectedIndex = "0";
+            }
+
+            document.getElementById("txtClaimID").value = "";
+            document.getElementById("txtAIN").value = "";
+            document.getElementById("txtClaimID_1").value = "";
+        });
+    });
 
 </script>
 <div class="text-left">

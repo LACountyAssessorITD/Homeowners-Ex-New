@@ -218,13 +218,7 @@ namespace Homeowners_Ex_New.Controllers
 
         public string ValidateInfo(string ClaimID, string AIN, string ClaimStatus, string ClaimReceivedDate)
         {
-            if (ClaimID == null)
-                ClaimID = "";
-            if (AIN == null)
-                AIN = "";
-
             string strAssignor = User.FindFirst("Name").Value;
-
             try
             {
                 var result = new ClaimInfo();
@@ -232,26 +226,6 @@ namespace Homeowners_Ex_New.Controllers
                 var pClaimID = new SqlParameter("@ClaimID", ClaimID);
                 var pAIN = new SqlParameter("@AIN", AIN);
                 result = _context.ClaimInfo.FromSql("sp_chk_ClaimID_AIN @ClaimStatusRefID, @ClaimID, @AIN", pClaimStatus, pClaimID, pAIN).FirstOrDefaultAsync().Result;
-
-                //string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
-                //SqlConnection cnn = new SqlConnection(cnnString);
-                //SqlCommand cmd = new SqlCommand();
-                //SqlDataReader rdr = null;
-
-                //cmd.Connection = cnn;
-                //cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                //cmd.CommandText = "sp_chk_ClaimID_AIN";
-                //cmd.Parameters.Add(new SqlParameter("@ClaimStatusRefID", ClaimStatus));
-                //cmd.Parameters.Add(new SqlParameter("@ClaimID", ClaimID));
-                //cmd.Parameters.Add(new SqlParameter("@AIN", AIN));
-
-                //cnn.Open();
-                //rdr = cmd.ExecuteReader();
-                //while (rdr.Read())
-                //{
-                //    result = rdr[0].ToString();
-                //}
-                //cnn.Close();
 
                 return result.info;
             }
