@@ -245,22 +245,6 @@
         });
     });
 
-    function BuildToday() {
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth() + 1;
-        var yyyy = today.getFullYear();
-        if (dd < 10) {
-            dd = '0' + dd;
-        }
-
-        if (mm < 10) {
-            mm = '0' + mm;
-        }
-
-        return mm + '/' + dd + '/' + yyyy;
-    }
-
     // For Claim Received Status Only
     // Send the data to the controller when click the "Search" button
     function ValidateInfo()
@@ -292,8 +276,8 @@
         else if (isDate(receivedDate) == false)
             alert("Claim Received Date is invalid");
         else {
-            receivedDate = new Date(receivedDate);
-            if (receivedDate <= today) {
+            var newReceivedDate = new Date(receivedDate); //change format
+            if (newReceivedDate <= today) {
                 $.ajax({
                     url: '@Url.Action("ValidateInfo", "Home")',
                     type: "POST",
@@ -367,22 +351,25 @@
                                         success: function (data) {
                                             if (data == "-1")
                                                 alert("Fail to process!");
-                                            else
+                                            else {
                                                 alert("Processed!");
+
+                                                Add_ClaimReceived();
+                                                document.getElementById("exclamationClaimID").style.display = "inline";
+                                                document.getElementById("exclamationAIN").style.display = "inline";
+                                                document.getElementById("checkClaimID").style.display = "none";
+                                                document.getElementById("checkAIN").style.display = "none";
+                                                document.getElementById("txtClaimID").value = "";
+                                                document.getElementById("txtAIN").value = "";
+                                                document.getElementById("txtClaimID").focus();
+                                            }
                                         },
                                         error: function () {
                                             alert("Fail to process!");
                                         }
                                     });
 
-                                    Add_ClaimReceived();
-                                    document.getElementById("exclamationClaimID").style.display = "inline";
-                                    document.getElementById("exclamationAIN").style.display = "inline";
-                                    document.getElementById("checkClaimID").style.display = "none";
-                                    document.getElementById("checkAIN").style.display = "none";
-                                    document.getElementById("txtClaimID").value = "";
-                                    document.getElementById("txtAIN").value = "";
-                                    document.getElementById("txtClaimID").focus();
+                                   
                                 }
                                 else {
                                     //Click CANCEL
