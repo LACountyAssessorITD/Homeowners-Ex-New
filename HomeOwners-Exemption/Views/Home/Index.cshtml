@@ -154,8 +154,9 @@
                 {
                     <div class="row">
                         <div class="col-custom">
-                            <p></p>
-                            <a asp-action="Claim" asp-controller="Home" asp-route-id="@Model.claims[i].ClaimId">@Model.claims[i].ClaimId</a>
+                            <p class="db-sub-heading">
+                                <a asp-action="Claim" asp-controller="Home" asp-route-id="@Model.claims[i].ClaimId">@Model.claims[i].ClaimId</a>
+                            </p>
                         </div>
                         <div class="col-custom">
                             <p class="p-space-center">@Model.claims[i].currentAPN</p>
