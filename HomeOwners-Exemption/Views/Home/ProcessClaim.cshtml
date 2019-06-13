@@ -245,6 +245,23 @@
         });
     });
 
+    function BuildToday() {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+
+        return mm + '/' + dd + '/' + yyyy;
+    }
+
+    // For Claim Received Status Only
     // Send the data to the controller when click the "Search" button
     function ValidateInfo()
     {
@@ -260,17 +277,24 @@
 
         // Get the claim received date
         var receivedDate = document.getElementById("txtClaimReceivedDate").value.trim();
+        var today = new Date();
 
         if (claimID == "")
             alert("Claim # is empty");
+        else if (claimID.length < 7)
+            alert("Claim # must be 7 digits");
         else if (AIN == "")
             alert("AIN is empty");
+        else if (AIN.length < 10)
+            alert("AIN must be 10 digits")
         else if (receivedDate == "")
             alert("Claim Received Date is empty");
+        else if (isDate(receivedDate) == false)
+            alert("Claim Received Date is invalid");
+        else if (receivedDate > BuildToday())
+            alert("Claim Received Date cannot be bigger than today");
         else {
-            if (isDate(receivedDate))
-            {
-                $.ajax({
+            $.ajax({
                     url: '@Url.Action("ValidateInfo", "Home")',
                     type: "POST",
                     data: { ClaimID: claimID, AIN: AIN, ClaimStatus: status, ClaimReceivedDate: receivedDate },
@@ -374,10 +398,7 @@
                     error: function () {
                         alert("Fail to validate!");
                     }
-                });
-            }
-            else
-                alert ("Claim Received Date is invalid")
+            });        
         }
     }
 
