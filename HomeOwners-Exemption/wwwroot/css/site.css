@@ -75,6 +75,7 @@ h1,h2,h3,h4,h5 {
     line-height: 60px; /* Vertically center the text there */
 }
 
+
 .top-nav-height {
     height: 98px;
 }
@@ -155,6 +156,23 @@ h1,h2,h3,h4,h5 {
     max-height: 300px;
     
 }
+/*Pattabi-Start*/
+.dashboard-Table-Heading {
+   color:white;
+   text-align:center;
+}
+.p-space {
+    padding-left: 0.6em
+}
+.p-space-center {
+    text-align:center;
+}
+.db-sub-heading {
+    text-align: center;
+    font-weight: bold;
+}
+
+/*Pattabi-end*/
 .sub-table p {
     /*padding-left: 15px;*/
 }
@@ -325,3 +343,4 @@ h1,h2,h3,h4,h5 {
     background: #808080;
     border-radius: 10px;
 }
+
