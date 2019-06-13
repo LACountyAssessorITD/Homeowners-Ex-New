@@ -17,13 +17,13 @@
             <div class="row claim-core test-padding border-title ">
                 <div class="col-4">
                     <div class="form-group">
-                        <label asp-for="claimID" id="Claimant" class="">Claim#:</label>
-                        <input asp-for="claimID" placeholder="Enter a Claim #" class="" />
+                        <label asp-for="claimID" id="Claimant" class="" >Claim#:</label>
+                        <input asp-for="claimID" placeholder="Enter a Claim #" class="" readonly/>
 
                     </div>
                     <div class="form-group">
                         <label asp-for="CurrentApn" class="">AIN#:</label>
-                        <input asp-for="CurrentApn" placeholder="Enter an AIN" class="" />
+                        <input asp-for="CurrentApn" placeholder="Enter an AIN" class=""readonly />
 
                     </div>
                 </div>
@@ -34,18 +34,18 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="ClaimStatusID" id="" class="">Claim Status:</label>
-                        <select asp-for="ClaimStatusID" asp-items="ViewBag.dropdownInfo.Status"></select>
+                        <select asp-for="ClaimStatusID" asp-items="ViewBag.dropdownInfo.Status" ></select>
                         @*<input asp-for="ClaimStatusRef" class="" />*@
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
                         <label asp-for="AssigneeID" class="">Assignee:</label>
-                        <input asp-for="AssigneeID" class="" />
+                        <input asp-for="AssigneeID" class="" readonly />
                     </div>
                     <div class="form-group">
                         <label asp-for="CreatedDate" class="">Date:</label>
-                        <input asp-for="CreatedDate" class="" />
+                        <input asp-for="CreatedDate" class="" readonly/>
                     </div>
                 </div>
             </div>
@@ -304,6 +304,7 @@
         <div class="form-group">
             <input type="submit" value="Save" class="btn btn-primary" />
         </div>
+        <a asp-action="Claim" asp-controller="Home" asp-route-id="1">Clear</a>
     </form>
 </div>
 

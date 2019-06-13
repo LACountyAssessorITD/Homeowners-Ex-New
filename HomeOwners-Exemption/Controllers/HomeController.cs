@@ -107,7 +107,7 @@ namespace HomeOwners_Exemption.Controllers
             DropdownListClaim drop = GetDropdown();
             var modelUser = new Claim();
             ViewBag.ModelMessage = false;
-            if (id != null)
+            if (id != null && id > 1)
             {
                 var EmpID = new SqlParameter("@ClaimID", id);
                  modelUser = _context.Claim.FromSql("sp_getClaim @ClaimID", EmpID).FirstOrDefaultAsync().Result;
@@ -144,7 +144,7 @@ namespace HomeOwners_Exemption.Controllers
                                                                 , parameter[15], parameter[16], parameter[17], parameter[18], parameter[19]
                                                                 , parameter[20], parameter[21], parameter[22], parameter[23], parameter[24]
                                                                 , parameter[25], parameter[26] ,parameter[27]);
-                return RedirectToAction(nameof(Claim));
+                return RedirectToAction("Claim", "Home", new { claim.claimID });
             }
             return View("Claim", "Home");
         }
