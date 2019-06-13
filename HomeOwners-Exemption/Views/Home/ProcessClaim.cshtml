@@ -291,10 +291,10 @@
             alert("Claim Received Date is empty");
         else if (isDate(receivedDate) == false)
             alert("Claim Received Date is invalid");
-        else if (receivedDate > BuildToday())
-            alert("Claim Received Date cannot be bigger than today");
         else {
-            $.ajax({
+            receivedDate = new Date(receivedDate);
+            if (receivedDate <= today) {
+                $.ajax({
                     url: '@Url.Action("ValidateInfo", "Home")',
                     type: "POST",
                     data: { ClaimID: claimID, AIN: AIN, ClaimStatus: status, ClaimReceivedDate: receivedDate },
@@ -309,13 +309,13 @@
                         }
 
                         function confirmBox(displayData) {
-                            if (displayData.includes("ERROR", 0) || displayData.includes("ALERT", 0)) {
+                            if ((displayData.indexOf("ERROR") != -1) || (displayData.indexOf("ALERT") != -1)) {
                                 var claimError = "";
                                 var ainError = "";
                                 var start;
                                 var end;
                                 data = displayData.toString();
-                                if (displayData.includes("ERROR", 0)) {
+                                if (displayData.indexOf("ERROR") != -1) {
                                     document.getElementById("exclamationClaimID").style.display = "inline";
                                     document.getElementById("checkClaimID").style.display = "none";
                                     start = displayData.indexOf("ERROR");
@@ -328,7 +328,7 @@
                                     document.getElementById("checkClaimID").style.display = "inline";
                                 }
 
-                                if (displayData.includes("ALERT", 0)) {
+                                if (displayData.indexOf("ALERT") != -1) {
                                     document.getElementById("exclamationAIN").style.display = "inline";
                                     document.getElementById("checkAIN").style.display = "none";
                                     start = displayData.indexOf("ALERT");
@@ -398,7 +398,10 @@
                     error: function () {
                         alert("Fail to validate!");
                     }
-            });        
+                }); 
+            }
+            else
+                alert("Claim Received Date cannot be bigger than today");    
         }
     }
 
