@@ -62,6 +62,7 @@ namespace Homeowners_Ex_New.Controllers
             });
 
             var statusDbList = _context.statusList.FromSql("sp_getCountsByStatus").ToListAsync().Result.ToList();
+            string strAssignor = User.FindFirst("Name").Value;
             foreach (var item in statusDbList)
             {
                 statusList[item.ClaimStatusRef] = new StatusCount(item.OrderCount, item.Late);
@@ -191,8 +192,8 @@ namespace Homeowners_Ex_New.Controllers
                     dt_tmpClaimID.Rows.Add(tmpClaimID);
                 }
 
-                //string result = _context.Database.ExecuteSqlCommand("sp_create_ClaimID_AIN @tvpClaimID", new SqlParameter("@tvpClaimID", dt_tmpClaimID)).ToString();
-                string result = _context.Database.ExecuteSqlCommand("sp_create_ClaimID_AIN @tvpClaimID", dt_tmpClaimID).ToString();
+                string result = _context.Database.ExecuteSqlCommand("sp_prepClaimID2 @tvpClaimID", new SqlParameter("@tvpClaimID", dt_tmpClaimID)).ToString();
+                //string result = _context.Database.ExecuteSqlCommand("sp_prepClaimID2 @tvpClaimID", dt_tmpClaimID).ToString();
                 return "1";
             }
             catch (Exception e)
