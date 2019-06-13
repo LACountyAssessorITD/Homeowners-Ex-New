@@ -245,6 +245,23 @@
         });
     });
 
+    function BuildToday() {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+
+        return mm + '/' + dd + '/' + yyyy;
+    }
+
+    // For Claim Received Status Only
     // Send the data to the controller when click the "Search" button
     function ValidateInfo()
     {
@@ -260,16 +277,23 @@
 
         // Get the claim received date
         var receivedDate = document.getElementById("txtClaimReceivedDate").value.trim();
+        var today = new Date();
 
         if (claimID == "")
             alert("Claim # is empty");
+        else if (claimID.length < 7)
+            alert("Claim # must be 7 digits");
         else if (AIN == "")
             alert("AIN is empty");
+        else if (AIN.length < 10)
+            alert("AIN must be 10 digits")
         else if (receivedDate == "")
             alert("Claim Received Date is empty");
+        else if (isDate(receivedDate) == false)
+            alert("Claim Received Date is invalid");
         else {
-            if (isDate(receivedDate))
-            {
+            receivedDate = new Date(receivedDate);
+            if (receivedDate <= today) {
                 $.ajax({
                     url: '@Url.Action("ValidateInfo", "Home")',
                     type: "POST",
@@ -285,13 +309,13 @@
                         }
 
                         function confirmBox(displayData) {
-                            if (displayData.includes("ERROR", 0) || displayData.includes("ALERT", 0)) {
+                            if ((displayData.indexOf("ERROR") != -1) || (displayData.indexOf("ALERT") != -1)) {
                                 var claimError = "";
                                 var ainError = "";
                                 var start;
                                 var end;
                                 data = displayData.toString();
-                                if (displayData.includes("ERROR", 0)) {
+                                if (displayData.indexOf("ERROR") != -1) {
                                     document.getElementById("exclamationClaimID").style.display = "inline";
                                     document.getElementById("checkClaimID").style.display = "none";
                                     start = displayData.indexOf("ERROR");
@@ -304,7 +328,7 @@
                                     document.getElementById("checkClaimID").style.display = "inline";
                                 }
 
-                                if (displayData.includes("ALERT", 0)) {
+                                if (displayData.indexOf("ALERT") != -1) {
                                     document.getElementById("exclamationAIN").style.display = "inline";
                                     document.getElementById("checkAIN").style.display = "none";
                                     start = displayData.indexOf("ALERT");
@@ -374,10 +398,10 @@
                     error: function () {
                         alert("Fail to validate!");
                     }
-                });
+                }); 
             }
             else
-                alert ("Claim Received Date is invalid")
+                alert("Claim Received Date cannot be bigger than today");    
         }
     }
 
