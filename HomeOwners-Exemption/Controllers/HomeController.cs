@@ -129,6 +129,7 @@ namespace Homeowners_Ex_New.Controllers
             return View(modelUser);
         }
 
+
         public DropdownListClaim GetDropdown()
         {
             DropdownListClaim drop = new DropdownListClaim();
