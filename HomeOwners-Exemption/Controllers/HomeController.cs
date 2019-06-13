@@ -40,8 +40,8 @@ namespace Homeowners_Ex_New.Controllers
             dynamic model = new ExpandoObject();
             
             var staffList = _context.Staffs.FromSql("sp_getStaff").ToListAsync().Result.ToList();
-            var supList = _context.Staffs.FromSql("sp_getSupervisors").ToListAsync().Result.ToList();
-            staffList.AddRange(supList);
+            //var supList = _context.Staffs.FromSql("sp_getSupervisors").ToListAsync().Result.ToList();
+            //staffList.AddRange(supList);
 
             Dictionary<string, StatusCount> statusList = new Dictionary<string, StatusCount>();
             statusList.Add("Preprint Sent", new StatusCount(0,0));
