@@ -367,16 +367,16 @@
 
             //Tables
             if (statusText == "Select Status") {
-                document.getElementById("dvClaimReceived").style.visibility = "hidden";
-                document.getElementById("dvNotClaimReceived").style.visibility = "hidden";
+                document.getElementById("dvClaimReceived").style.display = "inline";
+                document.getElementById("dvNotClaimReceived").style.display = "none";
             }
             else if (statusText == "Claim Received") {
-                document.getElementById("dvClaimReceived").style.visibility = "visible";
-                document.getElementById("dvNotClaimReceived").style.visibility = "hidden";
+                document.getElementById("dvClaimReceived").style.display = "inline";
+                document.getElementById("dvNotClaimReceived").style.display = "none";
             }
             else {
-                document.getElementById("dvClaimReceived").style.visibility = "hidden";
-                document.getElementById("dvNotClaimReceived").style.visibility = "visible";
+                document.getElementById("dvClaimReceived").style.display = "none";
+                document.getElementById("dvNotClaimReceived").style.display = "inline";
             }
 
             if (statusText == "Select Status") {
@@ -434,19 +434,53 @@
     });
 
 </script>
-<div class="text-left">
-    <label><b>Process Claim</b></label>
+
+<h4 class="p-2">Scan Claim</h4>
+
+<div class="container-fluid section-status p-0">
+    <div class="row"style="max-width: 1200px;">
+        <div class="col-6 ">
+            <label class="d-inline-flex" style="">
+                <p>Claim Status:</p>
+                @Html.DropDownListFor(model => model.ClaimStatus, Model.StatusList, new { style = "width:250px;", @id = "ddClaimStatus", @class = "form-control", @label = "Claim Status:", autofocus = "autofocus" })
+            </label>
+        </div>
+        <div class="col-6">
+            <div id="lblAssignTo" style="display:none;">
+                <label>
+                    Assign To:
+                    @Html.DropDownListFor(model => model.Supervisor, Model.Supervisors, new { style = "width:250px;display:none;", @id = "ddSupervisors", @class = "form-control dropdown-text" })
+                </label>
+            </div>
+
+            <div id="lblAssignToStaff" style="display:none;">
+                <label>
+                    Assign To:
+                    @Html.DropDownListFor(model => model.Staff, Model.Staffs, new { style = "width:250px;display:none;", @id = "ddStaffs", @class = "form-control dropdown-text" })
+                </label>
+            </div>
+            
+
+            <label id="lblClaimReceivedDate" style="display:none;">
+                Claim Received Date:
+                @Html.TextBoxFor(model => model.ClaimReceivedDate, new { style = "width:250px;", @id = "txtClaimReceivedDate", @name = "txtClaimReceivedDate", maxlength = 10, @class = "form-control input-text" })
+            </label>
+        </div>
+        
+       
+
+    </div>
 </div>
+
+<hr />
+
 <br />
-<table>
-    <tr>
-        <td width="350px">
-            <label style="font-weight:bold;">
+
+            @*<label style="font-weight:bold;">
                 Claim Status:
                 @Html.DropDownListFor(model => model.ClaimStatus, Model.StatusList, new { style = "width:250px;", @id = "ddClaimStatus", @class = "form-control", @label = "Claim Status:", autofocus = "autofocus" })
             </label>
-        </td>
-        <td width="400px">
+       
             <label id="lblAssignTo" style="font-weight:bold;display:none;">
                 Assign To:
                 @Html.DropDownListFor(model => model.Supervisor, Model.Supervisors, new { style = "width:250px;display:none;", @id = "ddSupervisors", @class = "form-control dropdown-text" })
@@ -460,13 +494,27 @@
             <label id="lblClaimReceivedDate" style="font-weight:bold;display:none;">
                 Claim Received Date: <font color="#CC0000"><b>(mm/dd/yyyy)</b></font>
                 @Html.TextBoxFor(model => model.ClaimReceivedDate, new { style = "width:250px;", @id = "txtClaimReceivedDate", @name = "txtClaimReceivedDate", maxlength = 10, @class = "form-control input-text" })
-            </label>
-        </td>
-    </tr>
-</table>
-<br />
-<br />
-<div text-align="center" id="dvClaimReceived" style="visibility:hidden;">
+            </label>*@
+
+
+@*<div class="container-fluid section-claim-body">
+    <div id="dvClaimReceived" style="display:none;">
+        <div class="row" style="max-width:800px">
+            <div class="col-6">
+
+            </div>
+            <div class="col-6">
+
+            </div>
+
+        </div>
+    </div>
+</div>*@
+
+
+
+
+<div text-align="center" id="dvClaimReceived" style="display:none;">
     <table id="tblClaims" cellpadding="0" cellspacing="0" border="1">
         <thead>
             <tr>
@@ -497,7 +545,7 @@
         </tfoot>
     </table>
 </div>
-<div text-align="center" id="dvNotClaimReceived" style="visibility:hidden;">
+<div text-align="center" id="dvNotClaimReceived" style="display:none;">
     <table id="tblClaims_1" cellpadding="0" cellspacing="0" border="1">
         <thead>
             <tr>

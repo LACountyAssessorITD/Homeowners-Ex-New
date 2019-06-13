@@ -344,3 +344,30 @@ h1,h2,h3,h4,h5 {
     border-radius: 10px;
 }
 
+/*=========================PROCESS CLAIM============================*/
+
+.section-status select, .section-status input {
+    border-radius: 0;
+    background-color: #c4c4c4;
+    height: 2rem;
+    padding-top: 2px;
+    padding-bottom: 4px;
+    margin-left: 8px;
+}
+.section-status .form-control:focus {
+    box-shadow: 0 0 0 0.1rem rgba(135, 135, 135, 0.25);
+    border-color: #878787;
+    
+
+}
+.section-status p{
+    padding-top: 5px;
+    padding-right: 10px;
+    margin-left: 5px;
+}
+.section-status .row {
+    
+    
+    padding-left: 100px;
+    padding-right: 100px;
+}

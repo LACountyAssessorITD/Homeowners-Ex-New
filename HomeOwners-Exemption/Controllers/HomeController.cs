@@ -49,15 +49,7 @@ namespace HomeOwners_Exemption.Controllers
             statusList.Add("Hold", new StatusCount(0, 0));
             statusList.Add("Closed", new StatusCount(0, 0));
 
-            List<string> statusID = new List<string>(new string[]
-            {
-                "Preprint Sent",
-                "Claim Received",
-                "Supervisor Workload",
-                "Staff Review",
-                "Hold",
-                "Closed"
-            });
+          
 
             var statusDbList = _context.statusList.FromSql("sp_getCountsByStatus").ToListAsync().Result.ToList();
             string strAssignor = User.FindFirst("Name").Value;
@@ -68,11 +60,11 @@ namespace HomeOwners_Exemption.Controllers
             var EmpID = new SqlParameter("@usersID", User.Identity.Name);
             var claimList = _context.MyClaims.FromSql("sp_getListOfAssignedClaim @usersID", EmpID).ToListAsync().Result.ToList();
 
-            var value = statusList[statusID[0]].Count;
+            
 
             model.staff = staffList;
             model.claims = claimList;
-            model.status = statusID;
+           
             model.statusId = statusList;
             return View( model);
         }
