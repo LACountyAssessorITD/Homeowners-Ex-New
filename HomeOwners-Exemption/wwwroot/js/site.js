@@ -37,5 +37,10 @@ $(document).ready(function () {
         $('.history-feature').addClass('display-popup');
         
     });
+    $('.close-history').click(function () {
+        $('.history-feature').removeClass('display-popup');
+
+    });
+    
 });
 

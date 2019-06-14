@@ -319,12 +319,80 @@
 <div class="history-feature">
     <div class="container-fluid h-100">
         <div class="row history-box" style="">
-            <h4 class="text-center w-100">Claim History</h4>
-            <ul>
-                <li>
-                    Claim # <span>@ViewBag.history.ClaimID*</span>
-                </li>
-            </ul>
+            <div class="container-fluid">
+                <div class="row  history-id" style="">
+
+                    <div class="col-12">
+                        <h4 style="margin-bottom: 40px;" class="text-center w-100">Claim History</h4>
+                    </div>
+                    <div class="col-3">
+                        Claim #:
+                    </div>
+                    <div class="col-9">
+                        <span>@Model.claimID</span>
+                    </div>
+                    <div class="col-3">
+                        Claiment:
+                    </div>
+                    <div class="col-9">
+                        <span>@Model.Claimant</span>
+                    </div>
+                    <div class="col-3">
+                        AIN:
+                    </div>
+                    <div class="col-9">
+                        <span>@Model.CurrentApn</span>
+                    </div>
+                    <div class="col-3">
+                        SITUS:
+                    </div>
+                    <div class="col-9">
+                        <span>@Model.CurrentStName , @Model.CurrentCity</span>
+                    </div>
+
+                </div>
+                <div class="row shadow-inset-2">
+                    <div class="col-custom">
+                        <p>Status</p>
+                    </div>
+                    <div class="col-custom">
+                        <p>Assignee</p>
+                    </div>
+                    <div class="col-custom">
+                        <p>Date Changed</p>
+                    </div>
+                    <div class="col-custom">
+                        <p>Days</p>
+                    </div>
+                    <div class="col-custom">
+                        <p>Created By</p>
+                    </div>
+                </div>
+                <div style="max-height: 400px; overflow-y: auto;">
+
+                    @foreach (var item in ViewBag.history)
+                    {
+                        <div class="row shadow-inset-2" style="background-color: #fff">
+                            <div class="col-custom">
+                                <p class="text-center">@item.Status</p>
+                            </div>
+                            <div class="col-custom">
+                                <p class="text-center">@item.Assignee</p>
+                            </div>
+                            <div class="col-custom">
+                                <p class="text-center">@item.DateChanged.ToString("yyyy-MM-dd")</p>
+                            </div>
+                            <div class="col-custom">
+                                <p class="text-center">@item.Days</p>
+                            </div>
+                            <div class="col-custom">
+                                <p class="text-center">@item.CreatedBy</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+         <p class="btn btn-dark close-history">Close</p>
         </div>
     </div>
 </div>

@@ -97,8 +97,8 @@ namespace HomeOwners_Exemption.Controllers
 
         public IActionResult Claim(int? id)
         {
-            
 
+            ViewBag.history = new ClaimHistory();
             DropdownListClaim drop = GetDropdown();
             var modelUser = new Claim();
             ViewBag.ModelMessage = false;
@@ -118,7 +118,7 @@ namespace HomeOwners_Exemption.Controllers
             else
             {
                 modelUser = new Claim();
-                ViewBag.history = new ClaimHistory();
+                
             }
             ViewBag.Staffs = GetAllStaffs();
             ViewBag.dropdownInfo = drop;

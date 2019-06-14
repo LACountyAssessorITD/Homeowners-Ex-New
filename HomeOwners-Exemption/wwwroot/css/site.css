@@ -363,6 +363,16 @@ h1,h2,h3,h4,h5 {
 .display-popup {
     display: block;
 }
+.history-id {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 600px;
+    margin-top: 80px;
+    margin-bottom: 50px;
+}
+.history-id span {
+    padding-left: 30px;
+}
 .history-box {
     max-width: 1000px;
     height: 800px;
@@ -374,15 +384,30 @@ h1,h2,h3,h4,h5 {
     -webkit-transform: translateX(-200px);
     transform: translateX(-200px);
 }
-/*=========================PROCESS CLAIM============================*/
-.section-status select, .section-status input {
-    border-radius: 0;
-    background-color: #c4c4c4;
-    height: 2rem;
-    padding-top: 2px;
-    padding-bottom: 4px;
-    margin-left: 8px;
-}
+    .history-box ul {
+        list-style: none;
+        margin-left: 50px;
+    }
+    .history-box li {
+        margin-bottom: 1rem;
+    }
+    .history-box .col-custom {
+        border: 1px solid #000;
+    }
+    .history-box p {
+        margin-bottom: 3px;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    /*=========================PROCESS CLAIM============================*/
+    .section-status select, .section-status input {
+        border-radius: 0;
+        background-color: #c4c4c4;
+        height: 2rem;
+        padding-top: 2px;
+        padding-bottom: 4px;
+        margin-left: 8px;
+    }
 .section-status .form-control:focus {
     box-shadow: 0 0 0 0.1rem rgba(135, 135, 135, 0.25);
     border-color: #878787;
@@ -438,3 +463,12 @@ i {
     right: 40%;
 }
 
+.close-history {
+    position: absolute;
+    right: 50%;
+    bottom: 50px;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    -webkit-transform: translateX(47px);
+    transform: translateX(47px);
+}
