@@ -46,6 +46,7 @@ namespace HomeOwners_Exemption.Controllers
             statusList.Add("Claim Received", new StatusCount(0, 0));
             statusList.Add("Supervisor Workload", new StatusCount(0, 0));
             statusList.Add("Staff Review", new StatusCount(0, 0));
+            statusList.Add("Supervisor Review", new StatusCount(0, 0));
             statusList.Add("Hold", new StatusCount(0, 0));
             statusList.Add("Closed", new StatusCount(0, 0));
 
@@ -68,6 +69,7 @@ namespace HomeOwners_Exemption.Controllers
             model.statusId = statusList;
             return View( model);
         }
+
         public class StatusCount
         {
             public int Count { get; set; }

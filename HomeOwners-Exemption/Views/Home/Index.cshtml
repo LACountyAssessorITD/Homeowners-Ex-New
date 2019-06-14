@@ -49,18 +49,18 @@
                 {
                     @if (entry.Key != "Preprint Sent")
                     {
-                        <div class="row">
+                        <div class="row shadow-inset-2" style="background-color: #fff;">
                             <div class="col-6">
                                 <p style="padding-left: 10px;">@entry.Key</p>
                             </div>
                             <div class="col-2">
-                                <p>@entry.Value.Count</p>
+                                <p class="text-center">@entry.Value.Count</p>
                             </div>
                             <div class="col-2">
-                                <p>@entry.Value.Current</p>
+                                <p class="text-center">@entry.Value.Current</p>
                             </div>
                             <div class="col-2">
-                                <p>@entry.Value.Late</p>
+                                <p class="text-center">@entry.Value.Late</p>
                             </div>
                         </div>
                     }
@@ -71,7 +71,7 @@
         <div class="col-6 border sub-dash2 scroll ">
 
             <div class="h-100 w-100 sub-table shadow-inset">
-                <div class="row">
+                <div class="row" >
                     <div class="col-4">
                         <div class="w-100">
                             <p class="db-sub-heading">Staff</p>
@@ -91,7 +91,7 @@
                 </div>
                 @for (int i = 0; i < Model.staff.Count; i++)
                 {
-                    <div class="row">
+                    <div class="row shadow-inset-2" style="background-color: #fff;">
                         <div class="col-4">
                             <p class="p-space">@Model.staff[i].Users</p>
                         </div>
@@ -152,7 +152,7 @@
                 </div>
                 @for (int i = 0; i < Model.claims.Count; i++)
                 {
-                    <div class="row">
+                    <div class="row shadow-inset-2" style="background-color: #fff;">
                         <div class="col-custom">
                             <p class="db-sub-heading">
                                 <a asp-action="Claim" asp-controller="Home" asp-route-id="@Model.claims[i].ClaimId">@Model.claims[i].ClaimId</a>
