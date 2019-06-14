@@ -48,35 +48,6 @@ namespace HomeOwners_Exemption.Models
             parameterMap.Add(new SqlParameter("@suppTaxYear", udpList.SuppTaxYear == null ? (object)DBNull.Value : udpList.SuppTaxYear));
             parameterMap.Add(new SqlParameter("@exemptRE", udpList.ExemptRe == null ? (object)DBNull.Value : udpList.ExemptRe));
             parameterMap.Add(new SqlParameter("@exemptRE2", udpList.ExemptRe2 == null ? (object)DBNull.Value : udpList.ExemptRe2));
-           
-            //parameterMap.Add("claimID", new SqlParameter("@claimID", udpList.claimID));
-
-            //parameterMap.Add("ClaimStatusRefID", new SqlParameter("@ClaimStatusRefID", udpList.ClaimStatusRef));
-            //parameterMap.Add("AssigneeD", new SqlParameter("@AssigneeID", udpList.AssigneeID));
-            //parameterMap.Add("AssignorID", new SqlParameter("@AssignorID", udpList.AssignorID));
-
-            //parameterMap.Add("Claimant	", new SqlParameter("@claimant	", udpList.Claimant));
-            //parameterMap.Add("ClaimantSSN", new SqlParameter("@claimantSSN", null));
-            //parameterMap.Add("Spouse", new SqlParameter("@spouse", udpList.Spouse));
-            //parameterMap.Add("spouseSSN", new SqlParameter("@spouseSSN", null));
-
-            //parameterMap.Add("MailingStName", new SqlParameter("@mailingStName", udpList.MailingStName));
-            //parameterMap.Add("MailingApt", new SqlParameter("@mailingApt", udpList.MailingApt));
-            //parameterMap.Add("MailingCity", new SqlParameter("@mailingCity", udpList.MailingCity));
-            //parameterMap.Add("MailingState", new SqlParameter("@mailingState", udpList.MailingState));
-            //parameterMap.Add("MailingZip", new SqlParameter("@mailingZip", udpList.MailingZip));
-
-            //parameterMap.Add("PriorApn", new SqlParameter("@priorAPN", udpList.PriorApn));
-            //parameterMap.Add("DateMovedOut", new SqlParameter("@dateMovedOut", udpList.DateMovedOut));
-            //parameterMap.Add("PriorStName", new SqlParameter("@priorStName", udpList.PriorStName));
-            //parameterMap.Add("PriorApt", new SqlParameter("@priorApt", udpList.PriorApt));
-            //parameterMap.Add("PriorCity", new SqlParameter("@priorCity", udpList.PriorCity));
-            //parameterMap.Add("PriorState", new SqlParameter("@priorState", udpList.PriorState));
-            //parameterMap.Add("PriorZip", new SqlParameter("@priorZip", udpList.PriorZip));
-
-            //parameterMap.Add("ClaimActionID", new SqlParameter("@ClaimActionRefID", udpList.ClaimActionID));
-            //parameterMap.Add("FindingReasonID", new SqlParameter("@FindingReasonRefID", udpList.FindingReasonID));
-            //parameterMap.Add("Late", new SqlParameter("@Late", null));
 
         }
     }

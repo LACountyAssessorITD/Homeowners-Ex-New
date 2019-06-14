@@ -17,40 +17,39 @@
             <div class="row claim-core test-padding border-title ">
                 <div class="col-4">
                     <div class="form-group">
-                        <label asp-for="claimID" id="Claimant" class="" >Claim#:</label>
-                        <input asp-for="claimID" placeholder="Enter a Claim #" class="" readonly/>
-
+                        <label asp-for="claimID" id="Claimant" >Claim#:</label>
+                        <input asp-for="claimID" placeholder="Enter a Claim #"  disabled />
                     </div>
                     <div class="form-group">
-                        <label asp-for="CurrentApn" class="">AIN#:</label>
-                        <input asp-for="CurrentApn" placeholder="Enter an AIN" class=""readonly />
+                        <label asp-for="CurrentApn" >AIN#:</label>
+                        <input asp-for="CurrentApn"  disabled />
 
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label asp-for="AssignorID" class="">Assignor:</label>
-                        <input asp-for="AssignorID" class="" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ClaimStatusID" id="" class="">Claim Status:</label>
-                        <select asp-for="ClaimStatusID" asp-items="ViewBag.dropdownInfo.Status" ></select>
+                        <label asp-for="ClaimStatusID">Claim Status:</label>
+                        <select asp-for="ClaimStatusID" asp-items="ViewBag.dropdownInfo.Status">
+                            <option>Select</option>
+                        </select>
                         @*<input asp-for="ClaimStatusRef" class="" />*@
                     </div>
+                    <div class="form-group">
+                        <label asp-for="AssigneeID">Assignee:</label>
+                        <select asp-for="ClaimStatusID" asp-items="ViewBag.Staffs">
+                            <option>Select</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label asp-for="AssigneeID" class="">Assignee:</label>
-                        <input asp-for="AssigneeID" class="" readonly />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="CreatedDate" class="">Date:</label>
+                        <label asp-for="CreatedDate" class="" style="text-align:right">Date:</label>
                         <input asp-for="CreatedDate" class="" readonly/>
                     </div>
                 </div>
             </div>
             <div class="row row-divider" style="">
-                <p>Personal Information</p>
+                <p><b>Personal Information</b></p>
             </div>
             <div class="row claim-core form-info border-title ">
                 <div class="col-6">
@@ -59,8 +58,8 @@
                         <input asp-for="Claimant" class="" />
                     </div>
                     <div class="form-group">
-                        <label class="">Claimant Ssn:</label>
-                        <input placeholder="Not avialable yet" class="" />
+                        <label class="">Claimant SSN:</label>
+                        <input placeholder="Not available yet" class="" />
                     </div>
                 </div>
                 <div class="col-6">
@@ -69,50 +68,32 @@
                         <input asp-for="Spouse" class="" />
                     </div>
                     <div class="form-group">
-                        <label class="">Spouse Ssn:</label>
-                        <input placeholder="Not avialable yet" class="" />
+                        <label class="">Spouse SSN:</label>
+                        <input placeholder="Not available yet" class="" />
                     </div>
                 </div>
 
             </div>
             <div class="row row-divider" style="">
-                <p>Property Information</p>
+                <p><b>Property Information</b></p>
             </div>
             <div class="row property-info border-title">
 
                 <div class="col-4">
                     <div class="w-100 ">
-                        <p>SITUS Information</p>
+                        <p><b>Situs Information</b></p>
                     </div>
                     <div class="row">
                         <div class="col-7">
                             <div class="form-group">
-                                <label style="" asp-for="CurrentStName" class="">Address:</label>
-                                <input asp-for="CurrentStName" readonly />
-
+                                <label style="width:200px;" asp-for="CurrentStName" class="">Street Number and Name:</label>
+                                <input asp-for="CurrentStName" disabled />
                             </div>
                         </div>
                         <div class="col-5">
                             <div class="form-group">
-                                <label asp-for="CurrentApt" class=""> apt:</label>
-                                <input style="" asp-for="CurrentApt" readonly />
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label style="" asp-for="CurrentCity" class="">Current City:</label>
-                                <input asp-for="CurrentCity" readonly />
-
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label asp-for="CurrentState" class=""> Current State:</label>
-                                @*<input style="" asp-for="CurrentState" readonly />*@
-                                <select asp-for="CurrentState" asp-items="ViewBag.dropdownInfo.states" readonly></select>
+                                <label asp-for="CurrentApt" class=""> Apt/Ste/Flr#:</label>
+                                <input style="" asp-for="CurrentApt" disabled />
 
                             </div>
                         </div>
@@ -120,22 +101,36 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="form-group">
-                                <label style="" asp-for="CurrentZip" class="">Current Zip:</label>
-                                <input asp-for="CurrentZip" readonly />
-
+                                <label style="" asp-for="CurrentCity" class="">City:</label>
+                                <input asp-for="CurrentCity" disabled />
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
+                                <label asp-for="CurrentState" class="">State:</label>
+                                <select asp-for="CurrentState" asp-items="ViewBag.dropdownInfo.states" disabled>
+                                    <option>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label asp-for="CurrentZip">Zip:</label>
+                                <input asp-for="CurrentZip" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group" >
                                 <label asp-for="DateAcquired" class=""> Date Acquired:</label>
-                                <input style="" asp-for="DateAcquired" readonly />
-
+                                <input style="width:200px" asp-for="DateAcquired" disabled />
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-6">
                             <div class="form-group">
                                 <label asp-for="DateOccupied" class=""> Date Occupied:</label>
-                                <input style="" asp-for="DateOccupied" readonly />
+                                <input style="width:200px" asp-for="DateOccupied" disabled />
 
                             </div>
                         </div>
@@ -143,19 +138,19 @@
                 </div>
                 <div class="col-4">
                     <div class="w-100 ">
-                        <p>Mailing Address</p>
+                        <p><b>Mailing Address</b></p>
                     </div>
                     <div class="row">
                         <div class="col-7">
                             <div class="form-group">
-                                <label style="" asp-for="MailingStName" class="">Address:</label>
+                                <label style="width:200px;" asp-for="MailingStName" class="">Street Number and Name:</label>
                                 <input asp-for="MailingStName" readonly />
 
                             </div>
                         </div>
                         <div class="col-5">
                             <div class="form-group">
-                                <label asp-for="MailingApt" class=""> apt:</label>
+                                <label asp-for="MailingApt" class=""> Apt/Ste/Flr#:</label>
                                 <input style="" asp-for="MailingApt" readonly />
 
                             </div>
@@ -172,15 +167,24 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label asp-for="MailingState" class=""> State:</label>
-                                <input style="" asp-for="MailingState" readonly />
+                                <select asp-for="MailingState" asp-items="ViewBag.dropdownInfo.states" readonly>
+                                    <option>Select</option>
+                                </select>
 
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label asp-for="MailingZip" class=""> Date Occupied:</label>
+                                <label asp-for="MailingZip" class=""> Zip:</label>
                                 <input style="" asp-for="MailingZip" readonly />
-
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1">
+                            <div class="form-group">
+                                <input id="chkPriorAddress" name="chkPriorAddress" type="checkbox" />
+                                <label style="width: 800px">Check if mailing address is different from situs to enable input</label>
                             </div>
                         </div>
                     </div>
@@ -188,7 +192,7 @@
 
                 <div class="col-4">
                     <div class="w-100 " style="">
-                        <p>Prior Address</p>
+                        <p><b>Prior Address (if applicable)</b></p>
                     </div>
                     <div class="row">
                         <div class="col-6">
@@ -200,7 +204,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label asp-for="DateMovedOut" class=""> Date Moved:</label>
+                                <label asp-for="DateMovedOut" class=""> Date Moved Out:</label>
                                 <input style="" asp-for="DateMovedOut" />
 
                             </div>
@@ -209,14 +213,14 @@
                     <div class="row">
                         <div class="col-7">
                             <div class="form-group">
-                                <label style="" asp-for="PriorStName" class="">Address:</label>
+                                <label style="Width:200px;" asp-for="PriorStName" class="">Street Number and Name:</label>
                                 <input asp-for="PriorStName" />
 
                             </div>
                         </div>
                         <div class="col-5">
                             <div class="form-group">
-                                <label asp-for="PriorApt" class=""> apt:</label>
+                                <label asp-for="PriorApt" class=""> Apt/Ste/Flr#:</label>
                                 <input style="" asp-for="PriorApt" />
 
                             </div>
@@ -233,13 +237,15 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label asp-for="PriorState" class=""> State:</label>
-                                <input style="" asp-for="PriorState" />
+                                <select asp-for="PriorState" asp-items="ViewBag.dropdownInfo.states" readonly>
+                                    <option>Select</option>
+                                </select>
 
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label asp-for="PriorZip" class=""> ZipCode:</label>
+                                <label asp-for="PriorZip" class=""> Zip:</label>
                                 <input style="" asp-for="PriorZip" />
 
                             </div>
@@ -250,7 +256,7 @@
             <div class="row">
                 <div class="col-6">
                     <div class="row row-divider" style="">
-                        <p>Decision for Claim</p>
+                        <p><b>Decision for Claim</b></p>
                     </div>
                 </div>
                 <div class="col-6" style="padding-left: 15px;">
@@ -266,7 +272,9 @@
                         <div class="col-5">
                             <label style="" asp-for="ClaimActionID" class="">Claim Action#:</label>
                             @*<input asp-for="ClaimActionID" />*@
-                            <select asp-for="ClaimActionID" asp-items="ViewBag.dropdownInfo.Action"></select>
+                            <select asp-for="ClaimActionID" asp-items="ViewBag.dropdownInfo.Action">
+                                <option>Select</option>
+                            </select>
                         </div>
                         <div class="col-7">
                             <label style="" asp-for="FindingReasonID" class="">Finding Reason:</label>
@@ -301,7 +309,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" style="text-align:right">
             <input type="submit" value="Save" class="btn btn-primary" />
         </div>
         <a asp-action="Claim" asp-controller="Home" asp-route-id="1">Clear</a>
