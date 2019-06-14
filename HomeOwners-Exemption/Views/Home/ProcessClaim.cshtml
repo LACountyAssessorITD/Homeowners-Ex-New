@@ -29,27 +29,35 @@
 
         //Add ClaimID cell.
         var cell = $(row.insertCell(-1));
-        cell.html(claimid);
+        cell.html("<p>" +claimid + "</p>");
 
         cell = $(row.insertCell(-1));
-        var imgCheck = $("<img />");
-        imgCheck.attr("src", "/img/check-circle-solid.svg");
-        imgCheck.attr("style", "height:30px;width:30px;");
+        var imgCheck = $("<i style=\"color:#26AB3A;\" class=\"fas fa-check-circle\"></i>");
+       
+        //imgCheck.attr("class", "fas fa - check - circle")
+        //img.change.attr("style", "color: #4cff00;")
+        //var imgCheck = $("<img />");
+        //imgCheck.attr("src", "/img/check-circle-solid.svg");
+        //imgCheck.attr("style", "height:30px;width:30px;");
         cell.append(imgCheck);
 
         //Add AIN cell.
         cell = $(row.insertCell(-1));
-        cell.html(ain);
+        cell.html("<p style=\"margin-left:100px;\">" + ain + "</p>");
 
         cell = $(row.insertCell(-1));
-        var imgCheck = $("<img />");
-        imgCheck.attr("src", "/img/check-circle-solid.svg");
-        imgCheck.attr("style", "height:30px;width:30px;");
+        var imgCheck = $("<i style=\"color:#26AB3A;\" class=\"fas fa-check-circle\"></i>");
+
+        //imgCheck.attr("src", "/img/check-circle-solid.svg");
+        //imgCheck.attr("style", "height:30px;width:30px;");
+        //imgCheck.attr("class", "fas fa - check - circle")
+        //img.change.attr("style", "color: #26AB3A;")
+            
         cell.append(imgCheck);
 
         //Add Process cell.
         cell = $(row.insertCell(-1));
-        var lblProcessed = $("<label style=\"height:30px;width:30px;color:green;\">Processed</label>");
+        var lblProcessed = $("<label style=\"margin-left:1rem;color:#26AB3A;\">Processed</label>");
         cell.append(lblProcessed);
     };
 
@@ -531,7 +539,7 @@
 
 
 
-@*<th width="150px"><input type="submit" class="btn btn-primary bg-3" id="SubmitClear" value="Clear" onclick="ClearInfo();" /></th>*@
+@*<th width="150px"><input type="submit" class="btn btn-info bg-3" id="SubmitClear" value="Clear" onclick="ClearInfo();" /></th>*@
 <div class="section-claim-body container-fluid">
     <div text-align="center" id="dvClaimReceived" style="display:none;">
         <table id="tblClaims">
@@ -552,14 +560,14 @@
                         @*<img src="~/img/exclamation-circle-solid.svg" id="exclamationClaimID" style="height:30px;width:30px;display:inline;" />*@
                         <i id="exclamationClaimID" style="color: red;display:inline;" class="fas fa-exclamation-circle"></i>
                         @*<img src="~/img/check-circle-solid.svg" id="checkClaimID" style="height:30px;width:30px;display:none;" />*@
-                        <i class="fas fa-check-circle" id="checkClaimID" style="color:#4cff00; display:none;"></i>
+                        <i class="fas fa-check-circle" id="checkClaimID" style="color:#26AB3A; display:none;"></i>
                     </td>
                     <td><input type="text" id="txtAIN" style="margin-left: 100px" name="txtAIN" maxlength="10" oninput="numberOnly(this.id)" /></td>
                     <td>
                         @*<img src="~/img/exclamation-circle-scolid.svg" id="exclamationAIN" style="height:30px;width:30px;display:inline;" />*@
                         <i id="exclamationAIN" style="color: red;display:inline;" class="fas fa-exclamation-circle"></i>
-                        <img src="~/img/check-circle-solid.svg" id="checkAIN" style="height:30px;width:30px;display:none;" />
-                        <i class="fas fa-check-circle" id="checkAIN" style="color:#4cff00; display:none;"></i>
+                        @*<img src="~/img/check-circle-solid.svg" id="checkAIN" style="height:30px;width:30px;display:none;" />*@
+                        <i class="fas fa-check-circle" id="checkAIN" style="color:#26AB3A; display:none;"></i>
                     </td>
                     <td>
                         @*<img src="~/img/search.jpg" onclick="ValidateInfo()" style="height:30px;width:30px;" title="Search" />*@
@@ -568,6 +576,9 @@
                 </tr>
             </tfoot>
         </table>
+        <div class="process-status">
+            <input type="submit" class="btn btn-info" id="SubmitClear" value="Reset" onclick="ClearInfo();" />
+        </div>
     </div>
     <div text-align="center" id="dvNotClaimReceived" style="display:none;">
         <table id="tblClaims_1">
@@ -602,6 +613,7 @@
             <input style="background-color:#17a2b8;" type="submit" class="btn btn-info " id="SubmitProcess" value="Process" />
 
             <input type="submit" class="btn btn-info" id="SubmitCancel" value="Cancel" onclick="javascript:window.location='../Home/ProcessClaim';" />
+            
         </div>
         
     </div>

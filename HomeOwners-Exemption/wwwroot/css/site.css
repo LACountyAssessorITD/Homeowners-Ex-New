@@ -364,6 +364,7 @@ h1,h2,h3,h4,h5 {
     padding-top: 5px;
     padding-right: 10px;
     margin-left: 5px;
+    
 }
 .section-status .row {
     
@@ -373,14 +374,17 @@ h1,h2,h3,h4,h5 {
 }
 .section-claim-body{
     padding-left: 100px;
-    height: 800px;
+    height: 700px;
     overflow-y: scroll;
 }
-.section-claim-body button {
-    padding-top: 1px;
-    padding-bottom: 1px;
-    margin-bottom: 4px;
-}
+    .section-claim-body p {
+        margin-bottom: 0;
+    }
+    .section-claim-body button {
+        padding-top: 1px;
+        padding-bottom: 1px;
+        margin-bottom: 4px;
+    }
 
 i {
     font-size: 140%;
@@ -404,3 +408,4 @@ i {
     bottom: 40px;
     right: 40px;
 }
+
