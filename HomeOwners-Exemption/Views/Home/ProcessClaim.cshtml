@@ -298,11 +298,11 @@
             e = document.getElementById("ddStaffs");
             var staffAssignee = e.options[e.selectedIndex].value;
 
-            if ((tblRows.length == 3) && ($("#txtClaimID_1").val() == ""))
+            if ((tblRows.length == 2) && ($("#txtClaimID_1").val() == ""))
                 alert("Claim# cannot be empty.");
-            else if ((tblRows.length == 3) && ($("#txtClaimID_1").val().length < 7))
+            else if ((tblRows.length == 2) && ($("#txtClaimID_1").val().length < 7))
                 alert("Claim# must be 7 digits.");
-            else if ((tblRows.length > 3) && ($("#txtClaimID_1").val() != "") && ($("#txtClaimID_1").val().length < 7))
+            else if ((tblRows.length > 2) && ($("#txtClaimID_1").val() != "") && ($("#txtClaimID_1").val().length < 7))
                 alert("Claim# must be 7 digits.");
             else if (supervisorAssignee == "0")
                 alert("Supervisor cannot be empty.");
