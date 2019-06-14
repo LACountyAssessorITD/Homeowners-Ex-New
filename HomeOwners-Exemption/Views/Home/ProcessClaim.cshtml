@@ -140,7 +140,7 @@
                                 var address = "";
                                 var rest = "";
                                 var result = "";
-                                            
+
                                 ain = displayData.substring(1, displayData.indexOf("$") - displayData.indexOf("|"));
                                 rest = displayData.substring(displayData.indexOf("$"));
                                 owner = rest.substring(1, rest.indexOf("!"));
@@ -176,7 +176,7 @@
                                         }
                                     });
 
-                                   
+
                                 }
                                 else {
                                     //Click CANCEL
@@ -192,10 +192,10 @@
                     error: function () {
                         alert("Fail to validate!");
                     }
-                }); 
+                });
             }
             else
-                alert("Claim Received Date cannot be in future.");    
+                alert("Claim Received Date cannot be in future.");
         }
     }
 
@@ -225,7 +225,7 @@
         else if ($("#txtClaimID_1").val().length < 7)
             alert("Claim# must be 7 digits.");
         else
-        { 
+        {
             AddRow($("#txtClaimID_1").val());
             $("#txtClaimID_1").val("");
         }
@@ -270,7 +270,7 @@
             var claimIDs = [];
 
             //Get the values from the cells
-            var tbl = document.getElementById("tblClaims_1");         
+            var tbl = document.getElementById("tblClaims_1");
             var tblRows = tbl.getElementsByTagName("tr");
             if (tblRows.length > 3) {
                 for (var i = 1; i<tblRows.length-2; i++) {
@@ -367,11 +367,11 @@
 
             //Tables
             if (statusText == "Select Status") {
-                document.getElementById("dvClaimReceived").style.display = "inline";
+                document.getElementById("dvClaimReceived").style.display = "block";
                 document.getElementById("dvNotClaimReceived").style.display = "none";
             }
             else if (statusText == "Claim Received") {
-                document.getElementById("dvClaimReceived").style.display = "inline";
+                document.getElementById("dvClaimReceived").style.display = "block";
                 document.getElementById("dvNotClaimReceived").style.display = "none";
             }
             else {
@@ -394,7 +394,7 @@
             //Claim Received input box
             if (statusText == "Claim Received") {
                 document.getElementById("lblClaimReceivedDate").style.display = "inline";
-                document.getElementById("txtClaimReceivedDate").style.display = "inline";     
+                document.getElementById("txtClaimReceivedDate").style.display = "inline";
                 document.getElementById("txtClaimReceivedDate").value = todayDate();
             }
             else {
@@ -438,7 +438,7 @@
 <h4 class="p-2">Scan Claim</h4>
 
 <div class="container-fluid section-status p-0">
-    <div class="row"style="max-width: 1200px;">
+    <div class="row" style="max-width: 1200px;">
         <div class="col-6 ">
             <label class="d-inline-flex" style="">
                 <p>Claim Status:</p>
@@ -459,15 +459,15 @@
                     @Html.DropDownListFor(model => model.Staff, Model.Staffs, new { style = "width:250px;display:none;", @id = "ddStaffs", @class = "form-control dropdown-text" })
                 </label>
             </div>
-            
+
 
             <label id="lblClaimReceivedDate" style="display:none;">
                 Claim Received Date:
                 @Html.TextBoxFor(model => model.ClaimReceivedDate, new { style = "width:250px;", @id = "txtClaimReceivedDate", @name = "txtClaimReceivedDate", maxlength = 10, @class = "form-control input-text" })
             </label>
         </div>
-        
-       
+
+
 
     </div>
 </div>
@@ -476,104 +476,131 @@
 
 <br />
 
-            @*<label style="font-weight:bold;">
-                Claim Status:
-                @Html.DropDownListFor(model => model.ClaimStatus, Model.StatusList, new { style = "width:250px;", @id = "ddClaimStatus", @class = "form-control", @label = "Claim Status:", autofocus = "autofocus" })
-            </label>
-       
-            <label id="lblAssignTo" style="font-weight:bold;display:none;">
-                Assign To:
-                @Html.DropDownListFor(model => model.Supervisor, Model.Supervisors, new { style = "width:250px;display:none;", @id = "ddSupervisors", @class = "form-control dropdown-text" })
-            </label>
+@*<label style="font-weight:bold;">
+        Claim Status:
+        @Html.DropDownListFor(model => model.ClaimStatus, Model.StatusList, new { style = "width:250px;", @id = "ddClaimStatus", @class = "form-control", @label = "Claim Status:", autofocus = "autofocus" })
+    </label>
 
-            <label id="lblAssignToStaff" style="font-weight:bold;display:none;">
-                Assign To:
-                @Html.DropDownListFor(model => model.Staff, Model.Staffs, new { style = "width:250px;display:none;", @id = "ddStaffs", @class = "form-control dropdown-text" })
-            </label>
+    <label id="lblAssignTo" style="font-weight:bold;display:none;">
+        Assign To:
+        @Html.DropDownListFor(model => model.Supervisor, Model.Supervisors, new { style = "width:250px;display:none;", @id = "ddSupervisors", @class = "form-control dropdown-text" })
+    </label>
 
-            <label id="lblClaimReceivedDate" style="font-weight:bold;display:none;">
-                Claim Received Date: <font color="#CC0000"><b>(mm/dd/yyyy)</b></font>
-                @Html.TextBoxFor(model => model.ClaimReceivedDate, new { style = "width:250px;", @id = "txtClaimReceivedDate", @name = "txtClaimReceivedDate", maxlength = 10, @class = "form-control input-text" })
-            </label>*@
+    <label id="lblAssignToStaff" style="font-weight:bold;display:none;">
+        Assign To:
+        @Html.DropDownListFor(model => model.Staff, Model.Staffs, new { style = "width:250px;display:none;", @id = "ddStaffs", @class = "form-control dropdown-text" })
+    </label>
+
+    <label id="lblClaimReceivedDate" style="font-weight:bold;display:none;">
+        Claim Received Date: <font color="#CC0000"><b>(mm/dd/yyyy)</b></font>
+        @Html.TextBoxFor(model => model.ClaimReceivedDate, new { style = "width:250px;", @id = "txtClaimReceivedDate", @name = "txtClaimReceivedDate", maxlength = 10, @class = "form-control input-text" })
+    </label>*@
 
 
-@*<div class="container-fluid section-claim-body">
-    <div id="dvClaimReceived" style="display:none;">
-        <div class="row" style="max-width:800px">
-            <div class="col-6">
+@*<div class="container-fluid section-claim-body" id="dvClaimReceived" style="display:none;">
+    <div class="row" style="max-width:800px">
+        <div class="col-6">
+            Claim#
+        </div>
+        <div class="col-6">
+            AIN#
+        </div>
 
-            </div>
-            <div class="col-6">
-
-            </div>
-
+    </div>
+    <tbody></tbody>
+    <div class="row" id="tblClaims" style="max-width:800px">
+        <div class="col-6">
+            <input type="text" id="txtClaimID" name="txtClaimID" maxlength="7" oninput="numberOnly(this.id)" />
+        </div>
+        <div class="col-6">
+            <input type="text" id="txtAIN" name="txtAIN" maxlength="10" oninput="numberOnly(this.id)" />
         </div>
     </div>
+    <img src="~/img/search.jpg" onclick="ValidateInfo()" style="height:30px;width:30px;" title="Search" />
 </div>*@
 
 
 
+@*<th width="150px"><input type="submit" class="btn btn-primary bg-3" id="SubmitClear" value="Clear" onclick="ClearInfo();" /></th>*@
+<div class="section-claim-body container-fluid">
+    <div text-align="center" id="dvClaimReceived" style="display:none;">
+        <table id="tblClaims">
+            <thead>
+                <tr>
+                    <th width="100px">Claim #</th>
+                    <th width="30px">&nbsp;&nbsp;</th>
+                    <th  width="100px"><p style="margin-left: 100px">AIN</p></th>
+                    <th width="30px">&nbsp;</th>
 
-<div text-align="center" id="dvClaimReceived" style="display:none;">
-    <table id="tblClaims" cellpadding="0" cellspacing="0" border="1">
-        <thead>
-            <tr>
-                <th width="100px">Claim #</th>
-                <th width="30px">&nbsp;</th>
-                <th width="100px">AIN</th>
-                <th width="30px">&nbsp;</th>
-                <th width="150px"><input type="submit" class="btn btn-primary bg-3" id="SubmitClear" value="Clear" onclick="ClearInfo();" /></th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-        <tfoot>
-            <tr>
-                <td><input type="text" id="txtClaimID" name="txtClaimID" maxlength="7" oninput="numberOnly(this.id)" /></td>
-                <td>
-                    <img src="~/img/exclamation-circle-solid.svg" id="exclamationClaimID" style="height:30px;width:30px;display:inline;" />
-                    <img src="~/img/check-circle-solid.svg" id="checkClaimID" style="height:30px;width:30px;display:none;" />
-                </td>
-                <td><input type="text" id="txtAIN" name="txtAIN" maxlength="10" oninput="numberOnly(this.id)" /></td>
-                <td>
-                    <img src="~/img/exclamation-circle-solid.svg" id="exclamationAIN" style="height:30px;width:30px;display:inline;" />
-                    <img src="~/img/check-circle-solid.svg" id="checkAIN" style="height:30px;width:30px;display:none;" />
-                </td>
-                <td>
-                    <img src="~/img/search.jpg" onclick="ValidateInfo()" style="height:30px;width:30px;" title="Search" />
-                </td>
-            </tr>
-        </tfoot>
-    </table>
-</div>
-<div text-align="center" id="dvNotClaimReceived" style="display:none;">
-    <table id="tblClaims_1" cellpadding="0" cellspacing="0" border="1">
-        <thead>
-            <tr>
-                <th width="100px">Claim #</th>
-                <!--<th width="30px">&nbsp;</th>-->
-                <th width="150px"></th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-        <tfoot>
-            <tr>
-                <td><input type="text" id="txtClaimID_1" name="txtClaimID_1" maxlength="7" oninput="numberOnly(this.id)" /></td>
-                <!--<td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+                <tr>
+                    <td><input type="text" id="txtClaimID"  name="txtClaimID" maxlength="7" oninput="numberOnly(this.id)" /></td>
+                    <td>
+                        @*<img src="~/img/exclamation-circle-solid.svg" id="exclamationClaimID" style="height:30px;width:30px;display:inline;" />*@
+                        <i id="exclamationClaimID" style="color: red;display:inline;" class="fas fa-exclamation-circle"></i>
+                        @*<img src="~/img/check-circle-solid.svg" id="checkClaimID" style="height:30px;width:30px;display:none;" />*@
+                        <i class="fas fa-check-circle" id="checkClaimID" style="color:#4cff00; display:none;"></i>
+                    </td>
+                    <td><input type="text" id="txtAIN" style="margin-left: 100px" name="txtAIN" maxlength="10" oninput="numberOnly(this.id)" /></td>
+                    <td>
+                        @*<img src="~/img/exclamation-circle-scolid.svg" id="exclamationAIN" style="height:30px;width:30px;display:inline;" />*@
+                        <i id="exclamationAIN" style="color: red;display:inline;" class="fas fa-exclamation-circle"></i>
+                        <img src="~/img/check-circle-solid.svg" id="checkAIN" style="height:30px;width:30px;display:none;" />
+                        <i class="fas fa-check-circle" id="checkAIN" style="color:#4cff00; display:none;"></i>
+                    </td>
+                    <td>
+                        @*<img src="~/img/search.jpg" onclick="ValidateInfo()" style="height:30px;width:30px;" title="Search" />*@
+                        <button class="btn btn-info ml-3" onclick="ValidateInfo()">Process</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div text-align="center" id="dvNotClaimReceived" style="display:none;">
+        <table id="tblClaims_1">
+            <thead>
+                <tr>
+                    <th width="100px">Claim #</th>
+                    <!--<th width="30px">&nbsp;</th>-->
+                    <th width="150px"></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+                <tr>
+                    <td><input type="text" id="txtClaimID_1" name="txtClaimID_1" maxlength="7" oninput="numberOnly(this.id)" /></td>
+                    <!--<td>
                     <img src="~/img/exclamation-circle-solid.svg" id="exclamationClaimID_1" style="height:30px;width:30px;display:inline;" />
                     <img src="~/img/check-circle-solid.svg" id="checkClaimID_1" style="height:30px;width:30px;display:none;" />
                 </td>-->
-                <td><img src="~/img/plus-circle-solid.svg" onclick="Add()" style="height:30px;width:30px;" /></td>
-            </tr>
-            <tr>
-                <td colspan="6" align="right">
-                    <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" />
-                    &nbsp;&nbsp;&nbsp;
-                    <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel" onclick="javascript:window.location='../Home/ProcessClaim';" />
-                </td>
-            </tr>
-        </tfoot>
-    </table>
+                    @*<td><img src="~/img/plus-circle-solid.svg" onclick="Add()" style="height:30px;width:30px;" /></td>*@
+                    <td><i onclick="Add()" class="fas fa-plus-circle"></i></td>
+                </tr>
+                @*<tr>
+                    <td colspan="6" align="right">
+                        <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" />
+
+                        <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel" onclick="javascript:window.location='../Home/ProcessClaim';" />
+                    </td>
+                </tr>*@
+            </tfoot>
+        </table>
+        <div class="process-status">
+            <input style="background-color:#17a2b8;" type="submit" class="btn btn-info " id="SubmitProcess" value="Process" />
+
+            <input type="submit" class="btn btn-info" id="SubmitCancel" value="Cancel" onclick="javascript:window.location='../Home/ProcessClaim';" />
+        </div>
+        
+    </div>
+
+
+
 </div>
+@*<div class="container justify-content-end">
+    <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" />
 
-
-
+    <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel" onclick="javascript:window.location='../Home/ProcessClaim';" />
+</div>*@
