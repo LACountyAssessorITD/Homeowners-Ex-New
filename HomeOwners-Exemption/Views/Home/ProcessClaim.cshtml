@@ -450,11 +450,9 @@
             document.getElementById("txtClaimID_1").value = "";
         });
     });
-
 </script>
 
 <h4 class="p-2">Scan Claim</h4>
-
 <div class="container-fluid section-status p-0">
     <div class="row" style="max-width: 1200px;">
         <div class="col-6 ">
@@ -470,27 +468,21 @@
                     @Html.DropDownListFor(model => model.Supervisor, Model.Supervisors, new { style = "width:250px;display:none;", @id = "ddSupervisors", @class = "form-control dropdown-text" })
                 </label>
             </div>
-
             <div id="lblAssignToStaff" style="display:none;">
                 <label>
                     Assign To:
                     @Html.DropDownListFor(model => model.Staff, Model.Staffs, new { style = "width:250px;display:none;", @id = "ddStaffs", @class = "form-control dropdown-text" })
                 </label>
             </div>
-
-
             <label id="lblClaimReceivedDate" style="display:none;">
                 Claim Received Date:
                 @Html.TextBoxFor(model => model.ClaimReceivedDate, new { style = "width:250px;", @id = "txtClaimReceivedDate", @name = "txtClaimReceivedDate", maxlength = 10, @class = "form-control input-text" })
             </label>
         </div>
-
-
-
     </div>
 </div>
 
-<hr class="shadow-lg" />
+<hr />
 
 <br />
 
@@ -537,8 +529,6 @@
     <img src="~/img/search.jpg" onclick="ValidateInfo()" style="height:30px;width:30px;" title="Search" />
 </div>*@
 
-
-
 @*<th width="150px"><input type="submit" class="btn btn-info bg-3" id="SubmitClear" value="Clear" onclick="ClearInfo();" /></th>*@
 <div class="section-claim-body container-fluid">
     <div text-align="center" id="dvClaimReceived" style="display:none;">
@@ -549,7 +539,6 @@
                     <th width="30px">&nbsp;&nbsp;</th>
                     <th  width="100px"><p style="margin-left: 100px">AIN</p></th>
                     <th width="30px">&nbsp;</th>
-
                 </tr>
             </thead>
             <tbody></tbody>
@@ -611,15 +600,9 @@
         </table>
         <div class="process-status">
             <input style="background-color:#17a2b8;" type="submit" class="btn btn-info " id="SubmitProcess" value="Process" />
-
-            <input type="submit" class="btn btn-info" id="SubmitCancel" value="Cancel" onclick="javascript:window.location='../Home/ProcessClaim';" />
-            
-        </div>
-        
+            <input type="submit" class="btn btn-info" id="SubmitCancel" value="Cancel" onclick="javascript:window.location='../Home/ProcessClaim';" />            
+        </div>        
     </div>
-
-
-
 </div>
 @*<div class="container justify-content-end">
     <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" />
