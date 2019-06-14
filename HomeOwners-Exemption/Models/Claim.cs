@@ -54,6 +54,9 @@ namespace HomeOwners_Exemption.Models
         public string Assignee { get; set; }
         public string AssignorID { get; set; }
         public string Assignor { get; set; }
+        public string Comments { get; set; }
+        public int? Late { get; set; }
+
 
         public Claim()
         {

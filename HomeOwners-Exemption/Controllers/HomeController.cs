@@ -56,16 +56,17 @@ namespace HomeOwners_Exemption.Controllers
             string strAssignor = User.FindFirst("Name").Value;
             foreach (var item in statusDbList)
             {
-                statusList[item.ClaimStatusRef] = new StatusCount(item.OrderCount, item.Late);
+                statusList[item.ClaimStatusRef] = new StatusCount(item.OrderCount ?? default(int), item.Late ?? default(int));
              }
             var EmpID = new SqlParameter("@usersID", User.Identity.Name);
             var claimList = _context.MyClaims.FromSql("sp_getListOfAssignedClaim @usersID", EmpID).ToListAsync().Result.ToList();
 
             
+            
 
             model.staff = staffList;
             model.claims = claimList;
-           
+            
             model.statusId = statusList;
             return View( model);
         }
@@ -96,7 +97,7 @@ namespace HomeOwners_Exemption.Controllers
 
         public IActionResult Claim(int? id)
         {
-            dynamic model = new ExpandoObject();
+            
 
             DropdownListClaim drop = GetDropdown();
             var modelUser = new Claim();
@@ -104,9 +105,11 @@ namespace HomeOwners_Exemption.Controllers
             if (id != null && id > 1)
             {
                 var EmpID = new SqlParameter("@ClaimID", id);
-                 modelUser = _context.Claim.FromSql("sp_getClaim @ClaimID", EmpID).FirstOrDefaultAsync().Result;
 
-                
+                modelUser = _context.Claim.FromSql("sp_getClaim @ClaimID", EmpID).FirstOrDefaultAsync().Result;
+               
+                ViewBag.history = _context.History.FromSql("sp_getClaimHistory @ClaimID", EmpID).ToListAsync().Result.ToList();
+
                 if (modelUser == null)
                 {
                     ViewBag.ModelMessage= true;
@@ -115,11 +118,11 @@ namespace HomeOwners_Exemption.Controllers
             else
             {
                 modelUser = new Claim();
-
+                ViewBag.history = new ClaimHistory();
             }
             ViewBag.Staffs = GetAllStaffs();
             ViewBag.dropdownInfo = drop;
-
+            
             return View(modelUser);
         }
 
@@ -132,13 +135,13 @@ namespace HomeOwners_Exemption.Controllers
                 UpdateClaim updClaim = new UpdateClaim(claim);
                 List<SqlParameter> parameter = updClaim.parameterMap;
 
-                var result = _context.Database.ExecuteSqlCommand("sp_updClaim @claimID, @ClaimStatusRefID, @AssigneeID, @AssignorID, @claimant, @claimantSSN, @spouse, @spouseSSN, @mailingStName, @mailingApt, @mailingCity, @mailingState, @mailingZip, @priorAPN, @dateMovedOut, @priorStName, @priorApt, @priorCity, @priorState, @priorZip, @ClaimActionRefID, @FindingReasonRefID, @Late, @Comments, @rollTaxYear, @suppTaxYear, @exemptRE, @exemptRE2"
-                                                                , parameter[0], parameter[1], parameter[2], new SqlParameter("@AssignorID", User.Identity.Name), parameter[4]
+                var result = _context.Database.ExecuteSqlCommand("sp_updClaim @claimID, @currentAPN, @ClaimStatusRefID, @AssigneeID, @AssignorID, @claimant, @claimantSSN, @spouse, @spouseSSN, @mailingStName, @mailingApt, @mailingCity, @mailingState, @mailingZip, @priorAPN, @dateMovedOut, @priorStName, @priorApt, @priorCity, @priorState, @priorZip, @ClaimActionRefID, @FindingReasonRefID, @Late, @Comments, @rollTaxYear, @suppTaxYear, @exemptRE, @exemptRE2"
+                                                                , parameter[0], parameter[1], parameter[2],  parameter[3], new SqlParameter("@AssignorID", User.Identity.Name)
                                                                 , parameter[5], parameter[6], parameter[7], parameter[8], parameter[9]
                                                                 , parameter[10], parameter[11], parameter[12], parameter[13], parameter[14]
                                                                 , parameter[15], parameter[16], parameter[17], parameter[18], parameter[19]
                                                                 , parameter[20], parameter[21], parameter[22], parameter[23], parameter[24]
-                                                                , parameter[25], parameter[26] ,parameter[27]);
+                                                                , parameter[25], parameter[26] ,parameter[27], parameter[28]);
                 return RedirectToAction("Claim", "Home", new { claim.claimID });
             }
             return View("Claim", "Home");

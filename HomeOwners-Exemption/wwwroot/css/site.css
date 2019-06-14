@@ -28,6 +28,7 @@ body{
     text-rendering: optimizeLegibility;
     /*overflow-x: hidden;
     overflow-y: hidden;*/
+    overflow-x: hidden;
     height: 100vh;
 }
 .row {
@@ -350,8 +351,30 @@ h1,h2,h3,h4,h5 {
     border-radius: 10px;
 }
 
+.history-feature {
+   position: absolute;
+   z-index: 9999;
+   background-color: rgba(0,0,0,.5);
+   width: 100%;
+   height: 100%;
+   top: 0;
+   display:none;
+}
+.display-popup {
+    display: block;
+}
+.history-box {
+    max-width: 1000px;
+    height: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    background-color: #e5e5e5;
+    border-radius: 10px 10px;
+    -webkit-transform: translateX(-200px);
+    transform: translateX(-200px);
+}
 /*=========================PROCESS CLAIM============================*/
-
 .section-status select, .section-status input {
     border-radius: 0;
     background-color: #c4c4c4;

@@ -28,6 +28,14 @@ function isDate(txtDate) {
 		if (dtDay > 29 || (dtDay == 29 && !isleap))
 			return false;
 	}
-	return true;
+    return true;
+
 }
+
+$(document).ready(function () {
+    $('.history-button').click(function () {
+        $('.history-feature').addClass('display-popup');
+        
+    });
+});
 
