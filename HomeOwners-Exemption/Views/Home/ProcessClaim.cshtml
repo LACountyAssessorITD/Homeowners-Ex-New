@@ -91,7 +91,7 @@
                     data: { ClaimID: claimID, AIN: AIN, ClaimStatus: status, ClaimReceivedDate: receivedDate },
                     traditional: true,
                     success: function (returnData) {
-                        if (returnData == "-1") {
+                        if (returnData == "0") {
                             alert("Fail to validate!");
                         }
                         else {
@@ -156,7 +156,7 @@
                                         data: { ClaimID: claimID, AIN: AIN, ClaimStatus: status, ClaimReceivedDate: receivedDate },
                                         traditional: true,
                                         success: function (data) {
-                                            if (data == "-1")
+                                            if (data == "0")
                                                 alert("Fail to process!");
                                             else {
                                                 alert("Processed!");
@@ -278,9 +278,6 @@
                 }
             }
 
-            // Get the value from the input text box
-            claimIDs.push(document.getElementById("txtClaimID_1").value);
-
             // Get the claim status
             var e = document.getElementById("ddClaimStatus");
             var status = e.options[e.selectedIndex].value;
@@ -293,20 +290,33 @@
             e = document.getElementById("ddStaffs");
             var staffAssignee = e.options[e.selectedIndex].value;
 
-            if (supervisorAssignee == "0")
+            if ((tblRows.length == 3) && ($("#txtClaimID_1").val() == ""))
+                alert("Claim# cannot be empty.");
+            else if ((tblRows.length == 3) && ($("#txtClaimID_1").val().length < 7))
+                alert("Claim# must be 7 digits.");
+            else if ((tblRows.length > 3) && ($("#txtClaimID_1").val() != "") && ($("#txtClaimID_1").val().length < 7))
+                alert("Claim# must be 7 digits.");
+            else if (supervisorAssignee == "0")
                 alert("Supervisor cannot be empty.");
             else {
+                // Get the value from the input text box
+                claimIDs.push(document.getElementById("txtClaimID_1").value);
+
                 $.ajax({
                     url: '@Url.Action("ProcessOtherStatus", "Home")',
                     type: "POST",
                     data: { ClaimIDList: claimIDs, ClaimStatus: status, AssigneeSupervisor: supervisorAssignee, AssigneeStaff: staffAssignee },
                     traditional: true,
-                    success: function () {
-                        alert("Processed!");
-                        window.location = '../Home/ProcessClaim';
+                    success: function (data) {
+                        if (data == "0")
+                            alert("Fail to process!");
+                        else {
+                            alert("Processed!");
+                            //window.location = '../Home/ProcessClaim';
+                        }
                     },
                     error: function () {
-                        alert("Not Processed!");
+                        alert("Fail to process!");
                     }
                 });
             }

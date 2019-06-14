@@ -209,11 +209,11 @@ namespace HomeOwners_Exemption.Controllers
 
                 string result = _context.Database.ExecuteSqlCommand("exec sp_prepClaimID2 @tvpClaimID", parameter).ToString();
 
-                return "1";
+                return result;
             }
             catch (Exception e)
             {
-                return "-1";
+                return "0";
             }
 
             ////string cnnString = Environment.GetEnvironmentVariable("ConnectionStrings__hox_connect");
@@ -246,7 +246,7 @@ namespace HomeOwners_Exemption.Controllers
             }
             catch (Exception e)
             {
-                return "-1";
+                return "0";
             }
         }
 
@@ -261,7 +261,7 @@ namespace HomeOwners_Exemption.Controllers
             }
             catch (Exception e)
             {
-                return "-1";
+                return "0";
             }
         }
 
