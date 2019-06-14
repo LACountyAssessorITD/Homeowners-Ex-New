@@ -11,7 +11,11 @@ namespace HomeOwners_Exemption.Models
         public string Claimant { get; set; }
         public string Spouse { get; set; }
         public long? CurrentApn { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DateAcquired { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DateOccupied { get; set; }
         public string CurrentStName { get; set; }
         public string CurrentApt { get; set; }
@@ -24,6 +28,8 @@ namespace HomeOwners_Exemption.Models
         public string MailingState { get; set; }
         public int? MailingZip { get; set; }
         public long? PriorApn { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DateMovedOut { get; set; }
         public string PriorStName { get; set; }
         public string PriorApt { get; set; }
@@ -49,8 +55,14 @@ namespace HomeOwners_Exemption.Models
         public string AssignorID { get; set; }
         public string Assignor { get; set; }
 
+        public Claim()
+        {
+            CreatedDate =Convert.ToDateTime(System.DateTime.Now.ToString("MM/dd/yyyy h:mm tt"));
+            Assignor = "";
 
 
+        }
+        
 
 
     }
