@@ -198,6 +198,12 @@ h1,h2,h3,h4,h5 {
     -webkit-box-shadow: inset 0 0 5px #000000;
     box-shadow: inset 0 0 5px #000000;
 }
+.shadow-inset-2 {
+    -moz-box-shadow: inset 0 0 3px #000000;
+    -webkit-box-shadow: inset 0 0 3px #000000;
+    box-shadow: inset 0 0 3px #000000;
+}
+
 .dashboard-1 p {
     font-size: 90%;
     margin-bottom: 5px;
@@ -324,8 +330,8 @@ h1,h2,h3,h4,h5 {
     
 }
 .scroll {
-    overflow-y: scroll;
-    max-height: 234px;
+    overflow-y: auto;
+    max-height: 275px;
 }
 /* width */
 ::-webkit-scrollbar {
