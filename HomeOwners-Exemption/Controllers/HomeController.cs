@@ -113,8 +113,9 @@ namespace HomeOwners_Exemption.Controllers
             else
             {
                 modelUser = new Claim();
+
             }
-           
+            ViewBag.Staffs = GetAllStaffs();
             ViewBag.dropdownInfo = drop;
 
             return View(modelUser);
@@ -130,7 +131,7 @@ namespace HomeOwners_Exemption.Controllers
                 List<SqlParameter> parameter = updClaim.parameterMap;
 
                 var result = _context.Database.ExecuteSqlCommand("sp_updClaim @claimID, @ClaimStatusRefID, @AssigneeID, @AssignorID, @claimant, @claimantSSN, @spouse, @spouseSSN, @mailingStName, @mailingApt, @mailingCity, @mailingState, @mailingZip, @priorAPN, @dateMovedOut, @priorStName, @priorApt, @priorCity, @priorState, @priorZip, @ClaimActionRefID, @FindingReasonRefID, @Late, @Comments, @rollTaxYear, @suppTaxYear, @exemptRE, @exemptRE2"
-                                                                , parameter[0], parameter[1], parameter[2], parameter[3], parameter[4]
+                                                                , parameter[0], parameter[1], parameter[2], new SqlParameter("@AssignorID", User.Identity.Name), parameter[4]
                                                                 , parameter[5], parameter[6], parameter[7], parameter[8], parameter[9]
                                                                 , parameter[10], parameter[11], parameter[12], parameter[13], parameter[14]
                                                                 , parameter[15], parameter[16], parameter[17], parameter[18], parameter[19]

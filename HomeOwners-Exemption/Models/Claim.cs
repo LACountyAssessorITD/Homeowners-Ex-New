@@ -49,8 +49,14 @@ namespace HomeOwners_Exemption.Models
         public string AssignorID { get; set; }
         public string Assignor { get; set; }
 
+        public Claim()
+        {
+            CreatedDate =Convert.ToDateTime(System.DateTime.Now.ToString("MM/dd/yyyy h:mm tt"));
+            Assignor = "";
 
 
+        }
+        
 
 
     }
