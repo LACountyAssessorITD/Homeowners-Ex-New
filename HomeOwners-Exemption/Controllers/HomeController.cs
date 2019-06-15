@@ -99,7 +99,7 @@ namespace HomeOwners_Exemption.Controllers
         {
 
             ViewBag.history = new ClaimHistory();
-            DropdownListClaim drop = GetDropdown();
+            DropdownListClaim drop = GetDropdown(id);
             var modelUser = new Claim();
             ViewBag.ModelMessage = false;
             if (id != null && id > 1)
@@ -148,7 +148,7 @@ namespace HomeOwners_Exemption.Controllers
         }
 
 
-        public DropdownListClaim GetDropdown()
+        public DropdownListClaim GetDropdown(int? ClaimID)
         {
             DropdownListClaim drop = new DropdownListClaim();
 
@@ -158,8 +158,10 @@ namespace HomeOwners_Exemption.Controllers
             {
                 drop.states.Add(new SelectListItem() { Text = item.Id, Value = item.Id });
             }
-            
-            var tempStatus = _context.ClaimStatus.FromSql("sp_getStatus").ToListAsync().Result.ToList();
+
+            //var tempStatus = _context.ClaimStatus.FromSql("sp_getStatus").ToListAsync().Result.ToList();
+            var ID = new SqlParameter("@ClaimID", ClaimID);
+            var tempStatus = _context.ClaimStatus.FromSql("sp_getStatus @ClaimID", ID).ToListAsync().Result.ToList();
             foreach (var item in tempStatus)
             {
                 drop.Status.Add(new SelectListItem() { Text = item.ClaimStatusRef, Value = item.ClaimStatusRefID.ToString() });
