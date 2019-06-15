@@ -107,15 +107,16 @@ namespace HomeOwners_Exemption.Controllers
                 var EmpID = new SqlParameter("@ClaimID", id);
 
                 modelUser = _context.Claim.FromSql("sp_getClaim @ClaimID", EmpID).FirstOrDefaultAsync().Result;
-               
+                if (modelUser == null)
+                {
+                    ViewBag.ModelMessage = true;
+                    return RedirectToAction(nameof(Index));
+                }
+
                 ViewBag.history = _context.History.FromSql("sp_getClaimHistory @ClaimID", EmpID).ToListAsync().Result.ToList();
 
                
-                if (modelUser == null)
-                {
-                    ViewBag.ModelMessage= true;
-                    return View("Index", "Home");
-                }
+                
             }
             else
             {
