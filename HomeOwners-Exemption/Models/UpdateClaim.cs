@@ -16,6 +16,7 @@ namespace HomeOwners_Exemption.Models
 
             parameterMap.Add( new SqlParameter("@claimID", udpList.claimID));
 
+            parameterMap.Add(new SqlParameter("@currentAPN", udpList.CurrentApn));
             parameterMap.Add( new SqlParameter("@ClaimStatusRefID", udpList.ClaimStatusID));
             parameterMap.Add(new SqlParameter("@AssigneeID", udpList.AssigneeID));
             parameterMap.Add( new SqlParameter("@AssignorID", udpList.AssignorID));

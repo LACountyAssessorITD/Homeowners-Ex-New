@@ -18,11 +18,11 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label asp-for="claimID" id="Claimant" >Claim#:</label>
-                        <input asp-for="claimID" placeholder="Enter a Claim #"  disabled />
+                        <input asp-for="claimID" placeholder="Enter a Claim #"   />
                     </div>
                     <div class="form-group">
                         <label asp-for="CurrentApn" >AIN#:</label>
-                        <input asp-for="CurrentApn"  disabled />
+                        <input asp-for="CurrentApn"   />
 
                     </div>
                 </div>
@@ -30,15 +30,15 @@
                     <div class="form-group">
                         <label asp-for="ClaimStatusID">Claim Status:</label>
                         <select asp-for="ClaimStatusID" asp-items="ViewBag.dropdownInfo.Status">
-                            <option>Select</option>
+                            @*<option>Select</option>*@
                         </select>
+
                         @*<input asp-for="ClaimStatusRef" class="" />*@
                     </div>
                     <div class="form-group">
                         <label asp-for="AssigneeID">Assignee:</label>
-                        <select asp-for="ClaimStatusID" asp-items="ViewBag.Staffs">
-                            <option>Select</option>
-                        </select>
+                       
+                        <input asp-for="AssigneeID"/>
                     </div>
                 </div>
                 <div class="col-4">
@@ -87,13 +87,13 @@
                         <div class="col-7">
                             <div class="form-group">
                                 <label style="width:200px;" asp-for="CurrentStName" class="">Street Number and Name:</label>
-                                <input asp-for="CurrentStName" disabled />
+                                <input asp-for="CurrentStName"  />
                             </div>
                         </div>
                         <div class="col-5">
                             <div class="form-group">
                                 <label asp-for="CurrentApt" class=""> Apt/Ste/Flr#:</label>
-                                <input style="" asp-for="CurrentApt" disabled />
+                                <input style="" asp-for="CurrentApt"  />
 
                             </div>
                         </div>
@@ -102,21 +102,21 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label style="" asp-for="CurrentCity" class="">City:</label>
-                                <input asp-for="CurrentCity" disabled />
+                                <input asp-for="CurrentCity"  />
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
                                 <label asp-for="CurrentState" class="">State:</label>
-                                <select asp-for="CurrentState" asp-items="ViewBag.dropdownInfo.states" disabled>
-                                    <option>Select</option>
+                                <select asp-for="CurrentState" asp-items="ViewBag.dropdownInfo.states" >
+                                    @*<option>Select</option>*@
                                 </select>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
                                 <label asp-for="CurrentZip">Zip:</label>
-                                <input asp-for="CurrentZip" disabled />
+                                <input asp-for="CurrentZip"  />
                             </div>
                         </div>
                     </div>
@@ -124,13 +124,13 @@
                         <div class="col-6">
                             <div class="form-group" >
                                 <label asp-for="DateAcquired" class=""> Date Acquired:</label>
-                                <input style="width:200px" asp-for="DateAcquired" disabled />
+                                <input style="width:200px" asp-for="DateAcquired"  />
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
                                 <label asp-for="DateOccupied" class=""> Date Occupied:</label>
-                                <input style="width:200px" asp-for="DateOccupied" disabled />
+                                <input style="width:200px" asp-for="DateOccupied"  />
 
                             </div>
                         </div>
@@ -168,7 +168,7 @@
                             <div class="form-group">
                                 <label asp-for="MailingState" class=""> State:</label>
                                 <select asp-for="MailingState" asp-items="ViewBag.dropdownInfo.states" readonly>
-                                    <option>Select</option>
+                                    @*<option>Select</option>*@
                                 </select>
 
                             </div>
@@ -238,7 +238,7 @@
                             <div class="form-group">
                                 <label asp-for="PriorState" class=""> State:</label>
                                 <select asp-for="PriorState" asp-items="ViewBag.dropdownInfo.states" readonly>
-                                    <option>Select</option>
+                                    @*<option>Select</option>*@
                                 </select>
 
                             </div>
@@ -273,7 +273,7 @@
                             <label style="" asp-for="ClaimActionID" class="">Claim Action:</label>
                             @*<input asp-for="ClaimActionID" />*@
                             <select asp-for="ClaimActionID" asp-items="ViewBag.dropdownInfo.Action">
-                                <option>Select</option>
+                                @*<option>Select</option>*@
                             </select>
                         </div>
                         <div class="col-7">
@@ -313,7 +313,88 @@
             <input type="submit" value="Save" class="btn btn-primary" />
         </div>
         <a asp-action="Claim" asp-controller="Home" asp-route-id="1">Clear</a>
+        <p class="btn btn-dark history-button">Claim History</p>
     </form>
+</div>
+<div class="history-feature">
+    <div class="container-fluid h-100">
+        <div class="row history-box" style="">
+            <div class="container-fluid">
+                <div class="row  history-id" style="">
+
+                    <div class="col-12">
+                        <h4 style="margin-bottom: 40px;" class="text-center w-100">Claim History</h4>
+                    </div>
+                    <div class="col-3">
+                        Claim #:
+                    </div>
+                    <div class="col-9">
+                        <span>@Model.claimID</span>
+                    </div>
+                    <div class="col-3">
+                        Claiment:
+                    </div>
+                    <div class="col-9">
+                        <span>@Model.Claimant</span>
+                    </div>
+                    <div class="col-3">
+                        AIN:
+                    </div>
+                    <div class="col-9">
+                        <span>@Model.CurrentApn</span>
+                    </div>
+                    <div class="col-3">
+                        SITUS:
+                    </div>
+                    <div class="col-9">
+                        <span>@Model.CurrentStName , @Model.CurrentCity</span>
+                    </div>
+
+                </div>
+                <div class="row shadow-inset-2">
+                    <div class="col-custom">
+                        <p>Status</p>
+                    </div>
+                    <div class="col-custom">
+                        <p>Assignee</p>
+                    </div>
+                    <div class="col-custom">
+                        <p>Date Changed</p>
+                    </div>
+                    <div class="col-custom">
+                        <p>Days</p>
+                    </div>
+                    <div class="col-custom">
+                        <p>Created By</p>
+                    </div>
+                </div>
+                <div style="max-height: 400px; overflow-y: auto;">
+
+                    @foreach (var item in ViewBag.history)
+                    {
+                        <div class="row shadow-inset-2" style="background-color: #fff">
+                            <div class="col-custom">
+                                <p class="text-center">@item.Status</p>
+                            </div>
+                            <div class="col-custom">
+                                <p class="text-center">@item.Assignee</p>
+                            </div>
+                            <div class="col-custom">
+                                <p class="text-center">@item.DateChanged.ToString("yyyy-MM-dd")</p>
+                            </div>
+                            <div class="col-custom">
+                                <p class="text-center">@item.Days</p>
+                            </div>
+                            <div class="col-custom">
+                                <p class="text-center">@item.CreatedBy</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+         <p class="btn btn-dark close-history">Close</p>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
