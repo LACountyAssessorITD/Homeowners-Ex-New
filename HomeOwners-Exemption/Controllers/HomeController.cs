@@ -110,9 +110,11 @@ namespace HomeOwners_Exemption.Controllers
                
                 ViewBag.history = _context.History.FromSql("sp_getClaimHistory @ClaimID", EmpID).ToListAsync().Result.ToList();
 
+               
                 if (modelUser == null)
                 {
                     ViewBag.ModelMessage= true;
+                    return View("Index", "Home");
                 }
             }
             else

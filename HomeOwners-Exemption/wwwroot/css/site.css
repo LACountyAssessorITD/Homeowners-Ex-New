@@ -29,6 +29,7 @@ body{
     /*overflow-x: hidden;
     overflow-y: hidden;*/
     overflow-x: hidden;
+    overflow-y: hidden;
     height: 100vh;
 }
 .row {
@@ -470,5 +471,5 @@ i {
     padding-left: 40px !important;
     padding-right: 40px !important;
     -webkit-transform: translateX(47px);
-    transform: translateX(47px);
+    transform: translateX(23.5px);
 }
