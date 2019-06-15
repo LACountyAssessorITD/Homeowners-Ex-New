@@ -57,7 +57,7 @@ namespace HomeOwners_Exemption.Controllers
             foreach (var item in statusDbList)
             {
                 statusList[item.ClaimStatusRef] = new StatusCount(item.OrderCount, item.Late);
-             }
+            }
             var EmpID = new SqlParameter("@usersID", User.Identity.Name);
             var claimList = _context.MyClaims.FromSql("sp_getListOfAssignedClaim @usersID", EmpID).ToListAsync().Result.ToList();
 
