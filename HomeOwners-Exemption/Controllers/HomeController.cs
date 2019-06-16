@@ -165,9 +165,17 @@ namespace HomeOwners_Exemption.Controllers
             //var tempStatus = _context.ClaimStatus.FromSql("sp_getStatus").ToListAsync().Result.ToList();
             var ID = new SqlParameter("@ClaimID", ClaimID);
             var tempStatus = _context.ClaimStatus.FromSql("sp_getStatus @ClaimID", ID).ToListAsync().Result.ToList();
+            var index = 0;
             foreach (var item in tempStatus)
             {
-                drop.Status.Add(new SelectListItem() { Text = item.ClaimStatusRef, Value = item.ClaimStatusRefID.ToString() });
+                if (index == 0)
+                {
+                    drop.Status.Add(new SelectListItem() { Text = item.ClaimStatusRef, Value = item.ClaimStatusRefID.ToString(), Selected = true });
+                    drop.Status[0].Selected = true;
+                }
+                else
+                    drop.Status.Add(new SelectListItem() { Text = item.ClaimStatusRef, Value = item.ClaimStatusRefID.ToString(), Selected = false });
+                index = index + 1;
             }
             var tempFinding = _context.FindingReason.FromSql("sp_getReasonRef").ToListAsync().Result.ToList();
             foreach (var item in tempFinding)
