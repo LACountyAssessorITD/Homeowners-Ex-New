@@ -139,7 +139,7 @@ namespace HomeOwners_Exemption.Controllers
                 UpdateClaim updClaim = new UpdateClaim(claim);
                 List<SqlParameter> parameter = updClaim.parameterMap;
 
-                var result = _context.Database.ExecuteSqlCommand("sp_updClaim @claimID, @currentAPN, @ClaimStatusRefID, @AssigneeID, @AssignorID, @claimant, @claimantSSN, @spouse, @spouseSSN, @mailingStName, @mailingApt, @mailingCity, @mailingState, @mailingZip, @priorAPN, @dateMovedOut, @priorStName, @priorApt, @priorCity, @priorState, @priorZip, @ClaimActionRefID, @FindingReasonRefID, @Late, @Comments, @rollTaxYear, @suppTaxYear, @exemptRE, @exemptRE2"
+                var result = _context.Database.ExecuteSqlCommand("sp_updClaim @claimID, @currentAPN, @ClaimStatusRefID, @AssigneeID, @AssignorID, @claimant, @claimantSSN, @spouse, @spouseSSN, @mailingStName, @mailingApt, @mailingCity, @mailingState, @mailingZip, @priorAPN, @dateMovedOut, @priorStName, @priorApt, @priorCity, @priorState, @priorZip, @ClaimActionRefID, @FindingReasonRefID, @Comments, @Late,  @rollTaxYear, @suppTaxYear, @exemptRE, @exemptRE2"
                                                                 , parameter[0], parameter[1], parameter[2],  parameter[3], new SqlParameter("@AssignorID", User.Identity.Name)
                                                                 , parameter[5], parameter[6], parameter[7], parameter[8], parameter[9]
                                                                 , parameter[10], parameter[11], parameter[12], parameter[13], parameter[14]

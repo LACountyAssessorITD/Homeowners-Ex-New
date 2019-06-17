@@ -43,7 +43,7 @@ namespace HomeOwners_Exemption.Models
             parameterMap.Add(new SqlParameter("@ClaimActionRefID", udpList.ClaimActionID == null ? (object)DBNull.Value : udpList.ClaimActionID));
             parameterMap.Add(new SqlParameter("@FindingReasonRefID", udpList.FindingReasonID));
             parameterMap.Add(new SqlParameter("@Comments", DBNull.Value));
-            parameterMap.Add(new SqlParameter("@Late", DBNull.Value));
+            parameterMap.Add(new SqlParameter("@Late", udpList.Late));
 
             parameterMap.Add(new SqlParameter("@rollTaxYear", udpList.RollTaxYear == null ? (object)DBNull.Value : udpList.RollTaxYear));
             parameterMap.Add(new SqlParameter("@suppTaxYear", udpList.SuppTaxYear == null ? (object)DBNull.Value : udpList.SuppTaxYear));
