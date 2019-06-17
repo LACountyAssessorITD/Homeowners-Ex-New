@@ -333,31 +333,49 @@ namespace HomeOwners_Exemption.Controllers
                 dt_tmpClaimID.Columns.Add("ClaimID", typeof(string));
                 dt_tmpClaimID.Columns.Add("Assignee", typeof(string));
                 dt_tmpClaimID.Columns.Add("Assignor", typeof(string));
-                DataRow tmpClaimID;
+                if (ClaimStatusID == "4")
+                {
+                    dt_tmpClaimID.Columns.Add("ClaimStatusRefID", typeof(Int32));
+                    dt_tmpClaimID.Columns.Add("ClaimDate", typeof(DateTime));
+                }
 
+                DataRow tmpClaimID;
                 foreach (int claimID in ClaimIDList)
                 {
-                    tmpClaimID = dt_tmpClaimID.NewRow();
-                    tmpClaimID["ClaimID"] = Convert.ToString(claimID);
+                    tmpClaimID = dt_tmpClaimID.NewRow();               
                     if (ClaimStatusID == "3")
+                    {
+                        tmpClaimID["ClaimID"] = Convert.ToString(claimID);
                         tmpClaimID["Assignee"] = AssigneeSupervisor;
+                        tmpClaimID["Assignor"] = strAssignor;
+                    }
                     else if (ClaimStatusID == "4")
+                    {
+                        tmpClaimID["ClaimID"] = Convert.ToString(claimID);
                         tmpClaimID["Assignee"] = AssigneeStaff;
-                    tmpClaimID["Assignor"] = strAssignor;
+                        tmpClaimID["Assignor"] = strAssignor;
+                        tmpClaimID["ClaimStatusRefID"] = Convert.ToInt32(ClaimStatusID);
+                        tmpClaimID["ClaimDate"] = DateTime.Today;
+                    }                    
                     dt_tmpClaimID.Rows.Add(tmpClaimID);
                 }
 
-                var parameter = new SqlParameter("@tvpClaimID", SqlDbType.Structured);
-                parameter.TypeName = "tvpClaimID";
-                parameter.Value = dt_tmpClaimID;
-
-                string result = "";
-
-                if (ClaimStatusID == "3") //Supervisor Workload
+                var result = "";
+                if (ClaimStatusID == "3")
+                {
+                    var parameter = new SqlParameter("@tvpClaimID", SqlDbType.Structured);
+                    parameter.TypeName = "tvpClaimID";
+                    parameter.Value = dt_tmpClaimID;
                     result = _context.Database.ExecuteSqlCommand("exec sp_prepClaimID2 @tvpClaimID", parameter).ToString();
-                else if (ClaimStatusID == "4") //Staff Review
-                    result = _context.Database.ExecuteSqlCommand("exec sp_prepStaffReview @tvpClaimID", parameter).ToString();
-
+                }
+                else if (ClaimStatusID == "4")
+                {
+                    var parameter = new SqlParameter("@tvpReview", SqlDbType.Structured);
+                    parameter.TypeName = "tvpReviewID";
+                    parameter.Value = dt_tmpClaimID;
+                    result = _context.Database.ExecuteSqlCommand("exec sp_prepStaffReview @tvpReview", parameter).ToString();
+                }
+                    
                 return result;
             }
             catch (Exception e)
