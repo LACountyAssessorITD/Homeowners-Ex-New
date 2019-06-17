@@ -212,8 +212,8 @@ namespace HomeOwners_Exemption.Controllers
                 }
                 else if (item.ClaimStatusRefID == 4)
                 {
-                    List<Staffs> lStaffs = new List<Staffs>();
-                    lStaffs = _context.Staffs.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
+                    List<UserStaff> lStaffs = new List<UserStaff>();
+                    lStaffs = _context.UserStaff.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
                     foreach (var oneStaff in lStaffs)
                     {
                         if (Convert.ToInt32(oneStaff.EmployeeID) == Convert.ToInt32(item.AssigneeID))
@@ -278,8 +278,8 @@ namespace HomeOwners_Exemption.Controllers
             }
             else if (CurrentClaimStatusRefID == 3 && SelectedClaimStatusRefID == 4) //Supervisor Workload - Staff Review
             {
-                List<Staffs> lStaffs = new List<Staffs>();
-                lStaffs = _context.Staffs.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
+                List<UserStaff> lStaffs = new List<UserStaff>();
+                lStaffs = _context.UserStaff.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
                 foreach (var oneStaff in lStaffs)
                 {
                     DropdownText = DropdownText + "<option value=" + oneStaff.EmployeeID + ">" + oneStaff.Users + "</option>";
@@ -287,8 +287,8 @@ namespace HomeOwners_Exemption.Controllers
             }   
             else if (CurrentClaimStatusRefID == 4 && SelectedClaimStatusRefID == 4) //Staff Review - Staff Review
             {
-                List<Staffs> lStaffs = new List<Staffs>();
-                lStaffs = _context.Staffs.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
+                List<UserStaff> lStaffs = new List<UserStaff>();
+                lStaffs = _context.UserStaff.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
                 foreach (var oneStaff in lStaffs)
                 {
                     if (oneStaff.EmployeeID == AssigneeID)
@@ -470,8 +470,8 @@ namespace HomeOwners_Exemption.Controllers
 
         private IEnumerable<SelectListItem> GetAllStaffs()
         {
-            //List<Staffs> lStaffs = new List<Staffs>();
-            var lStaffs = _context.UserStaff.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
+            List<UserStaff> lStaffs = new List<UserStaff>();
+            lStaffs = _context.UserStaff.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
             List<SelectListItem> li = new List<SelectListItem>();
             li.Add(new SelectListItem { Text = "Select Staff", Value = "0" });
             foreach (var oneStaff in lStaffs)
