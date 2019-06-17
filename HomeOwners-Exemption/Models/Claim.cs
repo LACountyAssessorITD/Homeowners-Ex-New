@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HomeOwners_Exemption.Models
 {
@@ -58,12 +59,40 @@ namespace HomeOwners_Exemption.Models
         public string Comments { get; set; }
         public int? Late { get; set; }
 
+        private bool lateBool;
+        [NotMapped]
+        public bool LateBool
+        {
+            get {
+                lateBool = (this.Late == 1 ? true : false);
+                return lateBool;
+            }
+            set {
+                if(value)
+                {
+                    this.Late = 1;
+                    
+                }
+                else
+                {
+                    this.Late = 0;
+                }
+
+                lateBool = value;
+            }
+        }
+
+
+
+
+
+
 
         public Claim()
         {
             CreatedDate =Convert.ToDateTime(System.DateTime.Now.ToString("MM/dd/yyyy h:mm tt"));
             Assignor = "";
-
+            LateBool = false;
 
         }
         
