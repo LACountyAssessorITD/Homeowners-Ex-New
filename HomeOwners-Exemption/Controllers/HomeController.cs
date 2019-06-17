@@ -212,8 +212,8 @@ namespace HomeOwners_Exemption.Controllers
                 }
                 else if (item.ClaimStatusRefID == 4)
                 {
-                    List<Staffs> lStaffs = new List<Staffs>();
-                    lStaffs = _context.Staffs.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
+                    List<UserStaff> lStaffs = new List<UserStaff>();
+                    lStaffs = _context.UserStaff.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
                     foreach (var oneStaff in lStaffs)
                     {
                         if (Convert.ToInt32(oneStaff.EmployeeID) == Convert.ToInt32(item.AssigneeID))
@@ -278,17 +278,17 @@ namespace HomeOwners_Exemption.Controllers
             }
             else if (CurrentClaimStatusRefID == 3 && SelectedClaimStatusRefID == 4) //Supervisor Workload - Staff Review
             {
-                List<Staffs> lStaffs = new List<Staffs>();
-                lStaffs = _context.Staffs.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
+                List<UserStaff> lStaffs = new List<UserStaff>();
+                lStaffs = _context.UserStaff.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
                 foreach (var oneStaff in lStaffs)
                 {
                     DropdownText = DropdownText + "<option value=" + oneStaff.EmployeeID + ">" + oneStaff.Users + "</option>";
                 }
-            }   
+            }
             else if (CurrentClaimStatusRefID == 4 && SelectedClaimStatusRefID == 4) //Staff Review - Staff Review
             {
-                List<Staffs> lStaffs = new List<Staffs>();
-                lStaffs = _context.Staffs.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
+                List<UserStaff> lStaffs = new List<UserStaff>();
+                lStaffs = _context.UserStaff.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
                 foreach (var oneStaff in lStaffs)
                 {
                     if (oneStaff.EmployeeID == AssigneeID)
@@ -298,7 +298,14 @@ namespace HomeOwners_Exemption.Controllers
                 }
             }
             else if (CurrentClaimStatusRefID == 4 && SelectedClaimStatusRefID == 5) //Staff Review - Supervisor Review
-                DropdownText = "<option value=" + AssigneeID + ">" + Assignee + "</option>";
+            {
+                List<Supervisors> lSupervisors = new List<Supervisors>();
+                lSupervisors = _context.Supervisors.FromSql("sp_getSupervisors").ToListAsync().Result.ToList();
+                foreach (var oneSupervisor in lSupervisors)
+                {
+                    DropdownText = DropdownText + "<option value=" + oneSupervisor.EmployeeID + ">" + oneSupervisor.Users + "</option>";
+                }
+            }
             else if (CurrentClaimStatusRefID == 5 && SelectedClaimStatusRefID == 5) //Supervisor Review - Supervisor Review
                 DropdownText = "<option value=" + AssigneeID + ">" + Assignee + "</option>";
             else if (CurrentClaimStatusRefID == 5 && SelectedClaimStatusRefID == 6) //Supervisor Review - Hold
@@ -333,31 +340,49 @@ namespace HomeOwners_Exemption.Controllers
                 dt_tmpClaimID.Columns.Add("ClaimID", typeof(string));
                 dt_tmpClaimID.Columns.Add("Assignee", typeof(string));
                 dt_tmpClaimID.Columns.Add("Assignor", typeof(string));
-                DataRow tmpClaimID;
+                if (ClaimStatusID == "4")
+                {
+                    dt_tmpClaimID.Columns.Add("ClaimStatusRefID", typeof(Int32));
+                    dt_tmpClaimID.Columns.Add("ClaimDate", typeof(DateTime));
+                }
 
+                DataRow tmpClaimID;
                 foreach (int claimID in ClaimIDList)
                 {
-                    tmpClaimID = dt_tmpClaimID.NewRow();
-                    tmpClaimID["ClaimID"] = Convert.ToString(claimID);
+                    tmpClaimID = dt_tmpClaimID.NewRow();               
                     if (ClaimStatusID == "3")
+                    {
+                        tmpClaimID["ClaimID"] = Convert.ToString(claimID);
                         tmpClaimID["Assignee"] = AssigneeSupervisor;
+                        tmpClaimID["Assignor"] = strAssignor;
+                    }
                     else if (ClaimStatusID == "4")
+                    {
+                        tmpClaimID["ClaimID"] = Convert.ToString(claimID);
                         tmpClaimID["Assignee"] = AssigneeStaff;
-                    tmpClaimID["Assignor"] = strAssignor;
+                        tmpClaimID["Assignor"] = strAssignor;
+                        tmpClaimID["ClaimStatusRefID"] = Convert.ToInt32(ClaimStatusID);
+                        tmpClaimID["ClaimDate"] = DateTime.Today;
+                    }                    
                     dt_tmpClaimID.Rows.Add(tmpClaimID);
                 }
 
-                var parameter = new SqlParameter("@tvpClaimID", SqlDbType.Structured);
-                parameter.TypeName = "tvpClaimID";
-                parameter.Value = dt_tmpClaimID;
-
-                string result = "";
-
-                if (ClaimStatusID == "3") //Supervisor Workload
+                var result = "";
+                if (ClaimStatusID == "3")
+                {
+                    var parameter = new SqlParameter("@tvpClaimID", SqlDbType.Structured);
+                    parameter.TypeName = "tvpClaimID";
+                    parameter.Value = dt_tmpClaimID;
                     result = _context.Database.ExecuteSqlCommand("exec sp_prepClaimID2 @tvpClaimID", parameter).ToString();
-                else if (ClaimStatusID == "4") //Staff Review
-                    result = _context.Database.ExecuteSqlCommand("exec sp_prepStaffReview @tvpClaimID", parameter).ToString();
-
+                }
+                else if (ClaimStatusID == "4")
+                {
+                    var parameter = new SqlParameter("@tvpReview", SqlDbType.Structured);
+                    parameter.TypeName = "tvpReviewID";
+                    parameter.Value = dt_tmpClaimID;
+                    result = _context.Database.ExecuteSqlCommand("exec sp_prepStaffReview @tvpReview", parameter).ToString();
+                }
+                    
                 return result;
             }
             catch (Exception e)
@@ -452,8 +477,8 @@ namespace HomeOwners_Exemption.Controllers
 
         private IEnumerable<SelectListItem> GetAllStaffs()
         {
-            //List<Staffs> lStaffs = new List<Staffs>();
-            var lStaffs = _context.UserStaff.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
+            List<UserStaff> lStaffs = new List<UserStaff>();
+            lStaffs = _context.UserStaff.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
             List<SelectListItem> li = new List<SelectListItem>();
             li.Add(new SelectListItem { Text = "Select Staff", Value = "0" });
             foreach (var oneStaff in lStaffs)
