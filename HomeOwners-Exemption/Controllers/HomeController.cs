@@ -179,6 +179,11 @@ namespace HomeOwners_Exemption.Controllers
             {
                 drop.Action.Add(new SelectListItem() { Text = item.ClaimActionRef, Value = item.ClaimActionRefID.ToString() });
             }
+            var temStaff = _context.Staffs.FromSql("sp_getStaff").ToListAsync().Result.ToList();
+            foreach (var item in temStaff)
+            {
+                drop.Users.Add(new SelectListItem() { Text = item.Users, Value = item.EmployeeID});
+            }
             return drop;
             
         }
