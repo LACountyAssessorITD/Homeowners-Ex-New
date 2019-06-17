@@ -284,7 +284,7 @@ namespace HomeOwners_Exemption.Controllers
                 {
                     DropdownText = DropdownText + "<option value=" + oneStaff.EmployeeID + ">" + oneStaff.Users + "</option>";
                 }
-            }   
+            }
             else if (CurrentClaimStatusRefID == 4 && SelectedClaimStatusRefID == 4) //Staff Review - Staff Review
             {
                 List<UserStaff> lStaffs = new List<UserStaff>();
@@ -298,7 +298,14 @@ namespace HomeOwners_Exemption.Controllers
                 }
             }
             else if (CurrentClaimStatusRefID == 4 && SelectedClaimStatusRefID == 5) //Staff Review - Supervisor Review
-                DropdownText = "<option value=" + AssigneeID + ">" + Assignee + "</option>";
+            {
+                List<Supervisors> lSupervisors = new List<Supervisors>();
+                lSupervisors = _context.Supervisors.FromSql("sp_getSupervisors").ToListAsync().Result.ToList();
+                foreach (var oneSupervisor in lSupervisors)
+                {
+                    DropdownText = DropdownText + "<option value=" + oneSupervisor.EmployeeID + ">" + oneSupervisor.Users + "</option>";
+                }
+            }
             else if (CurrentClaimStatusRefID == 5 && SelectedClaimStatusRefID == 5) //Supervisor Review - Supervisor Review
                 DropdownText = "<option value=" + AssigneeID + ">" + Assignee + "</option>";
             else if (CurrentClaimStatusRefID == 5 && SelectedClaimStatusRefID == 6) //Supervisor Review - Hold
