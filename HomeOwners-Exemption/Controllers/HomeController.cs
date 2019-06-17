@@ -178,11 +178,13 @@ namespace HomeOwners_Exemption.Controllers
                 index = index + 1;
             }
             var tempFinding = _context.FindingReason.FromSql("sp_getReasonRef").ToListAsync().Result.ToList();
+            
             foreach (var item in tempFinding)
             {
                 drop.Reason.Add(new SelectListItem() { Text = item.FindingReasonRef, Value = item.FindingReasonRefID.ToString() });
             }
             var tempAction = _context.ClaimAction.FromSql("sp_getAction").ToListAsync().Result.ToList();
+            drop.Action.Add(new SelectListItem() { Text = "Select", Value = "0" });
             foreach (var item in tempAction)
             {
                 drop.Action.Add(new SelectListItem() { Text = item.ClaimActionRef, Value = item.ClaimActionRefID.ToString() });

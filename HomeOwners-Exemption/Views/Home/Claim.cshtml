@@ -33,7 +33,7 @@
                         <!--<select asp-for="ClaimStatusID" asp-items="ViewBag.dropdownInfo.Status">
                             @*<option>Select</option>*@
                         </select>-->
-                        <select id="ddStatus" onchange="PopulateAssignee(this.value, '@Model.Assignee');">
+                        <select asp-for="ClaimStatusID" id="ddStatus" onchange="PopulateAssignee(this.value, '@Model.Assignee');">
                             @foreach (var item in ViewBag.dropdownInfo.Status)
                             {
                                 <option value="@item.Value" selected=@item.Selected>
@@ -66,7 +66,7 @@
                         <label asp-for="AssigneeID">Assignee:</label>
 
                         <!--<input asp-for="AssigneeID"/>-->
-                        <select id="ddAssignee">
+                        <select asp-for="AssigneeID" id="ddAssignee">
                             @foreach (var item in ViewBag.dropdownInfo.Assignee)
                             {
                                 <option value="@Convert.ToInt32(item.Value).ToString()" selected=@item.Selected>
@@ -74,6 +74,7 @@
                                 </option>
                             }
                         </select>
+                        <input type="hidden" asp-for="AssignorID" />
                     </div>
                 </div>
                 <div class="col-4">
@@ -122,13 +123,15 @@
                         <div class="col-7">
                             <div class="form-group">
                                 <label style="width:200px;" asp-for="CurrentStName" class="">Street Number and Name:</label>
-                                <input asp-for="CurrentStName"  />
+                                <input asp-for="CurrentStName" disabled />
+                                <input type="hidden" asp-for="CurrentStName" />
                             </div>
                         </div>
                         <div class="col-5">
                             <div class="form-group">
                                 <label asp-for="CurrentApt" class=""> Apt/Ste/Flr#:</label>
-                                <input style="" asp-for="CurrentApt"  />
+                                <input style="" asp-for="CurrentApt" />
+                                
 
                             </div>
                         </div>
@@ -137,7 +140,8 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label style="" asp-for="CurrentCity" class="">City:</label>
-                                <input asp-for="CurrentCity"  />
+                                <input asp-for="CurrentCity" />
+                                
                             </div>
                         </div>
                         <div class="col-4">
@@ -146,12 +150,14 @@
                                 <select asp-for="CurrentState" asp-items="ViewBag.dropdownInfo.states" >
                                     @*<option>Select</option>*@
                                 </select>
+                               
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
                                 <label asp-for="CurrentZip">Zip:</label>
                                 <input asp-for="CurrentZip"  />
+                                
                             </div>
                         </div>
                     </div>
