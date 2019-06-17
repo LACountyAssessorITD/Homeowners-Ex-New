@@ -12,6 +12,7 @@ namespace HomeOwners_Exemption.Models
         public List<SelectListItem> Action { get; set; }
         public List<SelectListItem> Reason { get; set; }
         public List<SelectListItem> states { get; set; }
+        public List<SelectListItem> Assignee { get; set; }
 
         public DropdownListClaim()
         {
@@ -19,6 +20,7 @@ namespace HomeOwners_Exemption.Models
             Action = new List<SelectListItem>();
             Reason = new List<SelectListItem>();
             states = new List<SelectListItem>();
+            Assignee = new List<SelectListItem>();
         }
 
     }
