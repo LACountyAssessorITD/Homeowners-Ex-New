@@ -8,10 +8,11 @@ namespace HomeOwners_Exemption.Models
 {
     public class ClaimHistory
     {
-        [Key]
+        
         public long ClaimID { get; set; }
         public string Claimant { get; set; }
         public long AIN { get; set; }
+        [Key]
         public string Status { get; set; }
         public string Assignee { get; set; }
         public DateTime? DateChanged { get; set; }

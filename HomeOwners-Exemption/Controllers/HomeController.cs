@@ -113,10 +113,11 @@ namespace HomeOwners_Exemption.Controllers
                     return RedirectToAction(nameof(Index));
                 }
 
-                ViewBag.history = _context.History.FromSql("sp_getClaimHistory @ClaimID", EmpID).ToListAsync().Result.ToList();
+                 var test = _context.History.FromSql("sp_getClaimHistory @ClaimID", EmpID).ToListAsync().Result.ToList();
 
-               
-                
+                ViewBag.history = test;
+
+
             }
             else
             {

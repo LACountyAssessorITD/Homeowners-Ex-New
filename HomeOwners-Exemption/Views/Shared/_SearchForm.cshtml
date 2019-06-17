@@ -1,9 +1,9 @@
 ﻿<script>
     function validate() {
         var id = document.forms["RegForm"]["Id"];
+        var numbers = /^[0-9]+$/;
         
-        window.alert(test);
-        if (id.value.toString().length < 7 && (isNaN(id.value))) {
+        if (id.value.toString().length < 7 && id.value.match(numbers) == null) {
             window.alert("Must include 7 digits and Must be Numeric");
             id.focus();
             return false;
