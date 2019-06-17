@@ -175,7 +175,15 @@ namespace HomeOwners_Exemption.Controllers
                     drop.Status[0].Selected = true;
                 }
                 else
-                    drop.Status.Add(new SelectListItem() { Text = item.ClaimStatusRef, Value = item.ClaimStatusRefID.ToString(), Selected = false });
+                {
+                    if (User.FindFirst("RoleId").Value != "3")
+                        drop.Status.Add(new SelectListItem() { Text = item.ClaimStatusRef, Value = item.ClaimStatusRefID.ToString(), Selected = false });
+                    else
+                    {
+                        if (item.ClaimStatusRefID != 4 && item.ClaimStatusRefID != 6 && item.ClaimStatusRefID != 7)
+                            drop.Status.Add(new SelectListItem() { Text = item.ClaimStatusRef, Value = item.ClaimStatusRefID.ToString(), Selected = false });
+                    }
+                }
                 index = index + 1;
             }
             var tempFinding = _context.FindingReason.FromSql("sp_getReasonRef").ToListAsync().Result.ToList();
