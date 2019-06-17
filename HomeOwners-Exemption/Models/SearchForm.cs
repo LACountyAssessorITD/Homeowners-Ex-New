@@ -7,6 +7,8 @@ namespace HomeOwners_Exemption.Models
 {
     public class SearchForm
     {
-        public int? Id { get; set; }
+        
+        public int? String { get; set; }
+
     }
 }
