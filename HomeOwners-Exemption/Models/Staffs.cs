@@ -13,7 +13,7 @@ namespace HomeOwners_Exemption.Models
         [Key]
         public string EmployeeID { get; set; }
         public string Users { get; set; }
-        public Int32 Unworked { get; set; }
-        public Int32 Worked { get; set; }
+        //public Int32 Unworked { get; set; }
+        //public Int32 Worked { get; set; }
     }
 }
