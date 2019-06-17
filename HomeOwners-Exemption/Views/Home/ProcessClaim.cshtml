@@ -96,7 +96,7 @@
                 $.ajax({
                     url: '@Url.Action("ValidateInfo", "Home")',
                     type: "POST",
-                    data: { ClaimID: claimID, AIN: AIN, ClaimStatus: status, ClaimReceivedDate: receivedDate },
+                    data: { ClaimID: claimID, AIN: AIN, ClaimStatusID: status, ClaimReceivedDate: receivedDate },
                     traditional: true,
                     success: function (returnData) {
                         if (returnData == "0") {
@@ -161,7 +161,7 @@
                                     $.ajax({
                                         url: '@Url.Action("ProcessInfo", "Home")',
                                         type: "POST",
-                                        data: { ClaimID: claimID, AIN: AIN, ClaimStatus: status, ClaimReceivedDate: receivedDate },
+                                        data: { ClaimID: claimID, AIN: AIN, ClaimStatusID: status, ClaimReceivedDate: receivedDate },
                                         traditional: true,
                                         success: function (data) {
                                             if (data == "0")
@@ -304,8 +304,10 @@
                 alert("Claim# must be 7 digits.");
             else if ((tblRows.length > 2) && ($("#txtClaimID_1").val() != "") && ($("#txtClaimID_1").val().length < 7))
                 alert("Claim# must be 7 digits.");
-            else if (supervisorAssignee == "0")
+            else if (status == 3 && supervisorAssignee == "0")
                 alert("Supervisor cannot be empty.");
+            else if (status == 4 && staffAssignee == "0")
+                alert("Staff cannot be empty.");
             else {
                 // Get the value from the input text box
                 claimIDs.push(document.getElementById("txtClaimID_1").value);
@@ -313,7 +315,7 @@
                 $.ajax({
                     url: '@Url.Action("ProcessOtherStatus", "Home")',
                     type: "POST",
-                    data: { ClaimIDList: claimIDs, ClaimStatus: status, AssigneeSupervisor: supervisorAssignee, AssigneeStaff: staffAssignee },
+                    data: { ClaimIDList: claimIDs, ClaimStatusID: status, AssigneeSupervisor: supervisorAssignee, AssigneeStaff: staffAssignee },
                     traditional: true,
                     success: function (data) {
                         if (data == "0")

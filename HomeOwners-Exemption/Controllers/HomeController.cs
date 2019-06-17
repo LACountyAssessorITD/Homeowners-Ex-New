@@ -213,7 +213,7 @@ namespace HomeOwners_Exemption.Controllers
                 else if (item.ClaimStatusRefID == 4)
                 {
                     List<Staffs> lStaffs = new List<Staffs>();
-                    lStaffs = _context.Staffs.FromSql("sp_getStaff").ToListAsync().Result.ToList();
+                    lStaffs = _context.Staffs.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
                     foreach (var oneStaff in lStaffs)
                     {
                         if (Convert.ToInt32(oneStaff.EmployeeID) == Convert.ToInt32(item.AssigneeID))
@@ -279,7 +279,7 @@ namespace HomeOwners_Exemption.Controllers
             else if (CurrentClaimStatusRefID == 3 && SelectedClaimStatusRefID == 4) //Supervisor Workload - Staff Review
             {
                 List<Staffs> lStaffs = new List<Staffs>();
-                lStaffs = _context.Staffs.FromSql("sp_getStaff").ToListAsync().Result.ToList();
+                lStaffs = _context.Staffs.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
                 foreach (var oneStaff in lStaffs)
                 {
                     DropdownText = DropdownText + "<option value=" + oneStaff.EmployeeID + ">" + oneStaff.Users + "</option>";
@@ -288,7 +288,7 @@ namespace HomeOwners_Exemption.Controllers
             else if (CurrentClaimStatusRefID == 4 && SelectedClaimStatusRefID == 4) //Staff Review - Staff Review
             {
                 List<Staffs> lStaffs = new List<Staffs>();
-                lStaffs = _context.Staffs.FromSql("sp_getStaff").ToListAsync().Result.ToList();
+                lStaffs = _context.Staffs.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
                 foreach (var oneStaff in lStaffs)
                 {
                     if (oneStaff.EmployeeID == AssigneeID)
@@ -324,7 +324,7 @@ namespace HomeOwners_Exemption.Controllers
             return View(model);
         }
 
-        public string ProcessOtherStatus(IEnumerable<int> ClaimIDList, string ClaimStatus, string AssigneeSupervisor, string AssigneeStaff)
+        public string ProcessOtherStatus(IEnumerable<int> ClaimIDList, string ClaimStatusID, string AssigneeSupervisor, string AssigneeStaff)
         {
             string strAssignor = User.FindFirst("Name").Value;
             try
@@ -339,7 +339,10 @@ namespace HomeOwners_Exemption.Controllers
                 {
                     tmpClaimID = dt_tmpClaimID.NewRow();
                     tmpClaimID["ClaimID"] = Convert.ToString(claimID);
-                    tmpClaimID["Assignee"] = AssigneeSupervisor;
+                    if (ClaimStatusID == "3")
+                        tmpClaimID["Assignee"] = AssigneeSupervisor;
+                    else if (ClaimStatusID == "4")
+                        tmpClaimID["Assignee"] = AssigneeStaff;
                     tmpClaimID["Assignor"] = strAssignor;
                     dt_tmpClaimID.Rows.Add(tmpClaimID);
                 }
@@ -348,7 +351,12 @@ namespace HomeOwners_Exemption.Controllers
                 parameter.TypeName = "tvpClaimID";
                 parameter.Value = dt_tmpClaimID;
 
-                string result = _context.Database.ExecuteSqlCommand("exec sp_prepClaimID2 @tvpClaimID", parameter).ToString();
+                string result = "";
+
+                if (ClaimStatusID == "3") //Supervisor Workload
+                    result = _context.Database.ExecuteSqlCommand("exec sp_prepClaimID2 @tvpClaimID", parameter).ToString();
+                else if (ClaimStatusID == "4") //Staff Review
+                    result = _context.Database.ExecuteSqlCommand("exec sp_prepStaffReview @tvpClaimID", parameter).ToString();
 
                 return result;
             }
@@ -372,13 +380,13 @@ namespace HomeOwners_Exemption.Controllers
             ////cnn.Close();
         }
 
-        public string ValidateInfo(string ClaimID, string AIN, string ClaimStatus, string ClaimReceivedDate)
+        public string ValidateInfo(string ClaimID, string AIN, string ClaimStatusID, string ClaimReceivedDate)
         {
             string strAssignor = User.FindFirst("Name").Value;
             try
             {
                 var result = new ClaimInfo();
-                var pClaimStatus = new SqlParameter("@ClaimStatusRefID", ClaimStatus);
+                var pClaimStatus = new SqlParameter("@ClaimStatusRefID", ClaimStatusID);
                 var pClaimID = new SqlParameter("@ClaimID", ClaimID);
                 var pAIN = new SqlParameter("@AIN", AIN);
                 result = _context.ClaimInfo.FromSql("sp_chk_ClaimID_AIN @ClaimStatusRefID, @ClaimID, @AIN", pClaimStatus, pClaimID, pAIN).FirstOrDefaultAsync().Result;
@@ -391,7 +399,7 @@ namespace HomeOwners_Exemption.Controllers
             }
         }
 
-        public string ProcessInfo(string ClaimID, string AIN, string ClaimStatus, string ClaimReceivedDate)
+        public string ProcessInfo(string ClaimID, string AIN, string ClaimStatusID, string ClaimReceivedDate)
         {
             string strAssignor = User.FindFirst("Name").Value;
             try
@@ -445,7 +453,7 @@ namespace HomeOwners_Exemption.Controllers
         private IEnumerable<SelectListItem> GetAllStaffs()
         {
             List<Staffs> lStaffs = new List<Staffs>();
-            lStaffs = _context.Staffs.FromSql("sp_getStaff").ToListAsync().Result.ToList();
+            lStaffs = _context.Staffs.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
             List<SelectListItem> li = new List<SelectListItem>();
             li.Add(new SelectListItem { Text = "Select Staff", Value = "0" });
             foreach (var oneStaff in lStaffs)
