@@ -46,6 +46,7 @@ namespace HomeOwners_Exemption.Models
         public string FindingReasonRef { get; set; }
         public int? ClaimStatusID { get; set; }
         public string ClaimStatusRef { get; set; }
+        public int? ClaimStatusRefID { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }

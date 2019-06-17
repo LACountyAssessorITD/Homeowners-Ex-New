@@ -165,9 +165,17 @@ namespace HomeOwners_Exemption.Controllers
             //var tempStatus = _context.ClaimStatus.FromSql("sp_getStatus").ToListAsync().Result.ToList();
             var ID = new SqlParameter("@ClaimID", ClaimID);
             var tempStatus = _context.ClaimStatus.FromSql("sp_getStatus @ClaimID", ID).ToListAsync().Result.ToList();
+            var index = 0;
             foreach (var item in tempStatus)
             {
-                drop.Status.Add(new SelectListItem() { Text = item.ClaimStatusRef, Value = item.ClaimStatusRefID.ToString() });
+                if (index == 0)
+                {
+                    drop.Status.Add(new SelectListItem() { Text = item.ClaimStatusRef, Value = item.ClaimStatusRefID.ToString(), Selected = true });
+                    drop.Status[0].Selected = true;
+                }
+                else
+                    drop.Status.Add(new SelectListItem() { Text = item.ClaimStatusRef, Value = item.ClaimStatusRefID.ToString(), Selected = false });
+                index = index + 1;
             }
             var tempFinding = _context.FindingReason.FromSql("sp_getReasonRef").ToListAsync().Result.ToList();
             foreach (var item in tempFinding)
@@ -179,13 +187,128 @@ namespace HomeOwners_Exemption.Controllers
             {
                 drop.Action.Add(new SelectListItem() { Text = item.ClaimActionRef, Value = item.ClaimActionRefID.ToString() });
             }
-            var temStaff = _context.Staffs.FromSql("sp_getStaff").ToListAsync().Result.ToList();
-            foreach (var item in temStaff)
+
+            var tempAssignee = _context.Claim.FromSql("sp_getClaim @ClaimID", ID).ToListAsync().Result.ToList();
+            foreach (var item in tempAssignee)
             {
-                drop.Users.Add(new SelectListItem() { Text = item.Users, Value = item.EmployeeID});
+                if (item.ClaimStatusRefID == 2)
+                {
+                    drop.Assignee.Add(new SelectListItem() { Text = item.Assignee, Value = item.AssigneeID, Selected = true });
+                    drop.Assignee[0].Selected = true;
+                }
+                else if (item.ClaimStatusRefID == 3)
+                {
+                    List<Supervisors> lSupervisors = new List<Supervisors>();
+                    lSupervisors = _context.Supervisors.FromSql("sp_getSupervisors").ToListAsync().Result.ToList();
+                    foreach (var oneSupervisor in lSupervisors)
+                    {
+                        if (Convert.ToInt32(oneSupervisor.EmployeeID) == Convert.ToInt32(item.AssigneeID))
+                            drop.Assignee.Add(new SelectListItem { Text = oneSupervisor.Users, Value = oneSupervisor.EmployeeID, Selected = true });
+                        else
+                            drop.Assignee.Add(new SelectListItem { Text = oneSupervisor.Users, Value = oneSupervisor.EmployeeID, Selected = false });
+                    }
+                }
+                else if (item.ClaimStatusRefID == 4)
+                {
+                    List<Staffs> lStaffs = new List<Staffs>();
+                    lStaffs = _context.Staffs.FromSql("sp_getStaff").ToListAsync().Result.ToList();
+                    foreach (var oneStaff in lStaffs)
+                    {
+                        if (Convert.ToInt32(oneStaff.EmployeeID) == Convert.ToInt32(item.AssigneeID))
+                            drop.Assignee.Add(new SelectListItem { Text = oneStaff.Users, Value = oneStaff.EmployeeID, Selected = true });
+                        else
+                            drop.Assignee.Add(new SelectListItem { Text = oneStaff.Users, Value = oneStaff.EmployeeID, Selected = false });
+                    }
+                }
+                else if (item.ClaimStatusRefID == 5)
+                {
+                    drop.Assignee.Add(new SelectListItem() { Text = item.Assignee, Value = item.AssigneeID, Selected = true });
+                    drop.Assignee[0].Selected = true;
+                }
+                else if (item.ClaimStatusRefID == 6)
+                {
+                    drop.Assignee.Add(new SelectListItem() { Text = item.Assignee, Value = item.AssigneeID, Selected = true });
+                    drop.Assignee[0].Selected = true;
+                }
+                else if (item.ClaimStatusRefID == 7)
+                {
+                    drop.Assignee.Add(new SelectListItem() { Text = item.Assignee, Value = item.AssigneeID, Selected = true });
+                    drop.Assignee[0].Selected = true;
+                }
             }
+
             return drop;
             
+        }
+
+        public string GetDropdownAssignee(int ClaimID, int CurrentClaimStatusRefID, int SelectedClaimStatusRefID, string AssigneeID, string Assignee)
+        {
+            // Claim Received - Assignee
+            // Supervisor Workload - Supervior List
+            // Staff Review - Staff List
+            // Supervisor Review - Assignee
+            // Hold - Assignee
+            // Closed - Assignee
+
+            string DropdownText = "";
+            if (CurrentClaimStatusRefID == 2 && SelectedClaimStatusRefID == 2) //Claim Received - Claim Received
+                DropdownText = "<option value=" + AssigneeID + ">" + Assignee + "</option>";
+            else if (CurrentClaimStatusRefID == 2 && SelectedClaimStatusRefID == 3) //Claim Received - Supervisor Workload
+            {
+                List<Supervisors> lSupervisors = new List<Supervisors>();
+                lSupervisors = _context.Supervisors.FromSql("sp_getSupervisors").ToListAsync().Result.ToList();
+                foreach (var oneSupervisor in lSupervisors)
+                {
+                    DropdownText = DropdownText + "<option value=" + oneSupervisor.EmployeeID + ">" + oneSupervisor.Users + "</option>";
+                }
+            }
+            else if (CurrentClaimStatusRefID == 3 && SelectedClaimStatusRefID == 3) //Supervisor Workload - Supervisor Workload
+            {
+                List<Supervisors> lSupervisors = new List<Supervisors>();
+                lSupervisors = _context.Supervisors.FromSql("sp_getSupervisors").ToListAsync().Result.ToList();
+                foreach (var oneSupervisor in lSupervisors)
+                {
+                    if (oneSupervisor.EmployeeID == AssigneeID)
+                        DropdownText = DropdownText + "<option value=" + oneSupervisor.EmployeeID + "selecte=true>" + oneSupervisor.Users + "</option>";
+                    else
+                        DropdownText = DropdownText + "<option value=" + oneSupervisor.EmployeeID + "selected=false>" + oneSupervisor.Users + "</option>";
+                }
+            }
+            else if (CurrentClaimStatusRefID == 3 && SelectedClaimStatusRefID == 4) //Supervisor Workload - Staff Review
+            {
+                List<Staffs> lStaffs = new List<Staffs>();
+                lStaffs = _context.Staffs.FromSql("sp_getStaff").ToListAsync().Result.ToList();
+                foreach (var oneStaff in lStaffs)
+                {
+                    DropdownText = DropdownText + "<option value=" + oneStaff.EmployeeID + ">" + oneStaff.Users + "</option>";
+                }
+            }   
+            else if (CurrentClaimStatusRefID == 4 && SelectedClaimStatusRefID == 4) //Staff Review - Staff Review
+            {
+                List<Staffs> lStaffs = new List<Staffs>();
+                lStaffs = _context.Staffs.FromSql("sp_getStaff").ToListAsync().Result.ToList();
+                foreach (var oneStaff in lStaffs)
+                {
+                    if (oneStaff.EmployeeID == AssigneeID)
+                        DropdownText = DropdownText + "<option value=" + oneStaff.EmployeeID + "selecte=true>" + oneStaff.Users + "</option>";
+                    else
+                        DropdownText = DropdownText + "<option value=" + oneStaff.EmployeeID + "selected=false>" + oneStaff.Users + "</option>";
+                }
+            }
+            else if (CurrentClaimStatusRefID == 4 && SelectedClaimStatusRefID == 5) //Staff Review - Supervisor Review
+                DropdownText = "<option value=" + AssigneeID + ">" + Assignee + "</option>";
+            else if (CurrentClaimStatusRefID == 5 && SelectedClaimStatusRefID == 5) //Supervisor Review - Supervisor Review
+                DropdownText = "<option value=" + AssigneeID + ">" + Assignee + "</option>";
+            else if (CurrentClaimStatusRefID == 5 && SelectedClaimStatusRefID == 6) //Supervisor Review - Hold
+                DropdownText = "<option value=" + AssigneeID + ">" + Assignee + "</option>";
+            else if (CurrentClaimStatusRefID == 5 && SelectedClaimStatusRefID == 7) //Supervisor Review - Closed
+                DropdownText = "<option value=" + AssigneeID + ">" + Assignee + "</option>";
+            else if (CurrentClaimStatusRefID == 6 && SelectedClaimStatusRefID == 6) //Hold - Hold
+                DropdownText = "<option value=" + AssigneeID + ">" + Assignee + "</option>";
+            else if (CurrentClaimStatusRefID == 6 && SelectedClaimStatusRefID == 7) //Hold - Closed
+                DropdownText = "<option value=" + AssigneeID + ">" + Assignee + "</option>";
+
+            return DropdownText;
         }
 
         public IActionResult ProcessClaim()

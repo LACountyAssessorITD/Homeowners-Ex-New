@@ -3,13 +3,14 @@
 @{
     ViewData["Title"] = "Claim";
 }
+
 <div class="h-100 p-4">
     <h4 class="">Claim</h4>
     @if (ViewBag.ModelMessage)
     {
         <h4 class="" style="color:#ff0000;">Claim Does not Exist</h4>
     }
-    
+
     <form asp-action="Claim">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -29,16 +30,50 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label asp-for="ClaimStatusID">Claim Status:</label>
-                        <select asp-for="ClaimStatusID" asp-items="ViewBag.dropdownInfo.Status">
+                        <!--<select asp-for="ClaimStatusID" asp-items="ViewBag.dropdownInfo.Status">
                             @*<option>Select</option>*@
+                        </select>-->
+                        <select id="ddStatus" onchange="PopulateAssignee(this.value, '@Model.Assignee');">
+                            @foreach (var item in ViewBag.dropdownInfo.Status)
+                            {
+                                <option value="@item.Value" selected=@item.Selected>
+                                    @item.Text
+                                </option>
+                            }
                         </select>
+                        <script type="text/javascript">
+                            function PopulateAssignee(selectedClaimStatusRefID, assignee)
+                            {
+                                $.ajax({
+                                    url: '@Url.Action("GetDropdownAssignee", "Home")',
+                                    type: "POST",
+                                    data: { ClaimID: @Model.claimID, CurrentClaimStatusRefID: @Model.ClaimStatusRefID, SelectedClaimStatusRefID: selectedClaimStatusRefID, AssigneeID: @Model.AssigneeID, Assignee: assignee },
+                                    traditional: true,
+                                    success: function (returnData) {
+                                        $("#ddAssignee").html("");
+                                        $("#ddAssignee").html(returnData);
+                                    },
+                                    error: function () {
+                                        alert("Fail to build the dropdown!");
+                                    }
+                                });                   
+                            }
 
+                        </script>
                         @*<input asp-for="ClaimStatusRef" class="" />*@
                     </div>
                     <div class="form-group">
                         <label asp-for="AssigneeID">Assignee:</label>
-                       
-                        <input asp-for="AssigneeID"/>
+
+                        <!--<input asp-for="AssigneeID"/>-->
+                        <select id="ddAssignee">
+                            @foreach (var item in ViewBag.dropdownInfo.Assignee)
+                            {
+                                <option value="@Convert.ToInt32(item.Value).ToString()" selected=@item.Selected>
+                                    @item.Text
+                                </option>
+                            }
+                        </select>
                     </div>
                 </div>
                 <div class="col-4">
