@@ -14,6 +14,8 @@ namespace HomeOwners_Exemption.Models
             : base(options)
         {
         }
+
+        public virtual DbSet<UserStaff> UserStaff { get; set; }
         public virtual DbSet<ClaimHistory> History{ get; set; }
         public virtual DbSet<ClaimActionRefDropdown> ClaimAction { get; set; }
         public virtual DbSet<FindReasonRefDropdown> FindingReason { get; set; }

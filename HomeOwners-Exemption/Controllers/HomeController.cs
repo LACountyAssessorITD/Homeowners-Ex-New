@@ -452,8 +452,8 @@ namespace HomeOwners_Exemption.Controllers
 
         private IEnumerable<SelectListItem> GetAllStaffs()
         {
-            List<Staffs> lStaffs = new List<Staffs>();
-            lStaffs = _context.Staffs.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
+            //List<Staffs> lStaffs = new List<Staffs>();
+            var lStaffs = _context.UserStaff.FromSql("sp_getStaffDropdown").ToListAsync().Result.ToList();
             List<SelectListItem> li = new List<SelectListItem>();
             li.Add(new SelectListItem { Text = "Select Staff", Value = "0" });
             foreach (var oneStaff in lStaffs)
