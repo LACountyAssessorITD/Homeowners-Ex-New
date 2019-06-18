@@ -510,3 +510,9 @@ i {
     pointer-events: none;
     background-color: #ebebe4;
 }
+
+
+.text-shadow {
+    text-shadow: 5px 5px 5px black;
+    /*font-weight: 300;*/
+}
