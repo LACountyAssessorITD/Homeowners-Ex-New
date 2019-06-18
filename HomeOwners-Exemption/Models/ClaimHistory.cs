@@ -17,6 +17,6 @@ namespace HomeOwners_Exemption.Models
         public string Assignee { get; set; }
         public DateTime? DateChanged { get; set; }
         public int? Days { get; set; }
-        public string CreatedBy { get; set; }
+        public string Assignor { get; set; }
     }
 }
