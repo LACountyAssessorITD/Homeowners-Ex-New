@@ -9,7 +9,7 @@
 
 <script type="text/javascript">
     function validate() {
-        if (chkPriorAddress.checked == 1) {
+        if (Check.checked == 1) {
             ;
             document.getElementById("txtMailingStName").readOnly = false;
             document.getElementById("txtMailingApt").readOnly = false;
@@ -253,7 +253,7 @@
                         <div class="row">
                             <div class="col-1">
                                 <div class="form-group">
-                                    <input id="chkPriorAddress" name="chkPriorAddress" type="checkbox" onclick="validate();" />
+                                    <input asp-for="Check"  type="checkbox" onclick="validate();" />
                                     <label style="width: 800px">Check if mailing address is different from situs to enable input</label>
                                 </div>
                             </div>

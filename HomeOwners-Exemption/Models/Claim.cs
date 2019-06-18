@@ -62,6 +62,8 @@ namespace HomeOwners_Exemption.Models
         public string AssignorID { get; set; }
         public string Assignor { get; set; }
         public string Comments { get; set; }
+        [NotMapped]
+        public bool Check { get; set; }
         public int? Late { get; set; }
 
         private bool lateBool;
@@ -98,6 +100,7 @@ namespace HomeOwners_Exemption.Models
             CreatedDate =Convert.ToDateTime(System.DateTime.Now.ToString("MM/dd/yyyy h:mm tt"));
             Assignor = "";
             LateBool = false;
+            Check = false;
 
         }
         

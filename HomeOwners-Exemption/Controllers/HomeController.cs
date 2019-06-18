@@ -42,7 +42,7 @@ namespace HomeOwners_Exemption.Controllers
             //staffList.AddRange(supList);
 
             Dictionary<string, StatusCount> statusList = new Dictionary<string, StatusCount>();
-            statusList.Add("Preprint Sent", new StatusCount(0,0));
+            
             statusList.Add("Claim Received", new StatusCount(0, 0));
             statusList.Add("Supervisor Workload", new StatusCount(0, 0));
             statusList.Add("Staff Review", new StatusCount(0, 0));
@@ -52,12 +52,15 @@ namespace HomeOwners_Exemption.Controllers
 
           
 
-            var statusDbList = _context.statusList.FromSql("sp_getCountsByStatus").ToListAsync().Result.ToList();
-            string strAssignor = User.FindFirst("Name").Value;
+            var statusDbList = _context.statusList.FromSql("sp_getClaimCounts").ToListAsync().Result.ToList();
+            
             foreach (var item in statusDbList)
             {
-                statusList[item.ClaimStatusRef] = new StatusCount(item.OrderCount ?? default(int), item.Late ?? default(int));
+                statusList[item.ClaimStatusRef] = new StatusCount(item.Counts ?? default(int), item.Late ?? default(int));
+                
              }
+
+
             var EmpID = new SqlParameter("@usersID", User.Identity.Name);
             var claimList = _context.MyClaims.FromSql("sp_getListOfAssignedClaim @usersID", EmpID).ToListAsync().Result.ToList();
 
@@ -139,6 +142,11 @@ namespace HomeOwners_Exemption.Controllers
             {
                 UpdateClaim updClaim = new UpdateClaim(claim);
                 List<SqlParameter> parameter = updClaim.parameterMap;
+                if(!claim.Check)
+                {
+                    parameter[12] = new SqlParameter("@mailingState", hiddenState.ToString());
+
+                }
 
                 var result = _context.Database.ExecuteSqlCommand("sp_updClaim @claimID, @currentAPN, @ClaimStatusRefID, @AssigneeID, @AssignorID, @claimant, @claimantSSN, @spouse, @spouseSSN, @mailingStName, @mailingApt, @mailingCity, @mailingState, @mailingZip, @priorAPN, @dateMovedOut, @priorStName, @priorApt, @priorCity, @priorState, @priorZip, @ClaimActionRefID, @FindingReasonRefID, @Comments, @Late,  @rollTaxYear, @suppTaxYear, @exemptRE, @exemptRE2"
                                                                 , parameter[0], parameter[1], parameter[2],  parameter[3], new SqlParameter("@AssignorID", User.Identity.Name)
@@ -147,6 +155,11 @@ namespace HomeOwners_Exemption.Controllers
                                                                 , parameter[15], parameter[16], parameter[17], parameter[18], parameter[19]
                                                                 , parameter[20], parameter[21], parameter[22], parameter[23], parameter[24]
                                                                 , parameter[25], parameter[26] ,parameter[27], parameter[28]);
+
+
+
+
+
                 return LocalRedirect("~/Home/Claim/" + claim.claimID);
             }
             return View("Claim", "Home");
