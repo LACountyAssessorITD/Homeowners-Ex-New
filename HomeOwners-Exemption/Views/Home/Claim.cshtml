@@ -4,8 +4,26 @@
     ViewData["Title"] = "Claim";
 }
 
+<script type="text/javascript">
+    function validate() {
+        if (chkPriorAddress.checked == 1) {;
+            document.getElementById("txtMailingStName").readOnly = false;
+            document.getElementById("txtMailingApt").readOnly = false;
+            document.getElementById("txtMailingCity").readOnly = false;
+            document.getElementById("ddMailingState").disabled = false;
+            document.getElementById("txtMailingZip").readOnly = false;
+        } else {
+            document.getElementById("txtMailingStName").readOnly = true;
+            document.getElementById("txtMailingApt").readOnly = true;
+            document.getElementById("txtMailingCity").readOnly = true;
+            document.getElementById("ddMailingState").disabled = true;
+            document.getElementById("txtMailingZip").readOnly = true;
+        }
+    }
+</script>
+
 <div class="h-100 p-4">
-    
+
     <div>
         <h4 class="">Claim</h4>
         <p class="btn btn-dark bg-1 history-button">Claim History</p>
@@ -64,7 +82,7 @@
                                 });
                             }
 
-                            </script>
+</script>
                             @*<input asp-for="ClaimStatusRef" class="" />*@
                         </div>
                         <div class="form-group">
@@ -191,14 +209,14 @@
                             <div class="col-7">
                                 <div class="form-group">
                                     <label style="width:200px;" asp-for="MailingStName" class="">Street Number and Name:</label>
-                                    <input asp-for="MailingStName" readonly />
+                                    <input asp-for="MailingStName" id="txtMailingStName" readonly />
 
                                 </div>
                             </div>
                             <div class="col-5">
                                 <div class="form-group">
                                     <label asp-for="MailingApt" class=""> Apt/Ste/Flr#:</label>
-                                    <input style="" asp-for="MailingApt" readonly />
+                                    <input style="" asp-for="MailingApt" id="txtMailingApt" readonly />
 
                                 </div>
                             </div>
@@ -207,14 +225,14 @@
                             <div class="col-4">
                                 <div class="form-group">
                                     <label style="" asp-for="MailingCity" class="">City:</label>
-                                    <input asp-for="MailingCity" readonly />
+                                    <input asp-for="MailingCity" id="txtMailingCity" readonly />
 
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
                                     <label asp-for="MailingState" class=""> State:</label>
-                                    <select asp-for="MailingState" asp-items="ViewBag.dropdownInfo.states" readonly>
+                                    <select asp-for="MailingState" id="ddMailingState" asp-items="ViewBag.dropdownInfo.states" readonly>
                                         <option value="null">Select</option>
                                     </select>
 
@@ -223,14 +241,14 @@
                             <div class="col-4">
                                 <div class="form-group">
                                     <label asp-for="MailingZip" class=""> Zip:</label>
-                                    <input style="" asp-for="MailingZip" readonly />
+                                    <input style="" id ="txtMailingZip" asp-for="MailingZip" readonly />
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-1">
                                 <div class="form-group">
-                                    <input id="chkPriorAddress" name="chkPriorAddress" type="checkbox" />
+                                    <input id="chkPriorAddress" name="chkPriorAddress" type="checkbox" onclick="validate();"/>
                                     <label style="width: 800px">Check if mailing address is different from situs to enable input</label>
                                 </div>
                             </div>
