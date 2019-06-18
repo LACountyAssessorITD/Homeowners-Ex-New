@@ -12,7 +12,7 @@ namespace HomeOwners_Exemption.Models
         [Key]
         public string ClaimStatusRef { get; set; }
         public int? Counts { get; set; }
-        [NotMapped]
+        
         public int? Late { get; set; }
         
 
