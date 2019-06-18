@@ -237,7 +237,7 @@
                             <div class="col-4">
                                 <div class="form-group">
                                     <label asp-for="MailingState" class=""> State:</label>
-                                    <select asp-for="MailingState" id="ddMailingState" asp-items="ViewBag.dropdownInfo.states" readonly>
+                                    <select asp-for="MailingState" id="ddMailingState" asp-items="ViewBag.dropdownInfo.states" disabled>
                                         <option value="null" readonly>Select</option>
                                     </select>
 
@@ -461,7 +461,29 @@
         </form>
     
 </div>
+<script type="text/javascript">
+    document.getElementById("hiddenState").value = document.getElementById("ddMailingState").value;
+    //alert(document.getElementById("hiddenState").value);
 
+    function validate() {
+        if (chkPriorAddress.checked == 1) {
+            document.getElementById("txtMailingStName").readOnly = false;
+            document.getElementById("txtMailingApt").readOnly = false;
+            document.getElementById("txtMailingCity").readOnly = false;
+            document.getElementById("ddMailingState").disabled = false;
+            document.getElementById("txtMailingZip").readOnly = false;
+            //alert(document.getElementById("ddMailingState").value);
+        } else {
+            document.getElementById("txtMailingStName").readOnly = true;
+            document.getElementById("txtMailingApt").readOnly = true;
+            document.getElementById("txtMailingCity").readOnly = true;
+            document.getElementById("ddMailingState").disabled = true;
+            document.getElementById("txtMailingZip").readOnly = true;
+            //alert(document.getElementById("ddMailingState").value);
+            document.getElementById("hiddenState").value = document.getElementById("ddMailingState").value;
+        }
+    }
+</script>
 
 <div class="history-feature">
     <div class="container-fluid h-100">
