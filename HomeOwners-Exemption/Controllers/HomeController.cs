@@ -112,7 +112,7 @@ namespace HomeOwners_Exemption.Controllers
                     ViewBag.ModelMessage = true;
                     return RedirectToAction(nameof(Index));
                 }
-
+                modelUser.CreatedDate = DateTime.Now;
                  var test = _context.History.FromSql("sp_getClaimHistory @ClaimID", EmpID).ToListAsync().Result.ToList();
 
                 ViewBag.history = test;

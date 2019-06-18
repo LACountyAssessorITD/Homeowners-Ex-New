@@ -40,8 +40,8 @@ namespace HomeOwners_Exemption.Models
             parameterMap.Add(new SqlParameter("@priorState", udpList.PriorState == null ? (object)DBNull.Value : udpList.PriorState));
             parameterMap.Add(new SqlParameter("@priorZip", udpList.PriorZip == null ? (object)DBNull.Value : udpList.PriorZip));
 
-            parameterMap.Add(new SqlParameter("@ClaimActionRefID", udpList.ClaimActionID == null ? (object)DBNull.Value : udpList.ClaimActionID));
-            parameterMap.Add(new SqlParameter("@FindingReasonRefID", udpList.FindingReasonID));
+            parameterMap.Add(new SqlParameter("@ClaimActionRefID", udpList.ClaimActionRefID == null ? (object)DBNull.Value : udpList.ClaimActionID));
+            parameterMap.Add(new SqlParameter("@FindingReasonRefID", udpList.FindingReasonRefID == null ? (object)DBNull.Value : udpList.FindingReasonID));
             parameterMap.Add(new SqlParameter("@Comments", DBNull.Value));
             parameterMap.Add(new SqlParameter("@Late", udpList.Late));
 
