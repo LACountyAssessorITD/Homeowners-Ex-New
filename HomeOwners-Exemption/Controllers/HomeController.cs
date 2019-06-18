@@ -175,7 +175,15 @@ namespace HomeOwners_Exemption.Controllers
                     drop.Status[0].Selected = true;
                 }
                 else
-                    drop.Status.Add(new SelectListItem() { Text = item.ClaimStatusRef, Value = item.ClaimStatusRefID.ToString(), Selected = false });
+                {
+                    if (User.FindFirst("RoleId").Value != "3")
+                        drop.Status.Add(new SelectListItem() { Text = item.ClaimStatusRef, Value = item.ClaimStatusRefID.ToString(), Selected = false });
+                    else
+                    {
+                        if (item.ClaimStatusRefID != 4 && item.ClaimStatusRefID != 6 && item.ClaimStatusRefID != 7)
+                            drop.Status.Add(new SelectListItem() { Text = item.ClaimStatusRef, Value = item.ClaimStatusRefID.ToString(), Selected = false });
+                    }
+                }
                 index = index + 1;
             }
             var tempFinding = _context.FindingReason.FromSql("sp_getReasonRef").ToListAsync().Result.ToList();
@@ -443,7 +451,7 @@ namespace HomeOwners_Exemption.Controllers
         private IEnumerable<SelectListItem> GetAllClaimStatus()
         {
             List<SelectListItem> li = new List<SelectListItem>();
-            if (User.FindFirst("RoleTitle").Value == "3")
+            if (User.FindFirst("RoleId").Value == "3")
             {
                 li.Add(new SelectListItem { Text = "Select Status", Value = "0" });
                 li.Add(new SelectListItem { Text = "Claim Received", Value = "2" });
