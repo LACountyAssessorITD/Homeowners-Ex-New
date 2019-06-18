@@ -7,26 +7,6 @@
     
 }
 
-<script type="text/javascript">
-    function validate() {
-        if (Check.checked == 1) {
-            ;
-            document.getElementById("txtMailingStName").readOnly = false;
-            document.getElementById("txtMailingApt").readOnly = false;
-            document.getElementById("txtMailingCity").readOnly = false;
-            document.getElementById("ddMailingState").disabled = false;
-            document.getElementById("txtMailingZip").readOnly = false;
-        } else {
-            document.getElementById("txtMailingStName").readOnly = true;
-            document.getElementById("txtMailingApt").readOnly = true;
-            document.getElementById("txtMailingCity").readOnly = true;
-            document.getElementById("ddMailingState").disabled = true;
-            document.getElementById("txtMailingZip").readOnly = true;      
-        }
-        document.getElementById("hiddenState").value = document.getElementById("ddMailingState").value;
-    }
-</script>
-
 <div class="h-100 p-4">
 
     <div>
@@ -466,7 +446,7 @@
     //alert(document.getElementById("hiddenState").value);
 
     function validate() {
-        if (chkPriorAddress.checked == 1) {
+        if (Check.checked) {
             document.getElementById("txtMailingStName").readOnly = false;
             document.getElementById("txtMailingApt").readOnly = false;
             document.getElementById("txtMailingCity").readOnly = false;
