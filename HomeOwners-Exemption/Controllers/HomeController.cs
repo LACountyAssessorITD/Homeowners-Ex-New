@@ -132,7 +132,7 @@ namespace HomeOwners_Exemption.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Claim(Claim claim, string returnUrl)
+        public IActionResult Claim(Claim claim)
         {
             if (ModelState.IsValid)
             {

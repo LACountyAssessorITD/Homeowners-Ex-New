@@ -28,11 +28,14 @@ namespace HomeOwners_Exemption.Models
         public string MailingCity { get; set; }
         public string MailingState { get; set; }
         public int? MailingZip { get; set; }
+        [RegularExpression(@"(\b\d{7}\b)", ErrorMessage = "Must be a 7 digits")]
         public long? PriorApn { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DateMovedOut { get; set; }
         public string PriorStName { get; set; }
+
+        
         public string PriorApt { get; set; }
         public string PriorCity { get; set; }
         public string PriorState { get; set; }

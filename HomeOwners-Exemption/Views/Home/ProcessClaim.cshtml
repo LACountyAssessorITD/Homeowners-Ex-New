@@ -560,13 +560,13 @@
                     </td>
                     <td>
                         @*<img src="~/img/search.jpg" onclick="ValidateInfo()" style="height:30px;width:30px;" title="Search" />*@
-                        <button class="btn btn-info ml-3" onclick="ValidateInfo()">Process</button>
+                        <button class="btn bg-1 ml-3" onclick="ValidateInfo()">Process</button>
                     </td>
                 </tr>
             </tfoot>
         </table>
         <div class="process-status">
-            <input type="submit" class="btn btn-info" id="SubmitClear" value="Reset" onclick="ClearInfo();" />
+            <input style="background-color:#155189;" type="submit" class="btn btn-info" id="SubmitClear" value="Reset" onclick="ClearInfo();" />
         </div>
     </div>
     <div text-align="center" id="dvNotClaimReceived" style="display:none;">
@@ -599,8 +599,8 @@
             </tfoot>
         </table>
         <div class="process-status">
-            <input style="background-color:#17a2b8;" type="submit" class="btn btn-info " id="SubmitProcess" value="Process" />
-            <input type="submit" class="btn btn-info" id="SubmitReset" value="Reset" onclick="javascript:window.location='../Home/ProcessClaim';" />            
+            <input style="background-color:#155189;" type="submit" class="btn" id="SubmitProcess" value="Process" />
+            <input type="submit" class="btn  bg-1" id="SubmitReset" value="Reset" onclick="javascript:window.location='../Home/ProcessClaim';" />            
         </div>        
     </div>
 </div>
