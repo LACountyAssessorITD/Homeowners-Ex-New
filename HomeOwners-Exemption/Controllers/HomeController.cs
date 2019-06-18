@@ -132,7 +132,7 @@ namespace HomeOwners_Exemption.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Claim(Claim claim)
+        public IActionResult Claim(Claim claim, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -146,7 +146,7 @@ namespace HomeOwners_Exemption.Controllers
                                                                 , parameter[15], parameter[16], parameter[17], parameter[18], parameter[19]
                                                                 , parameter[20], parameter[21], parameter[22], parameter[23], parameter[24]
                                                                 , parameter[25], parameter[26] ,parameter[27], parameter[28]);
-                return RedirectToAction("Claim", "Home", new { claim.claimID });
+                return LocalRedirect("~/Home/Claim/" + claim.claimID);
             }
             return View("Claim", "Home");
         }
