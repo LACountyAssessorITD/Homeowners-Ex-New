@@ -134,6 +134,7 @@ namespace HomeOwners_Exemption.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Claim(Claim claim)
         {
+            var hiddenState =  Request.Form["hiddenState"];
             if (ModelState.IsValid)
             {
                 UpdateClaim updClaim = new UpdateClaim(claim);
