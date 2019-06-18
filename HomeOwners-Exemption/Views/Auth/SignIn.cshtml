@@ -14,7 +14,7 @@
 <body class="container-fluid" style="background-color: #155189">
     <div class="h-25 d-flex la-title mx-auto" style="height:100px; max-width: 400px;">
         <div class="">
-            <img class="" src="~/img/LACseal.png" />
+            <img class="" style="height: 100px; width: auto;" src="~/img/LACseal.png" />
         </div>
         <div class="ml-3 mt-3" style="color: #fff; ">
             <h2 class="text-shadow" style="font-size: 120%;">Los Angeles County</h2>
@@ -39,7 +39,9 @@
                     <input type="password" class="form-control" placeholder="Password"
                            asp-for="Password" />
                 </div>
-                <button class="ml-auto btn  btn " style="background-color: #155189;color:white;">Sign In</button>
+                <div class="w-100 justify-content-end">
+                    <button class="btn  btn " style="background-color: #155189;color:white; margin-left: 345px">Sign In</button>
+                 </div>
             </form>
             @if (!ViewContext.ModelState.IsValid)
             {
