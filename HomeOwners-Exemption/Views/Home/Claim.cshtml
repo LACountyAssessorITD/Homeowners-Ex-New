@@ -6,7 +6,8 @@
 
 <script type="text/javascript">
     function validate() {
-        if (chkPriorAddress.checked == 1) {;
+        if (chkPriorAddress.checked == 1) {
+            ;
             document.getElementById("txtMailingStName").readOnly = false;
             document.getElementById("txtMailingApt").readOnly = false;
             document.getElementById("txtMailingCity").readOnly = false;
@@ -17,8 +18,9 @@
             document.getElementById("txtMailingApt").readOnly = true;
             document.getElementById("txtMailingCity").readOnly = true;
             document.getElementById("ddMailingState").disabled = true;
-            document.getElementById("txtMailingZip").readOnly = true;
+            document.getElementById("txtMailingZip").readOnly = true;      
         }
+        document.getElementById("hiddenState").value = document.getElementById("ddMailingState").value;
     }
 </script>
 
@@ -38,7 +40,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="container-fluid Section-Claim">
-                <div class="row claim-core test-padding border-title pl-2" >
+                <div class="row claim-core test-padding border-title pl-2">
                     <div class="col-6">
                         <div class="form-group">
                             <label asp-for="claimID" id="Claimant">Claim#:</label>
@@ -54,8 +56,8 @@
                         <div class="form-group">
                             <label asp-for="ClaimStatusID">Claim Status:</label>
                             <!--<select asp-for="ClaimStatusID" asp-items="ViewBag.dropdownInfo.Status">
-                    @*<option>Select</option>*@
-                </select>-->
+                        @*<option>Select</option>*@
+                    </select>-->
                             <select asp-for="ClaimStatusID" id="ddStatus" onchange="PopulateAssignee(this.value, '@Model.Assignee');">
                                 @foreach (var item in ViewBag.dropdownInfo.Status)
                                 {
@@ -82,7 +84,7 @@
                                 });
                             }
 
-</script>
+                            </script>
                             @*<input asp-for="ClaimStatusRef" class="" />*@
                         </div>
                         <div class="form-group">
@@ -101,12 +103,12 @@
                         </div>
                     </div>
                     @*<div class="col-4">
-                        <div class="form-group readonly-fields">
-                            
-                            <label asp-for="CreatedDate" class="" style="text-align:right">Date:</label>
-                            <input asp-for="CreatedDate" class="" readonly />
-                        </div>
-                    </div>*@
+                    <div class="form-group readonly-fields">
+
+                        <label asp-for="CreatedDate" class="" style="text-align:right">Date:</label>
+                        <input asp-for="CreatedDate" class="" readonly />
+                    </div>
+                </div>*@
                 </div>
                 <div class="row row-divider" style="">
                     <p><b>Personal Information</b></p>
@@ -233,7 +235,7 @@
                                 <div class="form-group">
                                     <label asp-for="MailingState" class=""> State:</label>
                                     <select asp-for="MailingState" id="ddMailingState" asp-items="ViewBag.dropdownInfo.states" readonly>
-                                        <option value="null">Select</option>
+                                        <option value="null" readonly>Select</option>
                                     </select>
 
                                 </div>
@@ -241,20 +243,19 @@
                             <div class="col-4">
                                 <div class="form-group">
                                     <label asp-for="MailingZip" class=""> Zip:</label>
-                                    <input style="" id ="txtMailingZip" asp-for="MailingZip" readonly />
+                                    <input style="" id="txtMailingZip" asp-for="MailingZip" readonly />
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-1">
                                 <div class="form-group">
-                                    <input id="chkPriorAddress" name="chkPriorAddress" type="checkbox" onclick="validate();"/>
+                                    <input id="chkPriorAddress" name="chkPriorAddress" type="checkbox" onclick="validate();" />
                                     <label style="width: 800px">Check if mailing address is different from situs to enable input</label>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <div class="col-4">
                         <div class="w-100 " style="">
                             <p><b>Prior Address (if applicable)</b></p>
@@ -332,66 +333,66 @@
                 </div>
                 @if (Model.ClaimStatusRefID < 4)
                 {
-                <div class="row property-info border-title readonly-fields">
-                    <div class="col-6">
+                    <div class="row property-info border-title readonly-fields">
+                        <div class="col-6">
 
-                        <div class="row">
-                            <div class="col-6">
-                                <label style="" asp-for="ClaimActionRefID" class="">Claim Action:</label>
-                                @*<input asp-for="ClaimActionID" />*@
-                                <select asp-for="ClaimActionRefID" asp-items="ViewBag.dropdownInfo.Action">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label style="" asp-for="ClaimActionRefID" class="">Claim Action:</label>
+                                    @*<input asp-for="ClaimActionID" />*@
+                                    <select asp-for="ClaimActionRefID" asp-items="ViewBag.dropdownInfo.Action">
+                                        @*<option>Select</option>*@
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label style="" asp-for="FindingReasonRefID" class="">Finding Reason:</label>
+                                    @*<input asp-for="FindingReasonRef" />*@
+                                    <select asp-for="FindingReasonRefID" asp-items="ViewBag.dropdownInfo.Reason"></select>
+                                </div>
+                                <div class="col-6 mt-3">
+                                    <label style="width: 50px;" asp-for="Late" class="">Late:</label>
+                                    <input style="width: 15px; height: 15px; margin-top: 4px;margin-bottom: 0px; box-shadow: none;" type="checkbox" asp-for="LateBool" />
+                                    @*@Html.CheckBoxFor(mode => Model.Late ?? false, new { @class = "input" })*@
                                     @*<option>Select</option>*@
-                                </select>
-                            </div>
-                            <div class="col-6">
-                                <label style="" asp-for="FindingReasonRefID" class="">Finding Reason:</label>
-                                @*<input asp-for="FindingReasonRef" />*@
-                                <select asp-for="FindingReasonRefID" asp-items="ViewBag.dropdownInfo.Reason"></select>
-                            </div>
-                            <div class="col-6 mt-3">
-                                <label style="width: 50px;" asp-for="Late" class="">Late:</label>
-                                <input style="width: 15px; height: 15px; margin-top: 4px;margin-bottom: 0px; box-shadow: none;" type="checkbox" asp-for="LateBool" />
-                                @*@Html.CheckBoxFor(mode => Model.Late ?? false, new { @class = "input" })*@
-                                @*<option>Select</option>*@
 
+                                </div>
+                                <div class="col-6">
+                                    <label style="" asp-for="Comments" class="">Other:</label>
+                                    @*<input asp-for="FindingReasonRef" />*@
+                                    <input asp-for="Comments" />
+                                </div>
                             </div>
-                            <div class="col-6">
-                                <label style="" asp-for="Comments" class="">Other:</label>
-                                @*<input asp-for="FindingReasonRef" />*@
-                                <input asp-for="Comments" />
+                        </div>
+                        <div class="col-6" style="padding-left: 15px; padding-right: 15px;">
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <label style="" asp-for="RollTaxYear" class="">Roll Tax Year:</label>
+                                    <input asp-for="RollTaxYear" />
+                                </div>
+                                <div class="col-6">
+                                    <label style="" asp-for="ExemptRe" class="">ExemptRe:</label>
+                                    <input asp-for="ExemptRe" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label style="" asp-for="SuppTaxYear" class="">Supp Tax Year#:</label>
+                                    <input asp-for="SuppTaxYear" />
+                                </div>
+                                <div class="col-6">
+                                    <label style="" asp-for="ExemptRe2" class="">ExemptRe2:</label>
+                                    <input asp-for="ExemptRe2" />
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6" style="padding-left: 15px; padding-right: 15px;">
-
-                        <div class="row">
-                            <div class="col-6">
-                                <label style="" asp-for="RollTaxYear" class="">Roll Tax Year:</label>
-                                <input asp-for="RollTaxYear" />
-                            </div>
-                            <div class="col-6">
-                                <label style="" asp-for="ExemptRe" class="">ExemptRe:</label>
-                                <input asp-for="ExemptRe" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <label style="" asp-for="SuppTaxYear" class="">Supp Tax Year#:</label>
-                                <input asp-for="SuppTaxYear" />
-                            </div>
-                            <div class="col-6">
-                                <label style="" asp-for="ExemptRe2" class="">ExemptRe2:</label>
-                                <input asp-for="ExemptRe2" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 }
                 else
                 {
                     <div class="row property-info border-title ">
                         <div class="col-6">
-                            
+
                             <div class="row">
                                 <div class="col-6">
                                     <label style="" asp-for="ClaimActionRefID" class="">Claim Action:</label>
@@ -447,11 +448,11 @@
             </div>
 
             <div class="form-group my-4" style="text-align:center">
-                <input type="submit" value="Save"  style="width: 98px"class="btn btn-primary bg-1 m-0" />
+                <input type="submit" value="Save" style="width: 98px" class="btn btn-primary bg-1 m-0" />
                 <a class="btn btn-primary bg-1" asp-action="Claim" asp-controller="Home" asp-route-id="@Model.claimID">Cancel</a>
             </div>
+            <input type="hidden" name="hiddenState" id="hiddenState" />.
 
-            
         </form>
     
 </div>
