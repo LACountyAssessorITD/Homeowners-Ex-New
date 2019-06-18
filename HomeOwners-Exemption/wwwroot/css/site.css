@@ -248,8 +248,11 @@ h1,h2,h3,h4,h5 {
     margin-bottom: 0;
     padding-left: 3px;
 }
-.claim-core{
+.claim-core {
     padding-top: 1.0rem;
+    -moz-box-shadow: inset 0 0 4px #000000;
+    -webkit-box-shadow: inset 0 0 4px #000000;
+    box-shadow: inset 0 0 4px #000000;
 }
     .claim-core input, .claim-core select {
         width: 76%;
@@ -308,7 +311,7 @@ input, select {
     box-shadow: inset 0 0 2px #000000;
 }
 .form-info {
-    background-color: #BABABA;
+    background-color: #bebebe;
     -moz-box-shadow: inset 0 0 5px #000000;
     -webkit-box-shadow: inset 0 0 5px #000000;
     box-shadow: inset 0 0 5px #000000;
@@ -320,7 +323,7 @@ input, select {
 
 .property-info {
     padding: 4px;
-    background-color: #BABABA;
+    background-color: #bebebe;
     -moz-box-shadow: inset 0 0 5px #000000;
     -webkit-box-shadow: inset 0 0 5px #000000;
     box-shadow: inset 0 0 5px #000000;
@@ -365,15 +368,18 @@ input, select {
     background: #808080;
     border-radius: 10px;
 }
-
+.history-info .col-custom{
+   
+    font-size: 80%
+}
 .history-feature {
-   position: absolute;
-   z-index: 9999;
-   background-color: rgba(0,0,0,.5);
-   width: 100%;
-   height: 100%;
-   top: 0;
-   display:none;
+    position: absolute;
+    z-index: 9999;
+    background-color: rgba(0,0,0,.5);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    display: none;
 }
 .display-popup {
     display: block;

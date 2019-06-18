@@ -136,7 +136,7 @@
                             <div class="col-5">
                                 <div class="form-group">
                                     <label asp-for="CurrentApt" class=""> Apt/Ste/Flr#:</label>
-                                    <input style="" asp-for="CurrentApt" />
+                                    <input style="" asp-for="CurrentApt" disabled/>
 
 
                                 </div>
@@ -146,14 +146,14 @@
                             <div class="col-4">
                                 <div class="form-group">
                                     <label style="" asp-for="CurrentCity" class="">City:</label>
-                                    <input asp-for="CurrentCity" />
+                                    <input asp-for="CurrentCity" disabled/>
 
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
                                     <label asp-for="CurrentState" class="">State:</label>
-                                    <select asp-for="CurrentState" asp-items="ViewBag.dropdownInfo.states">
+                                    <select asp-for="CurrentState" asp-items="ViewBag.dropdownInfo.states" disabled>
                                         @*<option>Select</option>*@
                                     </select>
 
@@ -162,7 +162,7 @@
                             <div class="col-4">
                                 <div class="form-group">
                                     <label asp-for="CurrentZip">Zip:</label>
-                                    <input asp-for="CurrentZip" />
+                                    <input asp-for="CurrentZip" disabled />
 
                                 </div>
                             </div>
@@ -171,13 +171,13 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label asp-for="DateAcquired" class=""> Date Acquired:</label>
-                                    <input style="width:100%" asp-for="DateAcquired" />
+                                    <input style="width:100%" asp-for="DateAcquired" disabled/>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label asp-for="DateOccupied" class=""> Date Occupied:</label>
-                                    <input style="width:100%" asp-for="DateOccupied" />
+                                    <input style="width:100%" asp-for="DateOccupied" disabled/>
 
                                 </div>
                             </div>
@@ -491,7 +491,7 @@
                         <p>Created By</p>
                     </div>
                 </div>
-                <div style="max-height: 400px; overflow-y: auto;">
+                <div class="history-info" style="max-height: 400px; overflow-y: auto;">
 
                     @foreach (var item in ViewBag.history)
                     {
