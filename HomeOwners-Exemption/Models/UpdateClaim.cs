@@ -15,8 +15,8 @@ namespace HomeOwners_Exemption.Models
             parameterMap = new List<SqlParameter>();
 
             parameterMap.Add( new SqlParameter("@claimID", udpList.claimID));
-
             parameterMap.Add(new SqlParameter("@currentAPN", udpList.CurrentApn));
+
             parameterMap.Add( new SqlParameter("@ClaimStatusRefID", udpList.ClaimStatusID));
             parameterMap.Add(new SqlParameter("@AssigneeID", udpList.AssigneeID));
             parameterMap.Add( new SqlParameter("@AssignorID", udpList.AssignorID));
@@ -40,9 +40,11 @@ namespace HomeOwners_Exemption.Models
             parameterMap.Add(new SqlParameter("@priorState", udpList.PriorState == null ? (object)DBNull.Value : udpList.PriorState));
             parameterMap.Add(new SqlParameter("@priorZip", udpList.PriorZip == null ? (object)DBNull.Value : udpList.PriorZip));
 
-            parameterMap.Add(new SqlParameter("@ClaimActionRefID", udpList.ClaimActionID == null ? (object)DBNull.Value : udpList.ClaimActionID));
-            parameterMap.Add(new SqlParameter("@FindingReasonRefID", udpList.FindingReasonID));
+            
+            parameterMap.Add(new SqlParameter("@ClaimActionRefID", udpList.ClaimActionRefID));
+            parameterMap.Add(new SqlParameter("@FindingReasonRefID", udpList.FindingReasonRefID));
             parameterMap.Add(new SqlParameter("@Comments", DBNull.Value));
+
             parameterMap.Add(new SqlParameter("@Late", udpList.Late));
 
             parameterMap.Add(new SqlParameter("@rollTaxYear", udpList.RollTaxYear == null ? (object)DBNull.Value : udpList.RollTaxYear));

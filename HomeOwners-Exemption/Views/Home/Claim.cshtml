@@ -5,7 +5,12 @@
 }
 
 <div class="h-100 p-4">
-    <h4 class="">Claim</h4>
+    
+    <div>
+        <h4 class="">Claim</h4>
+        <p class="btn btn-dark bg-1 history-button">Claim History</p>
+    </div>
+
     @if (ViewBag.ModelMessage)
     {
         <h4 class="" style="color:#ff0000;">Claim Does not Exist</h4>
@@ -15,8 +20,8 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="container-fluid Section-Claim">
-                <div class="row claim-core test-padding border-title ">
-                    <div class="col-4">
+                <div class="row claim-core test-padding border-title pl-2" >
+                    <div class="col-6">
                         <div class="form-group">
                             <label asp-for="claimID" id="Claimant">Claim#:</label>
                             <input asp-for="claimID" placeholder="Enter a Claim #" />
@@ -27,12 +32,12 @@
 
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="form-group">
                             <label asp-for="ClaimStatusID">Claim Status:</label>
                             <!--<select asp-for="ClaimStatusID" asp-items="ViewBag.dropdownInfo.Status">
-                        @*<option>Select</option>*@
-                    </select>-->
+                    @*<option>Select</option>*@
+                </select>-->
                             <select asp-for="ClaimStatusID" id="ddStatus" onchange="PopulateAssignee(this.value, '@Model.Assignee');">
                                 @foreach (var item in ViewBag.dropdownInfo.Status)
                                 {
@@ -77,17 +82,18 @@
                             <input type="hidden" asp-for="AssignorID" />
                         </div>
                     </div>
-                    <div class="col-4">
-                        <div class="form-group">
+                    @*<div class="col-4">
+                        <div class="form-group readonly-fields">
+                            
                             <label asp-for="CreatedDate" class="" style="text-align:right">Date:</label>
                             <input asp-for="CreatedDate" class="" readonly />
                         </div>
-                    </div>
+                    </div>*@
                 </div>
                 <div class="row row-divider" style="">
                     <p><b>Personal Information</b></p>
                 </div>
-                <div class="row claim-core form-info border-title ">
+                <div class="row claim-core form-info border-title " style="padding-left: 15px;">
                     <div class="col-6">
                         <div class="form-group">
                             <label asp-for="Claimant" class="">Claimant:</label>
@@ -115,11 +121,11 @@
                 </div>
                 <div class="row property-info border-title">
 
-                    <div class="col-4">
+                    <div class="col-4 readonly-fields">
                         <div class="w-100 ">
                             <p><b>Situs Information</b></p>
                         </div>
-                        <div class="row">
+                        <div class="row ">
                             <div class="col-7">
                                 <div class="form-group">
                                     <label style="width:200px;" asp-for="CurrentStName" class="">Street Number and Name:</label>
@@ -165,13 +171,13 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label asp-for="DateAcquired" class=""> Date Acquired:</label>
-                                    <input style="width:200px" asp-for="DateAcquired" />
+                                    <input style="width:100%" asp-for="DateAcquired" />
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label asp-for="DateOccupied" class=""> Date Occupied:</label>
-                                    <input style="width:200px" asp-for="DateOccupied" />
+                                    <input style="width:100%" asp-for="DateOccupied" />
 
                                 </div>
                             </div>
@@ -209,7 +215,7 @@
                                 <div class="form-group">
                                     <label asp-for="MailingState" class=""> State:</label>
                                     <select asp-for="MailingState" asp-items="ViewBag.dropdownInfo.states" readonly>
-                                        @*<option>Select</option>*@
+                                        <option value="null">Select</option>
                                     </select>
 
                                 </div>
@@ -279,7 +285,7 @@
                                 <div class="form-group">
                                     <label asp-for="PriorState" class=""> State:</label>
                                     <select asp-for="PriorState" asp-items="ViewBag.dropdownInfo.states" readonly>
-                                        @*<option>Select</option>*@
+                                        <option value="null">Select</option>
                                     </select>
 
                                 </div>
@@ -306,31 +312,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="row property-info border-title ">
+                @if (Model.ClaimStatusRefID < 4)
+                {
+                <div class="row property-info border-title readonly-fields">
                     <div class="col-6">
 
                         <div class="row">
                             <div class="col-6">
-                                <label style="" asp-for="ClaimActionID" class="">Claim Action:</label>
+                                <label style="" asp-for="ClaimActionRefID" class="">Claim Action:</label>
                                 @*<input asp-for="ClaimActionID" />*@
-                                <select asp-for="ClaimActionID" asp-items="ViewBag.dropdownInfo.Action">
+                                <select asp-for="ClaimActionRefID" asp-items="ViewBag.dropdownInfo.Action">
                                     @*<option>Select</option>*@
                                 </select>
                             </div>
                             <div class="col-6">
-                                <label style="" asp-for="FindingReasonID" class="">Finding Reason:</label>
+                                <label style="" asp-for="FindingReasonRefID" class="">Finding Reason:</label>
                                 @*<input asp-for="FindingReasonRef" />*@
-                                <select asp-for="FindingReasonID" asp-items="ViewBag.dropdownInfo.Reason"></select>
+                                <select asp-for="FindingReasonRefID" asp-items="ViewBag.dropdownInfo.Reason"></select>
                             </div>
                             <div class="col-6 mt-3">
                                 <label style="width: 50px;" asp-for="Late" class="">Late:</label>
-                                <input style="width:25%; margin-top: 4px;" type="checkbox" asp-for="LateBool" />
+                                <input style="width: 15px; height: 15px; margin-top: 4px;margin-bottom: 0px; box-shadow: none;" type="checkbox" asp-for="LateBool" />
                                 @*@Html.CheckBoxFor(mode => Model.Late ?? false, new { @class = "input" })*@
-                                    @*<option>Select</option>*@
-                                
+                                @*<option>Select</option>*@
+
                             </div>
                             <div class="col-6">
-                                <label style="" asp-for="Comments" class="">Other</label>
+                                <label style="" asp-for="Comments" class="">Other:</label>
                                 @*<input asp-for="FindingReasonRef" />*@
                                 <input asp-for="Comments" />
                             </div>
@@ -360,6 +368,64 @@
                         </div>
                     </div>
                 </div>
+                }
+                else
+                {
+                    <div class="row property-info border-title ">
+                        <div class="col-6">
+                            
+                            <div class="row">
+                                <div class="col-6">
+                                    <label style="" asp-for="ClaimActionRefID" class="">Claim Action:</label>
+                                    @*<input asp-for="ClaimActionID" />*@
+                                    <select asp-for="ClaimActionRefID" asp-items="ViewBag.dropdownInfo.Action">
+                                        @*<option>Select</option>*@
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label style="" asp-for="FindingReasonRefID" class="">Finding Reason:</label>
+                                    @*<input asp-for="FindingReasonRef" />*@
+                                    <select asp-for="FindingReasonRefID" asp-items="ViewBag.dropdownInfo.Reason"></select>
+                                </div>
+                                <div class="col-6 mt-3">
+                                    <label style="width: 50px;" asp-for="Late" class="">Late:</label>
+                                    <input style="width: 15px; height: 15px; margin-top: 4px;margin-bottom: 0px; box-shadow: none;" type="checkbox" asp-for="LateBool" />
+                                    @*@Html.CheckBoxFor(mode => Model.Late ?? false, new { @class = "input" })*@
+                                    @*<option>Select</option>*@
+
+                                </div>
+                                <div class="col-6">
+                                    <label style="" asp-for="Comments" class="">Other:</label>
+                                    @*<input asp-for="FindingReasonRef" />*@
+                                    <input asp-for="Comments" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6" style="padding-left: 15px; padding-right: 15px;">
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <label style="" asp-for="RollTaxYear" class="">Roll Tax Year:</label>
+                                    <input asp-for="RollTaxYear" />
+                                </div>
+                                <div class="col-6">
+                                    <label style="" asp-for="ExemptRe" class="">ExemptRe:</label>
+                                    <input asp-for="ExemptRe" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label style="" asp-for="SuppTaxYear" class="">Supp Tax Year#:</label>
+                                    <input asp-for="SuppTaxYear" />
+                                </div>
+                                <div class="col-6">
+                                    <label style="" asp-for="ExemptRe2" class="">ExemptRe2:</label>
+                                    <input asp-for="ExemptRe2" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
 
             <div class="form-group my-4" style="text-align:center">
@@ -367,7 +433,7 @@
                 <a class="btn btn-primary bg-1" asp-action="Claim" asp-controller="Home" asp-route-id="@Model.claimID">Cancel</a>
             </div>
 
-            <p class="btn btn-dark bg-1 history-button">Claim History</p>
+            
         </form>
     
 </div>
@@ -443,7 +509,7 @@
                                 <p class="text-center">@item.Days</p>
                             </div>
                             <div class="col-custom">
-                                <p class="text-center">@item.CreatedBy</p>
+                                <p class="text-center">@item.Assignor</p>
                             </div>
                         </div>
                     }
