@@ -14,6 +14,11 @@
     /////////////////////////////////////////////////////////////////////
     // For Claim Received Status
     /////////////////////////////////////////////////////////////////////
+    var claimID = "";
+    var AIN = "";
+    var status = "";
+    var receivedDate = "";
+
     function Add_ClaimReceived() {
         AddRow_ClaimReceived($("#txtClaimID").val(), $("#txtAIN").val());
         $("#txtClaimID").val("");
@@ -65,17 +70,15 @@
     function ValidateInfo()
     {
         // Get the value from the input text box
-        var claimID = "";
         claimID = document.getElementById("txtClaimID").value;
-        var AIN = "";
         AIN = document.getElementById("txtAIN").value;
 
         // Get the claim status
         var e = document.getElementById("ddClaimStatus");
-        var status = e.options[e.selectedIndex].value;
+        status = e.options[e.selectedIndex].value;
 
         // Get the claim received date
-        var receivedDate = document.getElementById("txtClaimReceivedDate").value.trim();
+        receivedDate = document.getElementById("txtClaimReceivedDate").value.trim();
         var today = new Date();
 
         if (claimID == "") {
@@ -106,9 +109,8 @@
                         }
                         else {
                             //popup("Validated!");
-                            //alert("here");
-                            //confirmpopup(returnData);
-                            confirmBox(returnData);
+                            //confirmpopup(returnData);     
+                            confirmBox(returnData);                         
                         }
 
                         function confirmBox(displayData) {
@@ -125,10 +127,12 @@
                                     end = displayData.indexOf("|");
                                     //popup(displayData.substring(start, end));
                                     claimError = displayData.substring(start, end) + '\n';
+                                    
                                 }
                                 else {
                                     document.getElementById("exclamationClaimID").style.display = "none";
                                     document.getElementById("checkClaimID").style.display = "inline";
+                                    
                                 }
 
                                 if (displayData.indexOf("ALERT") != -1) {
@@ -144,7 +148,6 @@
                                 }
                                 document.getElementById("txtClaimID").focus();
 
-                                //popup(claimError + ainError);
                                 popup(claimError + ainError);
                             }
                             else {
@@ -161,7 +164,9 @@
 
                                 result = "AIN: " + ain + "\nOwner: " + owner + "\nAddress: " + address + "\n\nDo you want to process this claim?";
 
-                                if (confirm(result)) {
+                                confirmpopup(result);
+
+                                @*if (confirm(result)) {
                                     //Click OK
                                     $.ajax({
                                         url: '@Url.Action("ProcessInfo", "Home")',
@@ -188,8 +193,6 @@
                                             popup("Fail to process!");
                                         }
                                     });
-
-
                                 }
                                 else {
                                     //Click CANCEL
@@ -198,7 +201,7 @@
                                     document.getElementById("checkClaimID").style.display = "inline";
                                     document.getElementById("checkAIN").style.display = "inline";
                                     document.getElementById("txtClaimID").focus();
-                                }
+                                }*@
                             }
                         }
                     },
@@ -226,6 +229,34 @@
         document.getElementById("checkClaimID").style.display = "none";
         document.getElementById("checkAIN").style.display = "none";
         document.getElementById("txtClaimID").focus();
+    }
+
+    function processbatch() {
+         $.ajax({
+            url: '@Url.Action("ProcessInfo", "Home")',
+            type: "POST",
+            data: { ClaimID: claimID, AIN: AIN, ClaimStatusID: status, ClaimReceivedDate: receivedDate },
+            traditional: true,
+            success: function (data) {
+                if (data == "0")
+                    popup("Fail to process!");
+                else {
+                    popup("Processed!");
+
+                    Add_ClaimReceived();
+                    document.getElementById("exclamationClaimID").style.display = "inline";
+                    document.getElementById("exclamationAIN").style.display = "inline";
+                    document.getElementById("checkClaimID").style.display = "none";
+                    document.getElementById("checkAIN").style.display = "none";
+                    document.getElementById("txtClaimID").value = "";
+                    document.getElementById("txtAIN").value = "";
+                    document.getElementById("txtClaimID").focus();
+                }
+            },
+            error: function () {
+                popup("Fail to process!");
+            }
+        });
     }
     /////////////////////////////////////////////////////////////////////
 
@@ -628,6 +659,22 @@
                 </div>
             </div>
             <p style="font-size: 90%;" class="btn btn-dark bg-1 close-popup close-popup-claim">Close</p>
+        </div>
+    </div>
+</div>
+
+<div class="confirm-feature">
+    <div class="container-fluid h-100">
+        <div class="row popup-box popup-box-2 box-shadow" style="">
+            <div class="container-fluid ">
+                <div class="row  history-id-2" style="">
+                    <div class="">
+                        <p id="cMessage"></p>
+                    </div>
+                </div>
+            </div>
+            <p style="font-size: 90%; width:126.52px;" class="btn btn-dark bg-1 close-confirm-popup close-confirm-popup-claim" onclick="processbatch();">OK</p>&nbsp;
+            <p style="font-size: 90%;" class="btn btn-dark bg-1 close-confirm-popup close-confirm-popup-claim">Cancel</p>
         </div>
     </div>
 </div>
