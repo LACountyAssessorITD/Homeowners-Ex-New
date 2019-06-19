@@ -409,6 +409,13 @@ input, select {
     -webkit-transform: translateX(-200px);
     transform: translateX(-200px);
 }
+.popup-box-2 {
+    height: 250px;
+    font-size: 80%;
+    max-width: 450px;
+    color: #ff0000;
+   
+}
 
 .history-id {
     margin-left: auto;
@@ -420,17 +427,21 @@ input, select {
 .history-id span {
     padding-left: 30px;
 }
-.history-box {
-    max-width: 1000px;
-    height: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 100px;
-    background-color: #e5e5e5;
-    border-radius: 10px 10px;
-    -webkit-transform: translateX(-200px);
-    transform: translateX(-200px);
-}
+    .history-id-2 {
+        margin-top: 30px;
+    }
+
+    .history-box {
+        max-width: 1000px;
+        height: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 100px;
+        background-color: #e5e5e5;
+        border-radius: 10px 10px;
+        -webkit-transform: translateX(-200px);
+        transform: translateX(-200px);
+    }
     .history-box ul {
         list-style: none;
         margin-left: 50px;
@@ -528,6 +539,10 @@ i {
     padding-right: 40px !important;
     -webkit-transform: translateX(47px);
     transform: translateX(47px);
+}
+.close-popup-claim {
+    bottom: 0px;
+    transform: translateX(60px);
 }
 
 .box-shadow {
