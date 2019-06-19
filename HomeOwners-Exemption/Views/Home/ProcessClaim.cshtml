@@ -256,11 +256,12 @@
 
         //Add Button cell.
         cell = $(row.insertCell(-1));
-        var btnRemove = $("<img />");
-        btnRemove.attr("src", "/img/minus-circle-solid.svg");
-        btnRemove.attr("style", "height:30px;width:30px;");
-        btnRemove.attr("onclick", "Remove(this);");
-        btnRemove.val("Remove");
+        var btnRemove = $("<i style=\"color:#155189;\" class=\"fas fa-minus-circle\" onclick=\"Remove(this);\"></i>");
+        //var btnRemove = $("<img />");
+        //btnRemove.attr("src", "/img/minus-circle-solid.svg");
+        //btnRemove.attr("style", "height:30px;width:30px;");
+        //btnRemove.attr("onclick", "Remove(this);");
+        //btnRemove.val("Remove");
         cell.append(btnRemove);
     };
 
@@ -593,7 +594,7 @@
                     <img src="~/img/check-circle-solid.svg" id="checkClaimID_1" style="height:30px;width:30px;display:none;" />
                 </td>-->
                     @*<td><img src="~/img/plus-circle-solid.svg" onclick="Add()" style="height:30px;width:30px;" /></td>*@
-                    <td><i onclick="Add()" class="fas fa-plus-circle"></i></td>
+                    <td><i style="color:#155189;" onclick="Add()" class="fas fa-plus-circle"></i></td>
                 </tr>
                 @*<tr>
                     <td colspan="6" align="right">
