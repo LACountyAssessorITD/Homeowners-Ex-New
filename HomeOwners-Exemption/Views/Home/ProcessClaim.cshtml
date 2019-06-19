@@ -18,6 +18,7 @@
     var AIN = "";
     var status = "";
     var receivedDate = "";
+    var buttonObject;
 
     function Add_ClaimReceived() {
         AddRow_ClaimReceived($("#txtClaimID").val(), $("#txtAIN").val());
@@ -300,6 +301,7 @@
         //Determine the reference of the Row using the Button.
         var row = $(button).closest("TR");
         var name = $("TD", row).eq(0).html();
+        buttonObject = button;
 
         deletepopup("Do you want to delete Claim #: " + name);
         //if (confirm("Do you want to delete Claim #: " + name)) {
@@ -311,7 +313,7 @@
         //}
     };
 
-     // Send the data to the controller when click the "Process" button
+    // Send the data to the controller when click the "Process" button
     $(document).ready(function () {
         $('#SubmitProcess').on('click', function () {
             var claimIDs = [];
@@ -385,13 +387,15 @@
     });
 
     function deleteitem() {
-        alert("here");
-        //Get the reference of the Table.
+        //Determine the reference of the Row using the Button.
+        var row1 = $(buttonObject).closest("TR");
+        var name1 = $("TD", row1).eq(0).html();
 
-        var table = $("#tblClaims_1")[0];
+        //Get the reference of the Table.
+        var table1 = $("#tblClaims_1")[0];
 
         //Delete the Table row using it's Index.
-        table.deleteRow(row[0].rowIndex);
+        table1.deleteRow(row1[0].rowIndex);
     }
     /////////////////////////////////////////////////////////////////////
 
@@ -701,8 +705,10 @@
                     </div>
                 </div>
             </div>
-            <p style="font-size: 90%; width:126.52px;" class="btn btn-dark bg-1 close-delete-popup close-delete-popup-claim" onclick="deleteitem();">OK</p>&nbsp;
-            <p style="font-size: 90%;" class="btn btn-dark bg-1 close-delete-popup close-delete-popup-claim">Cancel</p>
+            <div class="w-100" style="position: absolute; bottom: 5px;">
+                <p style="font-size: 90%; width:126.52px; height: 46px; margin-right: 5px;" class="btn btn-dark bg-1 close-delete-popup close-delete-popup-claim" onclick="deleteitem();">OK</p>
+                <p style="font-size: 90%; height: 46px; margin-left: 5px;" class="btn btn-dark bg-1 close-delete-popup close-delete-popup-claim">Cancel</p>
+            </div>
         </div>
     </div>
 </div>
