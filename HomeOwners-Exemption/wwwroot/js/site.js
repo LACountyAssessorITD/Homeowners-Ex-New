@@ -46,10 +46,24 @@ $(document).ready(function () {
 		$('.popup-feature').removeClass('display-popup1');
 
 	});
+
+	$('.close-confirm-popup').click(function () {
+		$('.confirm-feature').removeClass('display-popup2');
+		document.getElementById("exclamationClaimID").style.display = "none";
+		document.getElementById("exclamationAIN").style.display = "none";
+		document.getElementById("checkClaimID").style.display = "inline";
+		document.getElementById("checkAIN").style.display = "inline";
+		document.getElementById("txtClaimID").focus();
+	});
 });
 
 function popup(message) {
 	document.getElementById("pMessage").innerText = message;
 	$('.popup-feature').addClass('display-popup1');
+}
+
+function confirmpopup(message) {
+	document.getElementById("cMessage").innerText = message;
+	$('.confirm-feature').addClass('display-popup2');
 }
 
