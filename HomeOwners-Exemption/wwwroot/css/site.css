@@ -504,7 +504,7 @@ i {
 }
 
 .section-claim-body input {
-    border-radius: 0;
+    
     background-color: #c4c4c4;
     height: 2rem;
     padding-top: 2px;
@@ -552,9 +552,7 @@ i {
 }
 
 .history-button {
-    position: absolute;
-    top: 110px;
-    right: 2rem;
+    
 }
 
 .readonly-fields input, .readonly-fields select {
@@ -562,7 +560,9 @@ i {
     background-color: #ebebe4;
 }
 
-
+.btn {
+    color: #fff;
+}
 .text-shadow {
     text-shadow: 5px 5px 5px black;
     /*font-weight: 300;*/
