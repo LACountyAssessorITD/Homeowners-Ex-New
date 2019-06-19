@@ -78,8 +78,10 @@
         var receivedDate = document.getElementById("txtClaimReceivedDate").value.trim();
         var today = new Date();
 
-        if (claimID == "")
+        if (claimID == "") {
             alert("Claim# cannot be empty.");
+            popup("Claim# cannot be empty.");
+        }
         else if (claimID.length < 7)
             alert("Claim# must be 7 digits.");
         else if (AIN == "")
@@ -140,7 +142,8 @@
                                 }
                                 document.getElementById("txtClaimID").focus();
 
-                                alert(claimError + ainError);
+                                //alert(claimError + ainError);
+                                popup(claimError + ainError);
                             }
                             else {
                                 var ain = "";
@@ -452,6 +455,7 @@
             document.getElementById("txtClaimID_1").value = "";
         });
     });
+
 </script>
 
 <h4 class="p-2">Scan Claim</h4>
@@ -609,3 +613,21 @@
 
     <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel" onclick="javascript:window.location='../Home/ProcessClaim';" />
 </div>*@
+
+<div class="popup-feature">
+    <div class="container-fluid h-100">
+        <div class="row popup-box box-shadow" style="">
+            <div class="container-fluid ">
+                <div class="row  history-id" style="">
+                    <div class="col-12">
+                        <h4 style="margin-bottom: 40px;" class="text-center w-100">Scan Claim</h4>
+                    </div>
+                    <div class="">
+                        <p id="pMessage"></p>
+                    </div>
+                </div>
+            </div>
+            <p class="btn btn-dark bg-1 close-popup">Close</p>
+        </div>
+    </div>
+</div>

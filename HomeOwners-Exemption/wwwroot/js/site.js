@@ -41,6 +41,15 @@ $(document).ready(function () {
         $('.history-feature').removeClass('display-popup');
 
     });
-    
+
+	$('.close-popup').click(function () {
+		$('.popup-feature').removeClass('display-popup1');
+
+	});
 });
+
+function popup(message) {
+	document.getElementById("pMessage").innerText = message;
+	$('.popup-feature').addClass('display-popup1');
+}
 
