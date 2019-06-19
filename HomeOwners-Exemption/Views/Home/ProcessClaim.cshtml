@@ -79,19 +79,19 @@
         var today = new Date();
 
         if (claimID == "") {
-            alert("Claim# cannot be empty.");
+            //popup("Claim# cannot be empty.");
             popup("Claim# cannot be empty.");
         }
         else if (claimID.length < 7)
-            alert("Claim# must be 7 digits.");
+            popup("Claim# must be 7 digits.");
         else if (AIN == "")
-            alert("AIN cannot be empty.");
+            popup("AIN cannot be empty.");
         else if (AIN.length < 10)
-            alert("AIN must be 10 digits.")
+            popup("AIN must be 10 digits.")
         else if (receivedDate == "")
-            alert("Claim Received Date cannot be empty.");
+            popup("Claim Received Date cannot be empty.");
         else if (isDate(receivedDate) == false)
-            alert("Invalid date format.");
+            popup("Invalid date format.");
         else {
             var newReceivedDate = new Date(receivedDate); //change format
             if (newReceivedDate <= today) {
@@ -102,10 +102,12 @@
                     traditional: true,
                     success: function (returnData) {
                         if (returnData == "0") {
-                            alert("Fail to validate!");
+                            popup("Fail to validate!");
                         }
                         else {
-                            //alert("Validated!");
+                            //popup("Validated!");
+                            //alert("here");
+                            //confirmpopup(returnData);
                             confirmBox(returnData);
                         }
 
@@ -121,7 +123,7 @@
                                     document.getElementById("checkClaimID").style.display = "none";
                                     start = displayData.indexOf("ERROR");
                                     end = displayData.indexOf("|");
-                                    //alert(displayData.substring(start, end));
+                                    //popup(displayData.substring(start, end));
                                     claimError = displayData.substring(start, end) + '\n';
                                 }
                                 else {
@@ -133,7 +135,7 @@
                                     document.getElementById("exclamationAIN").style.display = "inline";
                                     document.getElementById("checkAIN").style.display = "none";
                                     start = displayData.indexOf("ALERT");
-                                    //alert(displayData.substring(start));
+                                    //popup(displayData.substring(start));
                                     ainError = displayData.substring(start);
                                 }
                                 else {
@@ -142,7 +144,7 @@
                                 }
                                 document.getElementById("txtClaimID").focus();
 
-                                //alert(claimError + ainError);
+                                //popup(claimError + ainError);
                                 popup(claimError + ainError);
                             }
                             else {
@@ -168,9 +170,9 @@
                                         traditional: true,
                                         success: function (data) {
                                             if (data == "0")
-                                                alert("Fail to process!");
+                                                popup("Fail to process!");
                                             else {
-                                                alert("Processed!");
+                                                popup("Processed!");
 
                                                 Add_ClaimReceived();
                                                 document.getElementById("exclamationClaimID").style.display = "inline";
@@ -183,7 +185,7 @@
                                             }
                                         },
                                         error: function () {
-                                            alert("Fail to process!");
+                                            popup("Fail to process!");
                                         }
                                     });
 
@@ -201,12 +203,12 @@
                         }
                     },
                     error: function () {
-                        alert("Fail to validate!");
+                        popup("Fail to validate!");
                     }
                 });
             }
             else
-                alert("Claim Received Date cannot be in future.");
+                popup("Claim Received Date cannot be in future.");
         }
     }
 
@@ -232,9 +234,9 @@
     /////////////////////////////////////////////////////////////////////
     function Add() {
         if ($("#txtClaimID_1").val() == "")
-            alert("Claim# cannot be empty.");
+            popup("Claim# cannot be empty.");
         else if ($("#txtClaimID_1").val().length < 7)
-            alert("Claim# must be 7 digits.");
+            popup("Claim# must be 7 digits.");
         else
         {
             AddRow($("#txtClaimID_1").val());
@@ -302,15 +304,15 @@
             var staffAssignee = e.options[e.selectedIndex].value;
 
             if ((tblRows.length == 2) && ($("#txtClaimID_1").val() == ""))
-                alert("Claim# cannot be empty.");
+                popup("Claim# cannot be empty.");
             else if ((tblRows.length == 2) && ($("#txtClaimID_1").val().length < 7))
-                alert("Claim# must be 7 digits.");
+                popup("Claim# must be 7 digits.");
             else if ((tblRows.length > 2) && ($("#txtClaimID_1").val() != "") && ($("#txtClaimID_1").val().length < 7))
-                alert("Claim# must be 7 digits.");
+                popup("Claim# must be 7 digits.");
             else if (status == 3 && supervisorAssignee == "0")
-                alert("Supervisor cannot be empty.");
+                popup("Supervisor cannot be empty.");
             else if (status == 4 && staffAssignee == "0")
-                alert("Staff cannot be empty.");
+                popup("Staff cannot be empty.");
             else {
                 // Get the value from the input text box
                 claimIDs.push(document.getElementById("txtClaimID_1").value);
@@ -322,14 +324,14 @@
                     traditional: true,
                     success: function (data) {
                         if (data == "0")
-                            alert("Fail to process!");
+                            popup("Fail to process!");
                         else {
-                            alert("Processed!");
+                            popup("Processed!");
                             //window.location = '../Home/ProcessClaim';
                         }
                     },
                     error: function () {
-                        alert("Fail to process!");
+                        popup("Fail to process!");
                     }
                 });
             }
@@ -340,9 +342,9 @@
         $('#txtClaimID_1').on('keypress', function () {
             if (event.keyCode == 13) {
                 if ($("#txtClaimID_1").val() == "")
-                    alert("Claim# cannot be empty.");
+                    popup("Claim# cannot be empty.");
                 else if ($("#txtClaimID_1").val().length < 7)
-                    alert("Claim# must be 7 digits.");
+                    popup("Claim# must be 7 digits.");
                 else
                     Add();
             }
