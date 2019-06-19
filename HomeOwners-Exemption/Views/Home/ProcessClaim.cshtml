@@ -300,13 +300,15 @@
         //Determine the reference of the Row using the Button.
         var row = $(button).closest("TR");
         var name = $("TD", row).eq(0).html();
-        if (confirm("Do you want to delete Claim #: " + name)) {
-            //Get the reference of the Table.
-            var table = $("#tblClaims_1")[0];
 
-            //Delete the Table row using it's Index.
-            table.deleteRow(row[0].rowIndex);
-        }
+        deletepopup("Do you want to delete Claim #: " + name);
+        //if (confirm("Do you want to delete Claim #: " + name)) {
+        //    //Get the reference of the Table.
+        //    var table = $("#tblClaims_1")[0];
+
+        //    //Delete the Table row using it's Index.
+        //    table.deleteRow(row[0].rowIndex);
+        //}
     };
 
      // Send the data to the controller when click the "Process" button
@@ -359,7 +361,6 @@
                             popup("Fail to process!");
                         else {
                             popup("Processed!");
-                            //window.location = '../Home/ProcessClaim';
                         }
                     },
                     error: function () {
@@ -382,6 +383,16 @@
             }
         });
     });
+
+    function deleteitem() {
+        alert("here");
+        //Get the reference of the Table.
+
+        var table = $("#tblClaims_1")[0];
+
+        //Delete the Table row using it's Index.
+        table.deleteRow(row[0].rowIndex);
+    }
     /////////////////////////////////////////////////////////////////////
 
     // Enter number only
@@ -676,6 +687,22 @@
             </div>
             <p style="font-size: 90%; width:126.52px;" class="btn btn-dark bg-1 close-confirm-popup close-confirm-popup-claim" onclick="processbatch();">OK</p>&nbsp;
             <p style="font-size: 90%;" class="btn btn-dark bg-1 close-confirm-popup close-confirm-popup-claim">Cancel</p>
+        </div>
+    </div>
+</div>
+
+<div class="delete-feature">
+    <div class="container-fluid h-100">
+        <div class="row popup-box popup-box-2 box-shadow" style="">
+            <div class="container-fluid ">
+                <div class="row  history-id-2" style="">
+                    <div class="">
+                        <p id="dMessage"></p>
+                    </div>
+                </div>
+            </div>
+            <p style="font-size: 90%; width:126.52px;" class="btn btn-dark bg-1 close-delete-popup close-delete-popup-claim" onclick="deleteitem();">OK</p>&nbsp;
+            <p style="font-size: 90%;" class="btn btn-dark bg-1 close-delete-popup close-delete-popup-claim">Cancel</p>
         </div>
     </div>
 </div>

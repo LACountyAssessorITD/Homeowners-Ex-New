@@ -55,6 +55,10 @@ $(document).ready(function () {
 		document.getElementById("checkAIN").style.display = "inline";
 		document.getElementById("txtClaimID").focus();
 	});
+
+	$('.close-delete-popup').click(function () {
+		$('.delete-feature').removeClass('display-popup3');
+	});
 });
 
 function popup(message) {
@@ -65,5 +69,10 @@ function popup(message) {
 function confirmpopup(message) {
 	document.getElementById("cMessage").innerText = message;
 	$('.confirm-feature').addClass('display-popup2');
+}
+
+function deletepopup(message) {
+	document.getElementById("dMessage").innerText = message;
+	$('.delete-feature').addClass('display-popup3');
 }
 
