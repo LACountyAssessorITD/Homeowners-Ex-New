@@ -10,7 +10,8 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
-        <script src="https://kit.fontawesome.com/78117d78d9.js"></script>
+        @*<script src="//kit.fontawesome.com/78117d78d9.js"></script>*@
+        <link rel="stylesheet" type="text/css" href="~/lib/fonts/css/all.css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
     </environment>
     <environment exclude="Development">
@@ -19,9 +20,10 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
               integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
-        <script src="https://kit.fontawesome.com/78117d78d9.js"></script>
+        @*<script src="//kit.fontawesome.com/78117d78d9.js"></script>*@
         <link rel="stylesheet" href="~/css/site.css" />
-        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,600i,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="~/lib/fonts/css/all.min.css" />
+        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,600i,700&display=swap" rel="stylesheet">
     </environment>
 
 </head>
@@ -102,6 +104,7 @@
                 </nav>
                 <partial name="_SearchForm" />
                 <main role="main" class="pb-3 h-auto">
+                   
                     @RenderBody()
                 </main>
             </div>
