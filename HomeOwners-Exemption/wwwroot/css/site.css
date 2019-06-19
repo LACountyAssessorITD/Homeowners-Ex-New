@@ -220,7 +220,7 @@ h1,h2,h3,h4,h5 {
         border: 1px solid #000;
     }
     .bg-1 {
-        background-color: #155189;
+        background-color: #155189 !important;
     }
     .bg-2{
         background-color: #e5e5e5;
