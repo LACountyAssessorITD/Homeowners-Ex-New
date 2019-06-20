@@ -39,12 +39,6 @@
 
         cell = $(row.insertCell(-1));
         var imgCheck = $("<i style=\"color:#26AB3A;\" class=\"fas fa-check-circle\"></i>");
-       
-        //imgCheck.attr("class", "fas fa - check - circle")
-        //img.change.attr("style", "color: #4cff00;")
-        //var imgCheck = $("<img />");
-        //imgCheck.attr("src", "/img/check-circle-solid.svg");
-        //imgCheck.attr("style", "height:30px;width:30px;");
         cell.append(imgCheck);
 
         //Add AIN cell.
@@ -52,13 +46,7 @@
         cell.html("<p style=\"margin-left:100px;\">" + ain + "</p>");
 
         cell = $(row.insertCell(-1));
-        var imgCheck = $("<i style=\"color:#26AB3A;\" class=\"fas fa-check-circle\"></i>");
-
-        //imgCheck.attr("src", "/img/check-circle-solid.svg");
-        //imgCheck.attr("style", "height:30px;width:30px;");
-        //imgCheck.attr("class", "fas fa - check - circle")
-        //img.change.attr("style", "color: #26AB3A;")
-            
+        var imgCheck = $("<i style=\"color:#26AB3A;\" class=\"fas fa-check-circle\"></i>");         
         cell.append(imgCheck);
 
         //Add Process cell.
@@ -82,10 +70,8 @@
         receivedDate = document.getElementById("txtClaimReceivedDate").value.trim();
         var today = new Date();
 
-        if (claimID == "") {
-            //popup("Claim# cannot be empty.");
+        if (claimID == "") 
             popup("Claim# cannot be empty.");
-        }
         else if (claimID.length < 7)
             popup("Claim# must be 7 digits.");
         else if (AIN == "")
@@ -108,9 +94,7 @@
                         if (returnData == "0") {
                             popup("Fail to validate!");
                         }
-                        else {
-                            //popup("Validated!");
-                            //confirmpopup(returnData);     
+                        else {  
                             confirmBox(returnData);                         
                         }
 
@@ -166,43 +150,6 @@
                                 result = "AIN: " + ain + "\nOwner: " + owner + "\nAddress: " + address + "\n\nDo you want to process this claim?";
 
                                 confirmpopup(result);
-
-                                @*if (confirm(result)) {
-                                    //Click OK
-                                    $.ajax({
-                                        url: '@Url.Action("ProcessInfo", "Home")',
-                                        type: "POST",
-                                        data: { ClaimID: claimID, AIN: AIN, ClaimStatusID: status, ClaimReceivedDate: receivedDate },
-                                        traditional: true,
-                                        success: function (data) {
-                                            if (data == "0")
-                                                popup("Fail to process!");
-                                            else {
-                                                popup("Processed!");
-
-                                                Add_ClaimReceived();
-                                                document.getElementById("exclamationClaimID").style.display = "inline";
-                                                document.getElementById("exclamationAIN").style.display = "inline";
-                                                document.getElementById("checkClaimID").style.display = "none";
-                                                document.getElementById("checkAIN").style.display = "none";
-                                                document.getElementById("txtClaimID").value = "";
-                                                document.getElementById("txtAIN").value = "";
-                                                document.getElementById("txtClaimID").focus();
-                                            }
-                                        },
-                                        error: function () {
-                                            popup("Fail to process!");
-                                        }
-                                    });
-                                }
-                                else {
-                                    //Click CANCEL
-                                    document.getElementById("exclamationClaimID").style.display = "none";
-                                    document.getElementById("exclamationAIN").style.display = "none";
-                                    document.getElementById("checkClaimID").style.display = "inline";
-                                    document.getElementById("checkAIN").style.display = "inline";
-                                    document.getElementById("txtClaimID").focus();
-                                }*@
                             }
                         }
                     },
@@ -289,11 +236,6 @@
         //Add Button cell.
         cell = $(row.insertCell(-1));
         var btnRemove = $("<i style=\"color:#155189;\" class=\"fas fa-minus-circle\" onclick=\"Remove(this);\"></i>");
-        //var btnRemove = $("<img />");
-        //btnRemove.attr("src", "/img/minus-circle-solid.svg");
-        //btnRemove.attr("style", "height:30px;width:30px;");
-        //btnRemove.attr("onclick", "Remove(this);");
-        //btnRemove.val("Remove");
         cell.append(btnRemove);
     };
 
@@ -304,13 +246,6 @@
         buttonObject = button;
 
         deletepopup("Do you want to delete Claim #: " + name);
-        //if (confirm("Do you want to delete Claim #: " + name)) {
-        //    //Get the reference of the Table.
-        //    var table = $("#tblClaims_1")[0];
-
-        //    //Delete the Table row using it's Index.
-        //    table.deleteRow(row[0].rowIndex);
-        //}
     };
 
     // Send the data to the controller when click the "Process" button
@@ -538,51 +473,6 @@
 </div>
 <hr />
 <br />
-
-@*<label style="font-weight:bold;">
-        Claim Status:
-        @Html.DropDownListFor(model => model.ClaimStatus, Model.StatusList, new { style = "width:250px;", @id = "ddClaimStatus", @class = "form-control", @label = "Claim Status:", autofocus = "autofocus" })
-    </label>
-
-    <label id="lblAssignTo" style="font-weight:bold;display:none;">
-        Assign To:
-        @Html.DropDownListFor(model => model.Supervisor, Model.Supervisors, new { style = "width:250px;display:none;", @id = "ddSupervisors", @class = "form-control dropdown-text" })
-    </label>
-
-    <label id="lblAssignToStaff" style="font-weight:bold;display:none;">
-        Assign To:
-        @Html.DropDownListFor(model => model.Staff, Model.Staffs, new { style = "width:250px;display:none;", @id = "ddStaffs", @class = "form-control dropdown-text" })
-    </label>
-
-    <label id="lblClaimReceivedDate" style="font-weight:bold;display:none;">
-        Claim Received Date: <font color="#CC0000"><b>(mm/dd/yyyy)</b></font>
-        @Html.TextBoxFor(model => model.ClaimReceivedDate, new { style = "width:250px;", @id = "txtClaimReceivedDate", @name = "txtClaimReceivedDate", maxlength = 10, @class = "form-control input-text" })
-    </label>*@
-
-
-@*<div class="container-fluid section-claim-body" id="dvClaimReceived" style="display:none;">
-    <div class="row" style="max-width:800px">
-        <div class="col-6">
-            Claim#
-        </div>
-        <div class="col-6">
-            AIN#
-        </div>
-
-    </div>
-    <tbody></tbody>
-    <div class="row" id="tblClaims" style="max-width:800px">
-        <div class="col-6">
-            <input type="text" id="txtClaimID" name="txtClaimID" maxlength="7" oninput="numberOnly(this.id)" />
-        </div>
-        <div class="col-6">
-            <input type="text" id="txtAIN" name="txtAIN" maxlength="10" oninput="numberOnly(this.id)" />
-        </div>
-    </div>
-    <img src="~/img/search.jpg" onclick="ValidateInfo()" style="height:30px;width:30px;" title="Search" />
-</div>*@
-
-@*<th width="150px"><input type="submit" class="btn btn-info bg-3" id="SubmitClear" value="Clear" onclick="ClearInfo();" /></th>*@
 <div class="section-claim-body container-fluid">
     <div text-align="center" id="dvClaimReceived" style="display:none;">
         <table id="tblClaims">
@@ -599,20 +489,15 @@
                 <tr>
                     <td><input type="text" id="txtClaimID"  name="txtClaimID" maxlength="7" oninput="numberOnly(this.id)" /></td>
                     <td>
-                        @*<img src="~/img/exclamation-circle-solid.svg" id="exclamationClaimID" style="height:30px;width:30px;display:inline;" />*@
                         <i id="exclamationClaimID" style="color: red;display:inline;" class="fas fa-exclamation-circle"></i>
-                        @*<img src="~/img/check-circle-solid.svg" id="checkClaimID" style="height:30px;width:30px;display:none;" />*@
                         <i class="fas fa-check-circle" id="checkClaimID" style="color:#26AB3A; display:none;"></i>
                     </td>
                     <td><input type="text" id="txtAIN" style="margin-left: 100px" name="txtAIN" maxlength="10" oninput="numberOnly(this.id)" /></td>
                     <td>
-                        @*<img src="~/img/exclamation-circle-scolid.svg" id="exclamationAIN" style="height:30px;width:30px;display:inline;" />*@
                         <i id="exclamationAIN" style="color: red;display:inline;" class="fas fa-exclamation-circle"></i>
-                        @*<img src="~/img/check-circle-solid.svg" id="checkAIN" style="height:30px;width:30px;display:none;" />*@
                         <i class="fas fa-check-circle" id="checkAIN" style="color:#26AB3A; display:none;"></i>
                     </td>
                     <td>
-                        @*<img src="~/img/search.jpg" onclick="ValidateInfo()" style="height:30px;width:30px;" title="Search" />*@
                         <button class="btn bg-1 ml-3" style="color:#fff;" onclick="ValidateInfo()">Process</button>
                     </td>
                 </tr>
@@ -627,7 +512,6 @@
             <thead>
                 <tr>
                     <th width="100px">Claim #</th>
-                    <!--<th width="30px">&nbsp;</th>-->
                     <th width="150px"></th>
                 </tr>
             </thead>
@@ -635,20 +519,8 @@
             <tfoot>
                 <tr>
                     <td><input type="text" id="txtClaimID_1" name="txtClaimID_1" maxlength="7" oninput="numberOnly(this.id)" /></td>
-                    <!--<td>
-                    <img src="~/img/exclamation-circle-solid.svg" id="exclamationClaimID_1" style="height:30px;width:30px;display:inline;" />
-                    <img src="~/img/check-circle-solid.svg" id="checkClaimID_1" style="height:30px;width:30px;display:none;" />
-                </td>-->
-                    @*<td><img src="~/img/plus-circle-solid.svg" onclick="Add()" style="height:30px;width:30px;" /></td>*@
                     <td><i style="color:#155189;" onclick="Add()" class="fas fa-plus-circle"></i></td>
                 </tr>
-                @*<tr>
-                    <td colspan="6" align="right">
-                        <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" />
-
-                        <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel" onclick="javascript:window.location='../Home/ProcessClaim';" />
-                    </td>
-                </tr>*@
             </tfoot>
         </table>
         <div class="process-status">
@@ -657,12 +529,6 @@
         </div>        
     </div>
 </div>
-@*<div class="container justify-content-end">
-    <input type="submit" class="btn btn-primary bg-3" id="SubmitProcess" value="Process" />
-
-    <input type="submit" class="btn btn-primary bg-3" id="SubmitCancel" value="Cancel" onclick="javascript:window.location='../Home/ProcessClaim';" />
-</div>*@
-
 <div class="popup-feature">
     <div class="container-fluid h-100">
         <div class="row popup-box popup-box-2 box-shadow" style="">
@@ -678,7 +544,6 @@
         </div>
     </div>
 </div>
-
 <div class="confirm-feature">
     <div class="container-fluid h-100">
         <div class="row popup-box popup-box-2 box-shadow" style="">
@@ -694,7 +559,6 @@
         </div>
     </div>
 </div>
-
 <div class="delete-feature">
     <div class="container-fluid h-100">
         <div class="row popup-box popup-box-2 box-shadow" style="">
